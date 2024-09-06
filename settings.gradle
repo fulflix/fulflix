@@ -1,1 +1,3 @@
 rootProject.name = 'fulflix'
+
+include("web-common")
