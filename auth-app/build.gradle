@@ -1,0 +1,12 @@
+ext {
+    WEB_COMMON_MODULE = ":web-common"
+}
+
+dependencies {
+    implementation project(WEB_COMMON_MODULE)
+    implementation("org.springframework.boot:spring-boot-starter-security")
+
+    testImplementation project(WEB_COMMON_MODULE).sourceSets.test.output
+    testImplementation("org.springframework.security:spring-security-test")
+    testRuntimeOnly("com.h2database:h2")
+}
