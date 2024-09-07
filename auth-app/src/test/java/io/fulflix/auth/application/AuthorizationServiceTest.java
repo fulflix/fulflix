@@ -40,8 +40,10 @@ class AuthorizationServiceTest extends AuthTestHelper {
     @BeforeEach
     void setUp() {
         signupRequest = MASTER_ADMIN;
-        userCreateRequest = UserCreateRequest.of(signupRequest,
-            EncodedPassword.from("encoded password"));
+        userCreateRequest = UserCreateRequest.of(
+            signupRequest,
+            EncodedPassword.from("encoded password")
+        );
         userResponse = fixtureGenerator.giveMeOne(UserResponse.class);
     }
 
@@ -53,10 +55,10 @@ class AuthorizationServiceTest extends AuthTestHelper {
         given(userAppClient.createUser(userCreateRequest)).willReturn(userResponse);
 
         // When
-        Long authorization = authorizationService.authorization(signupRequest);
+        Long actual = authorizationService.authorization(signupRequest);
 
         // Then
-        assertThat(authorization).isEqualTo(userResponse.id());
+        assertThat(actual).isEqualTo(userResponse.id());
         verify(userAppClient, times(1)).createUser(userCreateRequest);
     }
 
