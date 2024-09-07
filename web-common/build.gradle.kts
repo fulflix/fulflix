@@ -1,8 +1,18 @@
+plugins {
+    `java-library`
+}
+
 val jar: Jar by tasks
 jar.enabled = true
 
-plugins {
-    `java-library`
+val testJar by tasks.registering(Jar::class) {
+    enabled = true
+    archiveClassifier.set("tests")
+    from(sourceSets["test"].output)
+}
+
+artifacts {
+    add("archives", testJar)
 }
 
 dependencies {
