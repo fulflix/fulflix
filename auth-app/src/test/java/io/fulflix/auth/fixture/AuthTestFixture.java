@@ -4,7 +4,7 @@ import com.navercorp.fixturemonkey.ArbitraryBuilder;
 import com.navercorp.fixturemonkey.FixtureMonkey;
 import io.fulflix.auth.api.dto.SignUpRequest;
 import io.fulflix.auth.domain.Role;
-import io.fulflix.common.fixture.FixtureCommon;
+import io.fulflix.common.web.fixture.FixtureCommon;
 
 public abstract class AuthTestFixture {
 
