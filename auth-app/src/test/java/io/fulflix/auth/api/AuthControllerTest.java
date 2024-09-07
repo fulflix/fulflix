@@ -8,7 +8,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import io.fulflix.auth.api.dto.SignupRequest;
 import io.fulflix.auth.application.AuthorizationService;
 import io.fulflix.auth.domain.Role;
-import io.fulflix.common.base.presentation.WebMvcTestBase;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -21,7 +20,7 @@ import org.springframework.util.MimeTypeUtils;
 
 @WebMvcTest(controllers = AuthController.class)
 @DisplayName("API:Auth:sign-in")
-class AuthControllerTest extends WebMvcTestBase {
+class AuthControllerTest extends AuthTestHelper {
 
     private static final String SIGN_UP_URL = "/auth/sign-up";
 
@@ -47,44 +46,15 @@ class AuthControllerTest extends WebMvcTestBase {
             .andExpect(status().isCreated());
     }
 
+
     private static Stream<Arguments> signUp() {
         return Stream.of(
-            Arguments.of(new SignupRequest(
-                "master-admin",
-                "password",
-                "이부장",
-                Role.MASTER_ADMIN
-            ), Role.MASTER_ADMIN.getDescription()),
-            Arguments.of(new SignupRequest(
-                "hub-admin",
-                "password",
-                "장차장",
-                Role.HUB_ADMIN
-            ), Role.HUB_ADMIN.getDescription()),
-            Arguments.of(new SignupRequest(
-                "hub-company",
-                "password",
-                "최과장",
-                Role.HUB_COMPANY
-            ), Role.HUB_COMPANY.getDescription()),
-            Arguments.of(new SignupRequest(
-                "supply-company",
-                "password",
-                "유과장",
-                Role.SUPPLY_COMPANY
-            ), Role.SUPPLY_COMPANY.getDescription()),
-            Arguments.of(new SignupRequest(
-                "hub-delivery-manager",
-                "password",
-                "김대리",
-                Role.HUB_DELIVERY_MANAGER
-            ), Role.MASTER_ADMIN.getDescription()),
-            Arguments.of(new SignupRequest(
-                "company-delivery-manager",
-                "password",
-                "강대리",
-                Role.COMPANY_DELIVERY_MANAGER
-            ), Role.COMPANY_DELIVERY_MANAGER.getDescription())
+            Arguments.of(MASTER_ADMIN, Role.MASTER_ADMIN.getDescription()),
+            Arguments.of(HUB_ADMIN, Role.HUB_ADMIN.getDescription()),
+            Arguments.of(HUB_COMPANY, Role.HUB_COMPANY.getDescription()),
+            Arguments.of(SUPPLY_COMPANY, Role.SUPPLY_COMPANY.getDescription()),
+            Arguments.of(HUB_DELIVERY_MANAGER, Role.HUB_DELIVERY_MANAGER.getDescription()),
+            Arguments.of(COMPANY_DELIVERY_MANAGER, Role.COMPANY_DELIVERY_MANAGER.getDescription())
         );
     }
 
