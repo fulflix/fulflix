@@ -1,5 +1,4 @@
 spring:
-  profiles.active: test
   config:
     import:
       - classpath:properties/datasource.yml
