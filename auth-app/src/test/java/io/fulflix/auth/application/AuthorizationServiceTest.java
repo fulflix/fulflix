@@ -1,34 +1,26 @@
 package io.fulflix.auth.application;
 
+import static io.fulflix.auth.fixture.AuthTestFixture.MASTER_ADMIN;
+import static io.fulflix.auth.fixture.AuthTestFixture.fixtureGenerator;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-import io.fulflix.auth.api.AuthTestHelper;
 import io.fulflix.auth.api.dto.SignupRequest;
 import io.fulflix.auth.api.dto.UserCreateRequest;
 import io.fulflix.auth.domain.EncodedPassword;
-import io.fulflix.infra.client.UserAppClient;
 import io.fulflix.infra.client.dto.UserResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("Application:Authorization")
-class AuthorizationServiceTest extends AuthTestHelper {
-
-    @Mock
-    private UserAppClient userAppClient;
-
-    @Mock
-    private PasswordEncoder passwordEncoder;
+class AuthorizationServiceTest extends AuthServiceTestHelper {
 
     @InjectMocks
     private AuthorizationService authorizationService;
