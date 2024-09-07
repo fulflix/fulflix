@@ -4,6 +4,7 @@ import static io.fulflix.auth.utils.jwt.SigningUtils.PRINCIPAL;
 import static io.fulflix.auth.utils.jwt.SigningUtils.generateSigningKey;
 
 import io.fulflix.auth.domain.FulflixPrincipal;
+import io.fulflix.auth.domain.Role;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.jackson.io.JacksonDeserializer;
@@ -18,7 +19,7 @@ public class TokenTestHelper {
 
     protected static final Long ID = 1L;
     protected static final String USERNAME = "hong-gd";
-    protected static final String ROLES = "ADMIN";
+    protected static final Role ROLES = Role.MASTER_ADMIN;
 
     protected static final String ISSUER = "auth-app";
     protected static final String AUDIENCE = "fulflix-service-app";

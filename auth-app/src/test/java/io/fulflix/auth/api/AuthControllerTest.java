@@ -1,5 +1,11 @@
 package io.fulflix.auth.api;
 
+import static io.fulflix.auth.fixture.AuthTestFixture.COMPANY_DELIVERY_MANAGER;
+import static io.fulflix.auth.fixture.AuthTestFixture.HUB_ADMIN;
+import static io.fulflix.auth.fixture.AuthTestFixture.HUB_COMPANY;
+import static io.fulflix.auth.fixture.AuthTestFixture.HUB_DELIVERY_MANAGER;
+import static io.fulflix.auth.fixture.AuthTestFixture.MASTER_ADMIN;
+import static io.fulflix.auth.fixture.AuthTestFixture.SUPPLY_COMPANY;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -20,7 +26,7 @@ import org.springframework.util.MimeTypeUtils;
 
 @WebMvcTest(controllers = AuthController.class)
 @DisplayName("API:Auth:sign-in")
-class AuthControllerTest extends AuthTestHelper {
+class AuthControllerTest extends AuthApiTestHelper {
 
     private static final String SIGN_UP_URL = "/auth/sign-up";
 
