@@ -11,20 +11,17 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import io.fulflix.auth.api.dto.SignupRequest;
-import io.fulflix.auth.application.AuthorizationService;
+import io.fulflix.auth.api.dto.SignInRequest;
+import io.fulflix.auth.api.dto.SignUpRequest;
 import io.fulflix.auth.domain.Role;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.util.MimeTypeUtils;
 
-@WebMvcTest(controllers = AuthController.class)
 @DisplayName("API:Auth:sign-in")
 class AuthControllerTest extends AuthApiTestHelper {
 
@@ -36,7 +33,7 @@ class AuthControllerTest extends AuthApiTestHelper {
     @ParameterizedTest(name = "[{index}][{1}]")
     @MethodSource
     @DisplayName("[회원 가입][POST:201]")
-    void signUp(final SignupRequest signUpRequest, final String description) throws Exception {
+    void signUp(final SignUpRequest signUpRequest, final String description) throws Exception {
         // Given
         given(authorizationService.authorization(signUpRequest)).willReturn(1L);
 
@@ -51,7 +48,6 @@ class AuthControllerTest extends AuthApiTestHelper {
         resultActions.andDo(print())
             .andExpect(status().isCreated());
     }
-
 
     private static Stream<Arguments> signUp() {
         return Stream.of(

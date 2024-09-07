@@ -7,7 +7,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-import io.fulflix.auth.api.dto.SignupRequest;
+import io.fulflix.auth.api.dto.SignUpRequest;
 import io.fulflix.auth.api.dto.UserCreateRequest;
 import io.fulflix.auth.domain.EncodedPassword;
 import io.fulflix.infra.client.dto.UserResponse;
@@ -25,7 +25,7 @@ class AuthorizationServiceTest extends AuthServiceTestHelper {
     @InjectMocks
     private AuthorizationService authorizationService;
 
-    private SignupRequest signupRequest;
+    private SignUpRequest signupRequest;
     private UserCreateRequest userCreateRequest;
     private UserResponse userResponse;
 
