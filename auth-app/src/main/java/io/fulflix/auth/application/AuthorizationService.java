@@ -1,6 +1,6 @@
 package io.fulflix.auth.application;
 
-import io.fulflix.auth.api.dto.SignupRequest;
+import io.fulflix.auth.api.dto.SignUpRequest;
 import io.fulflix.auth.api.dto.UserCreateRequest;
 import io.fulflix.auth.domain.EncodedPassword;
 import io.fulflix.infra.client.UserAppClient;
@@ -15,12 +15,12 @@ public class AuthorizationService {
     private final UserAppClient userAppClient;
     private final PasswordEncoder passwordEncoder;
 
-    public Long authorization(SignupRequest signupRequest) {
+    public Long authorization(SignUpRequest signupRequest) {
         UserCreateRequest userCreateRequest = encodePassword(signupRequest);
         return userAppClient.createUser(userCreateRequest).id();
     }
 
-    private UserCreateRequest encodePassword(SignupRequest signupRequest) {
+    private UserCreateRequest encodePassword(SignUpRequest signupRequest) {
         EncodedPassword encodedPassword = EncodedPassword.from(
             passwordEncoder.encode(signupRequest.password())
         );

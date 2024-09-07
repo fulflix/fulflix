@@ -2,7 +2,7 @@ package io.fulflix.auth.api.dto;
 
 import io.fulflix.auth.domain.Role;
 
-public record SignupRequest(
+public record SignUpRequest(
     String username,
     String password,
     String name,

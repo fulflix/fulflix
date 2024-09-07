@@ -11,7 +11,7 @@ public record UserCreateRequest(
 ) {
 
     public static UserCreateRequest of(
-        SignupRequest signupRequest,
+        SignUpRequest signupRequest,
         EncodedPassword encodedPassword
     ) {
         return new UserCreateRequest(

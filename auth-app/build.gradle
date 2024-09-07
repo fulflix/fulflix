@@ -1,10 +1,14 @@
 ext {
     WEB_COMMON_MODULE = ":web-common"
+    JJWT_VERSION = "0.12.6"
 }
 
 dependencies {
     implementation project(WEB_COMMON_MODULE)
     implementation("org.springframework.security:spring-security-crypto")
+    implementation("io.jsonwebtoken:jjwt-api:${JJWT_VERSION}")
+    implementation("io.jsonwebtoken:jjwt-jackson:${JJWT_VERSION}")
+    implementation("io.jsonwebtoken:jjwt-impl:${JJWT_VERSION}")
 
     testImplementation project(path: WEB_COMMON_MODULE, configuration: "archives")
     testRuntimeOnly("com.h2database:h2")
