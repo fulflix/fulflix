@@ -1,4 +1,4 @@
-package io.fulflix.common.base;
+package io.fulflix.common.web.base;
 
 import static org.springframework.test.context.TestConstructor.AutowireMode.ALL;
 

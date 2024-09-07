@@ -1,4 +1,4 @@
-package io.fulflix.common.fixture;
+package io.fulflix.common.web.fixture;
 
 import com.navercorp.fixturemonkey.FixtureMonkey;
 import com.navercorp.fixturemonkey.api.introspector.ConstructorPropertiesArbitraryIntrospector;
