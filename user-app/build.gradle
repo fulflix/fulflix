@@ -1,0 +1,10 @@
+ext {
+    WEB_COMMON_MODULE = ":web-common"
+}
+
+dependencies {
+    implementation project(WEB_COMMON_MODULE)
+
+    testImplementation project(path: WEB_COMMON_MODULE, configuration: "archives")
+    testRuntimeOnly("com.h2database:h2")
+}
