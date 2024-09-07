@@ -6,6 +6,9 @@ import static io.fulflix.auth.fixture.AuthTestFixture.HUB_COMPANY;
 import static io.fulflix.auth.fixture.AuthTestFixture.HUB_DELIVERY_MANAGER;
 import static io.fulflix.auth.fixture.AuthTestFixture.MASTER_ADMIN;
 import static io.fulflix.auth.fixture.AuthTestFixture.SUPPLY_COMPANY;
+import static io.fulflix.auth.fixture.AuthTestFixture.fixtureGenerator;
+import static io.fulflix.auth.utils.jwt.TokenTestHelper.TEST_JWT_PROPERTIES;
+import static io.fulflix.auth.utils.jwt.TokenTestHelper.TEST_PRINCIPAL;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -14,8 +17,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import io.fulflix.auth.api.dto.SignInRequest;
 import io.fulflix.auth.api.dto.SignUpRequest;
 import io.fulflix.auth.domain.Role;
+import io.fulflix.auth.utils.jwt.JwtProvider;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -26,9 +31,7 @@ import org.springframework.util.MimeTypeUtils;
 class AuthControllerTest extends AuthApiTestHelper {
 
     private static final String SIGN_UP_URL = "/auth/sign-up";
-
-    @MockBean
-    private AuthorizationService authorizationService;
+    private static final String SIGN_IN_URL = "/auth/sign-in";
 
     @ParameterizedTest(name = "[{index}][{1}]")
     @MethodSource
@@ -58,6 +61,26 @@ class AuthControllerTest extends AuthApiTestHelper {
             Arguments.of(HUB_DELIVERY_MANAGER, Role.HUB_DELIVERY_MANAGER.getDescription()),
             Arguments.of(COMPANY_DELIVERY_MANAGER, Role.COMPANY_DELIVERY_MANAGER.getDescription())
         );
+    }
+
+    @Test
+    @DisplayName("[로그인][POST:200]")
+    void signIn() throws Exception {
+        // Given
+        SignInRequest signInRequest = fixtureGenerator.giveMeOne(SignInRequest.class);
+        String accessToken = JwtProvider.create(TEST_JWT_PROPERTIES, TEST_PRINCIPAL);
+        given(authenticationService.authenticate(signInRequest)).willReturn(accessToken);
+
+        // When
+        ResultActions resultActions = mockMvc.perform(post(SIGN_IN_URL)
+            .contentType(MimeTypeUtils.APPLICATION_JSON_VALUE)
+            .accept(MimeTypeUtils.APPLICATION_JSON_VALUE)
+            .content(objectMapper.writeValueAsBytes(signInRequest))
+        );
+
+        // Then
+        resultActions.andDo(print())
+            .andExpect(status().isOk());
     }
 
 }

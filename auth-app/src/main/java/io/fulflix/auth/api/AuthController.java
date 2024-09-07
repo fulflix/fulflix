@@ -1,12 +1,14 @@
 package io.fulflix.auth.api;
 
 import static io.fulflix.auth.api.AuthController.BASE_AUTH_PATH;
+import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
 import io.fulflix.auth.api.dto.SignInRequest;
 import io.fulflix.auth.api.dto.SignUpRequest;
 import io.fulflix.auth.application.AuthenticationService;
 import io.fulflix.auth.application.AuthorizationService;
+import jakarta.servlet.http.HttpServletResponse;
 import java.net.URI;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +31,7 @@ public class AuthController {
     private static final String USER_DETAILS_URI_FORMAT = "/user/{id}";
 
     private final AuthorizationService authorizationService;
+    private final AuthenticationService authenticationService;
 
     @PostMapping("/sign-up")
     ResponseEntity<Void> signUp(@RequestBody SignUpRequest signupRequest) {
@@ -38,6 +41,15 @@ public class AuthController {
 
         return ResponseEntity.created(userDetailsUri)
             .build();
+    }
+
+    @PostMapping("/sign-in")
+    ResponseEntity<Void> signIn(
+        @RequestBody SignInRequest signInRequest,
+        HttpServletResponse response
+    ) {
+        response.setHeader(AUTHORIZATION, authenticationService.authenticate(signInRequest));
+        return ResponseEntity.ok().build();
     }
 
 }
