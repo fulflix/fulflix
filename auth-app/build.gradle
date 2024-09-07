@@ -4,9 +4,7 @@ ext {
 
 dependencies {
     implementation project(WEB_COMMON_MODULE)
-    implementation("org.springframework.boot:spring-boot-starter-security")
 
-    testImplementation project(WEB_COMMON_MODULE).sourceSets.test.output
-    testImplementation("org.springframework.security:spring-security-test")
+    testImplementation project(path: WEB_COMMON_MODULE, configuration: "archives")
     testRuntimeOnly("com.h2database:h2")
 }
