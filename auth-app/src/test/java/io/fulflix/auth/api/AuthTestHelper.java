@@ -10,20 +10,20 @@ import io.fulflix.common.fixture.FixtureCommon;
 public abstract class AuthTestHelper extends WebMvcTestBase {
 
     protected static final FixtureMonkey fixtureGenerator = FixtureCommon.generate();
-    protected static ArbitraryBuilder<SignupRequest> signupRequestArbitraryBuilder = fixtureGenerator
+    protected static ArbitraryBuilder<SignupRequest> signupRequestBuilder = fixtureGenerator
         .giveMeBuilder(SignupRequest.class);
 
-    protected static SignupRequest MASTER_ADMIN = signupRequestArbitraryBuilder
+    protected static SignupRequest MASTER_ADMIN = signupRequestBuilder
         .setLazy("type", () -> Role.MASTER_ADMIN).sample();
-    protected static SignupRequest HUB_ADMIN = signupRequestArbitraryBuilder
+    protected static SignupRequest HUB_ADMIN = signupRequestBuilder
         .setLazy("type", () -> Role.HUB_ADMIN).sample();
-    protected static SignupRequest HUB_COMPANY = signupRequestArbitraryBuilder
+    protected static SignupRequest HUB_COMPANY = signupRequestBuilder
         .setLazy("type", () -> Role.HUB_COMPANY).sample();
-    protected static SignupRequest SUPPLY_COMPANY = signupRequestArbitraryBuilder
+    protected static SignupRequest SUPPLY_COMPANY = signupRequestBuilder
         .setLazy("type", () -> Role.SUPPLY_COMPANY).sample();
-    protected static SignupRequest HUB_DELIVERY_MANAGER = signupRequestArbitraryBuilder
+    protected static SignupRequest HUB_DELIVERY_MANAGER = signupRequestBuilder
         .setLazy("type", () -> Role.HUB_DELIVERY_MANAGER).sample();
-    protected static SignupRequest COMPANY_DELIVERY_MANAGER = signupRequestArbitraryBuilder
+    protected static SignupRequest COMPANY_DELIVERY_MANAGER = signupRequestBuilder
         .setLazy("type", () -> Role.COMPANY_DELIVERY_MANAGER).sample();
 
 }
