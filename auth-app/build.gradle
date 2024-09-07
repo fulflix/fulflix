@@ -4,6 +4,7 @@ ext {
 
 dependencies {
     implementation project(WEB_COMMON_MODULE)
+    implementation("org.springframework.security:spring-security-crypto")
 
     testImplementation project(path: WEB_COMMON_MODULE, configuration: "archives")
     testRuntimeOnly("com.h2database:h2")
