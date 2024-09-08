@@ -6,6 +6,8 @@ import com.navercorp.fixturemonkey.customizer.InnerSpec;
 
 public class FixtureCommon {
 
+    public static FixtureMonkey fixtureMonkey = FixtureCommon.generate();
+
     public static FixtureMonkey generate() {
         return FixtureMonkey.builder()
             .objectIntrospector(ConstructorPropertiesArbitraryIntrospector.INSTANCE)
