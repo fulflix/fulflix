@@ -43,7 +43,7 @@ public class AuthController {
 
     @PostMapping("/sign-in")
     ResponseEntity<Void> signIn(
-        @RequestBody SignInRequest signInRequest,
+        @Valid @RequestBody SignInRequest signInRequest,
         HttpServletResponse response
     ) {
         response.setHeader(AUTHORIZATION, authenticationService.authenticate(signInRequest));

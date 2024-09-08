@@ -12,6 +12,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import io.fulflix.auth.api.dto.SignInRequest;
 import io.fulflix.auth.api.dto.SignUpRequest;
 import io.fulflix.auth.domain.Role;
 import io.fulflix.auth.exception.AuthErrorCode;
@@ -70,7 +71,7 @@ class AuthControllerTest extends AuthApiTestHelper {
 
     @Test
     @DisplayName("[회원 가입][POST:400]")
-    void badRequest() throws Exception {
+    void badRequest_signUp() throws Exception {
         // Given
         SignUpRequest signUpRequest = new SignUpRequest("", "", "", null);
 
@@ -103,6 +104,25 @@ class AuthControllerTest extends AuthApiTestHelper {
         resultActions.andDo(print())
             .andExpect(status().isOk());
     }
+
+    @Test
+    @DisplayName("[로그인][POST:401]")
+    void badRequest_signIn() throws Exception {
+        // Given
+        SignInRequest signInRequest = new SignInRequest("", "");
+
+        // When
+        ResultActions resultActions = mockMvc.perform(post(SIGN_IN_URL)
+            .contentType(MimeTypeUtils.APPLICATION_JSON_VALUE)
+            .accept(MimeTypeUtils.APPLICATION_JSON_VALUE)
+            .content(objectMapper.writeValueAsBytes(signInRequest))
+        );
+
+        // Then
+        resultActions.andDo(print())
+            .andExpect(status().isBadRequest());
+    }
+
 
     @Test
     @DisplayName("[로그인][POST:403]")
