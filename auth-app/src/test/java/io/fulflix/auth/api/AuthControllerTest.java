@@ -69,6 +69,24 @@ class AuthControllerTest extends AuthApiTestHelper {
     }
 
     @Test
+    @DisplayName("[회원 가입][POST:400]")
+    void badRequest() throws Exception {
+        // Given
+        SignUpRequest signUpRequest = new SignUpRequest("", "", "", null);
+
+        // When
+        ResultActions resultActions = mockMvc.perform(post(SIGN_UP_URL)
+            .contentType(MimeTypeUtils.APPLICATION_JSON_VALUE)
+            .accept(MimeTypeUtils.APPLICATION_JSON_VALUE)
+            .content(objectMapper.writeValueAsBytes(signUpRequest))
+        );
+
+        // Then
+        resultActions.andDo(print())
+            .andExpect(status().isBadRequest());
+    }
+
+    @Test
     @DisplayName("[로그인][POST:200]")
     void signIn() throws Exception {
         // Given

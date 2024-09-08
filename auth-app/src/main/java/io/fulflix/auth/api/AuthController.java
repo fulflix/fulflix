@@ -10,6 +10,7 @@ import io.fulflix.auth.api.dto.SignUpRequest;
 import io.fulflix.auth.application.AuthenticationService;
 import io.fulflix.auth.application.AuthorizationService;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,7 +34,7 @@ public class AuthController {
     private final AuthenticationService authenticationService;
 
     @PostMapping("/sign-up")
-    ResponseEntity<Void> signUp(@RequestBody SignUpRequest signupRequest) {
+    ResponseEntity<Void> signUp(@Valid @RequestBody SignUpRequest signupRequest) {
         return created(
             USER_DETAILS_URI_FORMAT,
             authorizationService.authorization(signupRequest)
