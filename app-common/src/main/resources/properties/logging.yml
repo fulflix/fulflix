@@ -1,0 +1,9 @@
+spring:
+  config.activate.on-profile: test, local, dev
+logging:
+  config: classpath:logback-spring-dev.xml
+---
+spring:
+  config.activate.on-profile: prd
+logging:
+  config: classpath:logback-spring-prd.xml
