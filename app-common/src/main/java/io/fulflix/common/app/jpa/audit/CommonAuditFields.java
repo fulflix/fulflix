@@ -1,4 +1,4 @@
-package io.fulflix.common.jpa.audit;
+package io.fulflix.common.app.jpa.audit;
 
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;

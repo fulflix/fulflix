@@ -1,4 +1,4 @@
-package io.fulflix.common.context.annotation;
+package io.fulflix.common.app.context.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

@@ -1,4 +1,4 @@
-package io.fulflix.common.context;
+package io.fulflix.common.app.context;
 
 public class UserContextHolder {
 
