@@ -19,6 +19,8 @@ artifacts {
 val webCommonModule = ":web-common"
 
 dependencies {
-    api("org.springframework.boot:spring-boot-starter-data-jpa")
     api(project(webCommonModule))
+    api("org.springframework.boot:spring-boot-starter-data-jpa")
+
+    testImplementation(project(path = webCommonModule, configuration = "archives"))
 }
