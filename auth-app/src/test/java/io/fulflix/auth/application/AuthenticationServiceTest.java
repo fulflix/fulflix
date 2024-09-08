@@ -73,7 +73,7 @@ class AuthenticationServiceTest extends AuthServiceTestHelper {
             // When & Then
             assertThatExceptionOfType(AuthException.class)
                 .isThrownBy(() -> authenticationService.authenticate(signInRequest))
-                .extracting(AuthException::getCode)
+                .extracting(AuthException::getErrorCode)
                 .isEqualTo(AuthErrorCode.BAD_CREDENTIALS);
 
             verify(userAppClient, times(1)).retrieveUser(anyString());

@@ -1,19 +1,21 @@
 package io.fulflix.auth.exception;
 
+import io.fulflix.common.web.exception.BusinessException;
 import lombok.Getter;
 
 @Getter
-public class AuthException extends RuntimeException {
+public class AuthException extends BusinessException {
 
-    private final AuthErrorCode code;
+    private final AuthErrorCode errorCode;
 
-    public AuthException(AuthErrorCode code, String... args) {
-        super(formattedMessage(code.getMessage(), args));
-        this.code = code;
+    public AuthException(AuthErrorCode code) {
+        super(code.getStatus(), code.name(), code.getMessage());
+        this.errorCode = code;
     }
 
-    private static String formattedMessage(String message, String... args) {
-        return message.formatted(args);
+    public AuthException(AuthErrorCode code, Object... args) {
+        super(code.getStatus(), code.name(), code.getMessage(), args);
+        this.errorCode = code;
     }
 
 }
