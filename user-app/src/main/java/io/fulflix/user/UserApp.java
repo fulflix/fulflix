@@ -1,22 +1,24 @@
 package io.fulflix.user;
 
 import static io.fulflix.common.web.utils.PropertiesCombineUtils.BASE_PACKAGE;
-import static io.fulflix.common.web.utils.PropertiesCombineUtils.CONFIGURATION_PROPERTIES_NAME;
-import static io.fulflix.common.web.utils.PropertiesCombineUtils.combinedApplicationProperties;
 
+import io.fulflix.common.web.config.YamlPropertySourceFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.PropertySources;
 
+@PropertySources({
+    @PropertySource(
+        name = "user-app-properties",
+        value = "classpath:application-user.yml",
+        factory = YamlPropertySourceFactory.class
+    )
+})
 @SpringBootApplication(scanBasePackages = BASE_PACKAGE)
 public class UserApp {
 
-    private static final String USER_APP_PROPERTY = "application-user";
-
     public static void main(String[] args) {
-        System.setProperty(
-            CONFIGURATION_PROPERTIES_NAME,
-            combinedApplicationProperties(USER_APP_PROPERTY)
-        );
         SpringApplication.run(UserApp.class, args);
     }
 
