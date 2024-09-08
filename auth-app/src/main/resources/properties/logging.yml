@@ -1,0 +1,10 @@
+spring:
+  profiles:
+    active: test
+
+logging:
+  level:
+    root: INFO
+    org.springframework.web: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} %highlight([%thread] %-5level) %logger{36} - %msg%n"
