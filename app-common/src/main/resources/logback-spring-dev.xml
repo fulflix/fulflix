@@ -1,0 +1,20 @@
+<configuration>
+  <property name="LOG_FILE" value="logs/application.log"/>
+  <property name="LOGS" value="./logs"/>
+
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%d{yyyy-MM-dd HH:mm:ss} %highlight([%thread] %-5level) %logger{36} - %msg%n</pattern>
+      <charset>UTF-8</charset>
+    </encoder>
+  </appender>
+
+  <logger name="org.springframework.web" level="DEBUG"/>
+  <logger name="org.hibernate.orm.jdbc.bind" level="TRACE"/>
+  <logger name="org.hibernate.SQL_SLOW" level="INFO"/>
+  <logger name="org.hibernate.stat" level="DEBUG"/>
+
+  <root level="INFO">
+    <appender-ref ref="STDOUT"/>
+  </root>
+</configuration>
