@@ -1,4 +1,4 @@
-package io.fulflix.common.context;
+package io.fulflix.common.app.context;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;

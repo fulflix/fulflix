@@ -1,4 +1,4 @@
-package io.fulflix.common;
+package io.fulflix.common.app;
 
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 
