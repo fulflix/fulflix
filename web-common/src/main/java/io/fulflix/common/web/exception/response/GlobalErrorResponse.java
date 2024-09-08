@@ -1,15 +1,22 @@
-package io.fulflix.common.web.exception;
+package io.fulflix.common.web.exception.response;
 
+import static lombok.AccessLevel.PROTECTED;
+
+import io.fulflix.common.web.exception.BusinessException;
 import jakarta.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
-public record GlobalErrorResponse(
-    String method,
-    String path,
-    String code,
-    String message,
-    LocalDateTime timestamp
-) {
+@Getter
+@AllArgsConstructor(access = PROTECTED)
+public sealed class GlobalErrorResponse permits MethodArgumentNotValidErrorResponse {
+
+    private String method;
+    private String path;
+    private String code;
+    private String message;
+    private LocalDateTime timestamp;
 
     public static GlobalErrorResponse of(
         HttpServletRequest request,

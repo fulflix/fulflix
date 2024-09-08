@@ -1,6 +1,6 @@
 package io.fulflix.common.web.exception.event;
 
-import io.fulflix.common.web.exception.GlobalErrorResponse;
+import io.fulflix.common.web.exception.response.GlobalErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
@@ -23,15 +23,15 @@ public class ThrowsExceptionEventListener {
                              EXCEPTION :[{}, {}]
                              TRACE :[{}]
                 \s""",
-            response.method(),
-            response.path(),
-            response.code(),
-            response.message(),
+            response.getMessage(),
+            response.getPath(),
+            response.getCode(),
+            response.getMessage(),
             exception.getClass().getName(),
             exception.getMessage(),
             throwsExceptionEvent.formatStackTrace()
         );
-        
+
         // TODO notify throws exception
     }
 

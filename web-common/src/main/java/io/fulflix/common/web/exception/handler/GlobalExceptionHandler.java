@@ -1,9 +1,13 @@
-package io.fulflix.common.web.exception;
+package io.fulflix.common.web.exception.handler;
 
-import static io.fulflix.common.web.exception.GlobalErrorCode.UNEXPECTED_ERROR;
-import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
+import static io.fulflix.common.web.exception.response.GlobalErrorCode.METHOD_ARGUMENT_NOT_VALID;
+import static io.fulflix.common.web.exception.response.GlobalErrorCode.UNEXPECTED_ERROR;
 
+import io.fulflix.common.web.exception.BusinessException;
 import io.fulflix.common.web.exception.event.ThrowsExceptionEvent;
+import io.fulflix.common.web.exception.response.GlobalErrorCode;
+import io.fulflix.common.web.exception.response.GlobalErrorResponse;
+import io.fulflix.common.web.exception.response.MethodArgumentNotValidErrorResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,8 +37,10 @@ public class GlobalExceptionHandler {
         Exception exception,
         HttpServletRequest request
     ) {
-        GlobalErrorResponse errorResponse = GlobalErrorResponse.of(request, UNEXPECTED_ERROR);
-        return errorResponse(exception, INTERNAL_SERVER_ERROR, errorResponse);
+        GlobalErrorCode unexpectedError = UNEXPECTED_ERROR;
+        GlobalErrorResponse errorResponse = GlobalErrorResponse.of(request, unexpectedError);
+
+        return toErrorResponse(exception, unexpectedError.status, errorResponse);
     }
 
     @ExceptionHandler(BusinessException.class)
@@ -43,14 +49,28 @@ public class GlobalExceptionHandler {
         HttpServletRequest request
     ) {
         GlobalErrorResponse errorResponse = GlobalErrorResponse.businessErrorOf(request, exception);
-        return errorResponse(exception, exception.getStatus(), errorResponse);
+        return toErrorResponse(exception, exception.getStatus(), errorResponse);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<GlobalErrorResponse> methodArgumentNotValidException(
+        MethodArgumentNotValidException exception,
+        HttpServletRequest request
+    ) {
+        GlobalErrorCode methodArgumentNotValidError = METHOD_ARGUMENT_NOT_VALID;
+        MethodArgumentNotValidErrorResponse errorResponse = MethodArgumentNotValidErrorResponse.of(
+            request,
+            methodArgumentNotValidError,
+            exception.getFieldErrors()
+        );
+
+        return toErrorResponse(exception, methodArgumentNotValidError.status, errorResponse);
     }
 
     @ExceptionHandler({
         MissingPathVariableException.class,
         MissingServletRequestParameterException.class,
         MethodArgumentTypeMismatchException.class,
-        MethodArgumentNotValidException.class,
         HttpMessageNotReadableException.class,
         HttpMediaTypeNotAcceptableException.class,
         HttpRequestMethodNotSupportedException.class,
@@ -63,10 +83,10 @@ public class GlobalExceptionHandler {
         GlobalErrorCode errorCode = GlobalErrorCode.valueOf(exception);
         GlobalErrorResponse errorResponse = GlobalErrorResponse.of(request, errorCode);
 
-        return errorResponse(exception, errorCode.status, errorResponse);
+        return toErrorResponse(exception, errorCode.status, errorResponse);
     }
 
-    private ResponseEntity<GlobalErrorResponse> errorResponse(
+    private ResponseEntity<GlobalErrorResponse> toErrorResponse(
         Exception exception,
         HttpStatus status,
         GlobalErrorResponse errorResponse

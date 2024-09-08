@@ -1,6 +1,6 @@
 package io.fulflix.common.web.exception.event;
 
-import io.fulflix.common.web.exception.GlobalErrorResponse;
+import io.fulflix.common.web.exception.response.GlobalErrorResponse;
 import lombok.Getter;
 
 @Getter
