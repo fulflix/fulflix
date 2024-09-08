@@ -1,7 +1,0 @@
-spring:
-  application:
-    name: auth-app
-  profiles:
-    active: test
-  config:
-    import: classpath:properties/jwt.yml
