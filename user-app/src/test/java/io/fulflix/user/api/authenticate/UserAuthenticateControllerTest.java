@@ -1,9 +1,12 @@
 package io.fulflix.user.api.authenticate;
 
 import static io.fulflix.common.web.utils.UriComponentUtils.toResourceUri;
+import static io.fulflix.fixture.UserFixtures.USERNAME;
 import static io.fulflix.fixture.UserFixtures.USER_CREATE_REQUEST;
+import static io.fulflix.fixture.UserFixtures.USER_CREDENTIAL_RESPONSE;
 import static io.fulflix.user.api.authenticate.UserAuthenticateController.GET_AN_USER_CREDENTIAL_URI_FORMAT;
 import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
@@ -45,6 +48,26 @@ class UserAuthenticateControllerTest extends UserApiTestHelper {
                 HttpHeaders.LOCATION, expectedResourceUri.toString()
             ))
             .andExpect(status().isCreated());
+    }
+
+    @Test
+    @DisplayName("[회원 자격 증명 조회][GET:200]")
+    void retrieveUserCredential() throws Exception {
+        // Given
+        given(userAuthenticateUseCase.loadUserCredentialByUsername(USERNAME))
+            .willReturn(USER_CREDENTIAL_RESPONSE);
+
+        // When
+        ResultActions resultActions = mockMvc.perform(
+            get(GET_AN_USER_CREDENTIAL_URI_FORMAT, USERNAME)
+                .contentType(MimeTypeUtils.APPLICATION_JSON_VALUE)
+                .accept(MimeTypeUtils.APPLICATION_JSON_VALUE)
+                .content(objectMapper.writeValueAsBytes(USER_CREATE_REQUEST)
+                ));
+
+        // Then
+        resultActions.andDo(print())
+            .andExpect(status().isOk());
     }
 
 }
