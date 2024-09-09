@@ -7,6 +7,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 @PropertySources({
     @PropertySource(
@@ -15,6 +16,7 @@ import org.springframework.context.annotation.PropertySources;
         factory = YamlPropertySourceFactory.class
     )
 })
+@EnableAsync
 @SpringBootApplication(scanBasePackages = BASE_PACKAGE)
 public class UserApp {
 
