@@ -3,6 +3,7 @@ package io.fulflix.auth.api.dto;
 import io.fulflix.auth.domain.EncodedPassword;
 import io.fulflix.auth.domain.Role;
 
+// TODO user-app과 클래스 중복 개선 필요
 public record UserCreateRequest(
     String username,
     String encodedPassword,
