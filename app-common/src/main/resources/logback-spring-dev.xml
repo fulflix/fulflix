@@ -13,6 +13,7 @@
   <logger name="org.hibernate.orm.jdbc.bind" level="TRACE"/>
   <logger name="org.hibernate.SQL_SLOW" level="INFO"/>
   <logger name="org.hibernate.stat" level="DEBUG"/>
+  <logger name="com.netflix.eureka" level="INFO"/>
 
   <root level="INFO">
     <appender-ref ref="STDOUT"/>
