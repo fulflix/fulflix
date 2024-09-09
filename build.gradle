@@ -57,3 +57,4 @@ subprojects {
 }
 
 tasks.withType(BootJar).configureEach { enabled = false }
+tasks.named('test') { useJUnitPlatform() }
