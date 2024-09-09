@@ -6,3 +6,10 @@ spring:
     password:
 
 ---
+spring:
+  config.activate.on-profile: local
+  datasource:
+    url: jdbc:mysql://host.docker.internal:3306/fulflix?useUnicode=yes&characterEncoding=UTF-8&rewriteBatchedStatements=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: password
