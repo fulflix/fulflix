@@ -1,6 +1,10 @@
 package io.fulflix.user.application;
 
-import io.fulflix.user.api.dto.UserCreateRequest;
+import io.fulflix.user.api.authenticate.dto.UserAuthorityCreateRequest;
+import io.fulflix.user.api.authenticate.dto.UserCredentialResponse;
+import io.fulflix.user.exception.UserErrorCode;
+import io.fulflix.user.exception.UserException;
+import io.fulflix.user.repo.UserRepo;
 import io.fulflix.user.repo.model.User;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
@@ -10,12 +14,13 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
-public class UserService {
+public class UserAuthenticateUseCase {
 
     private final EntityManager entityManager;
+    private final UserRepo userRepo;
 
     @Transactional
-    public Long createUser(UserCreateRequest request) {
+    public Long createUser(UserAuthorityCreateRequest request) {
         User transientUser = request.toEntity();
         User savedUser = saveUser(transientUser);
 
@@ -27,6 +32,12 @@ public class UserService {
         entityManager.flush();
         transientUser.applyUserCreated(transientUser.getId());
         return transientUser;
+    }
+
+    public UserCredentialResponse loadUserCredentialByUsername(String username) {
+        return userRepo.findByUsername(username)
+            .map(UserCredentialResponse::from)
+            .orElseThrow(() -> new UserException(UserErrorCode.NOT_EXIST, username));
     }
 
 }
