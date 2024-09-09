@@ -15,6 +15,7 @@ public class AuthorizationService {
     private final UserAppClient userAppClient;
     private final PasswordEncoder passwordEncoder;
 
+    // TODO Kafka를 이용한 회원 생성 Event 발행
     public Long authorization(SignUpRequest signupRequest) {
         UserCreateRequest userCreateRequest = encodePassword(signupRequest);
         return userAppClient.createUser(userCreateRequest).id();

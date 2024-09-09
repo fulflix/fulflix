@@ -22,7 +22,7 @@ import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.util.MimeTypeUtils;
 
-@DisplayName("API:Auth:sign-in")
+@DisplayName("API:Auth")
 class AuthControllerTest extends AuthApiTestHelper {
 
     private static final String SIGN_UP_URL = "/auth/sign-up";
@@ -48,7 +48,7 @@ class AuthControllerTest extends AuthApiTestHelper {
         resultActions.andDo(print())
             .andExpect(status().isCreated());
     }
-    
+
     @Test
     @DisplayName("[회원 가입][POST:400]")
     void badRequest_signUp() throws Exception {
