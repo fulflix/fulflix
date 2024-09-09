@@ -1,17 +1,13 @@
 package io.fulflix.auth.application;
 
-import static io.fulflix.auth.fixture.AuthTestFixture.MASTER_ADMIN;
-import static io.fulflix.auth.fixture.AuthTestFixture.fixtureGenerator;
+import static io.fulflix.auth.fixture.AuthTestFixture.SIGN_UP_REQUEST;
+import static io.fulflix.auth.fixture.AuthTestFixture.USER_CREATE_REQUEST;
+import static io.fulflix.auth.fixture.AuthTestFixture.USER_RESPONSE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-import io.fulflix.auth.api.dto.SignUpRequest;
-import io.fulflix.auth.api.dto.UserCreateRequest;
-import io.fulflix.auth.domain.EncodedPassword;
-import io.fulflix.infra.client.dto.UserResponse;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,33 +21,19 @@ class AuthorizationServiceTest extends AuthServiceTestHelper {
     @InjectMocks
     private AuthorizationService authorizationService;
 
-    private SignUpRequest signupRequest;
-    private UserCreateRequest userCreateRequest;
-    private UserResponse userResponse;
-
-    @BeforeEach
-    void setUp() {
-        signupRequest = MASTER_ADMIN;
-        userCreateRequest = UserCreateRequest.of(
-            signupRequest,
-            EncodedPassword.from("encoded password")
-        );
-        userResponse = fixtureGenerator.giveMeOne(UserResponse.class);
-    }
-
     @Test
     @DisplayName("회원 생성")
     void authorization() {
         // Given
-        given(passwordEncoder.encode(signupRequest.password())).willReturn("encoded password");
-        given(userAppClient.createUser(userCreateRequest)).willReturn(userResponse);
+        given(passwordEncoder.encode(SIGN_UP_REQUEST.password())).willReturn("encoded password");
+        given(userAppClient.createUser(USER_CREATE_REQUEST)).willReturn(USER_RESPONSE);
 
         // When
-        Long actual = authorizationService.authorization(signupRequest);
+        Long actual = authorizationService.authorization(SIGN_UP_REQUEST);
 
         // Then
-        assertThat(actual).isEqualTo(userResponse.id());
-        verify(userAppClient, times(1)).createUser(userCreateRequest);
+        assertThat(actual).isEqualTo(USER_RESPONSE.id());
+        verify(userAppClient, times(1)).createUser(USER_CREATE_REQUEST);
     }
 
 }

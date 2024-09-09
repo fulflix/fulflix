@@ -17,22 +17,14 @@ import javax.crypto.SecretKey;
 
 public class TokenTestHelper {
 
-    protected static final Long ID = 1L;
-    protected static final String USERNAME = "hong-gd";
-    protected static final Role ROLES = Role.MASTER_ADMIN;
+    public static final Long ID = 1L;
+    public static final String USERNAME = "hong-gd";
+    public static final Role ROLES = Role.MASTER_ADMIN;
 
-    protected static final String ISSUER = "auth-app";
-    protected static final String AUDIENCE = "fulflix-service-app";
-    protected static final String TEST_PLAIN_SECRET_KEY = "test-fulflix-plain-secret-key";
-    protected static final int EXPIRATION_MINUTES = 10;
-
-    public static FulflixPrincipal TEST_PRINCIPAL = new FulflixPrincipal(ID, USERNAME, ROLES);
-    public static JwtProperties TEST_JWT_PROPERTIES = new JwtProperties(
-        ISSUER,
-        AUDIENCE,
-        EXPIRATION_MINUTES,
-        TEST_PLAIN_SECRET_KEY
-    );
+    public static final String ISSUER = "auth-app";
+    public static final String AUDIENCE = "fulflix-service-app";
+    public static final String TEST_PLAIN_SECRET_KEY = "test-fulflix-plain-secret-key";
+    public static final int EXPIRATION_MINUTES = 10;
 
     protected Instant extractExpiration(Date issuedAt) {
         return Instant.from(issuedAt.toInstant())

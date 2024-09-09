@@ -32,8 +32,6 @@ subprojects {
 
     repositories { mavenCentral() }
 
-    ext { FIXTURE_MONKEY_VERSION = "1.0.24" }
-
     dependencies {
         compileOnly 'org.projectlombok:lombok'
         annotationProcessor 'org.projectlombok:lombok'
@@ -46,7 +44,6 @@ subprojects {
         testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
         testImplementation 'org.springframework.boot:spring-boot-starter-test'
         testImplementation 'org.testcontainers:junit-jupiter'
-        testImplementation("com.navercorp.fixturemonkey:fixture-monkey:${FIXTURE_MONKEY_VERSION}")
     }
 
     ext['springCloudVersion'] = '2023.0.3'
