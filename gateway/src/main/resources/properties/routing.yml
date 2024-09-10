@@ -1,0 +1,8 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: auth-app-without-authorized
+          uri: lb://auth-app
+          predicates:
+            - Path=/auth/**

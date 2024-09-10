@@ -1,0 +1,24 @@
+## 회원가입 API
+POST http://localhost:8088/auth/sign-up
+Content-Type: application/json
+
+{
+  "username": "hong-gd",
+  "password": "password",
+  "name": "홍길동",
+  "type": "MASTER_ADMIN"
+}
+
+###
+
+## 로그인 API
+POST http://localhost:8088/auth/sign-in
+Content-Type: application/json
+
+{
+  "username": "hong-gd",
+  "password": "password"
+}
+> {%
+  client.global.set("access_token", response.headers.valueOf("Authorization"))
+%}

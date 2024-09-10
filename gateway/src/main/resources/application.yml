@@ -9,3 +9,4 @@ spring:
     import:
       - classpath:properties/logging.yml
       - classpath:properties/eureka.yml
+      - classpath:properties/routing.yml
