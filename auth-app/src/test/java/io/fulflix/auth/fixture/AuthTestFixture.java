@@ -17,12 +17,11 @@ import io.fulflix.auth.domain.FulflixPrincipal;
 import io.fulflix.auth.utils.jwt.JwtProperties;
 import io.fulflix.auth.utils.jwt.JwtProvider;
 import io.fulflix.infra.client.dto.UserCredentialResponse;
-import io.fulflix.infra.client.dto.UserResponse;
 import java.time.LocalDateTime;
 
 public abstract class AuthTestFixture {
 
-    private static final String NAME = "홍길동";
+    public static final String NAME = "홍길동";
     public static final String PASSWORD = "password";
     public static final String ENCODED_PASSWORD = "encoded password";
 
@@ -46,13 +45,6 @@ public abstract class AuthTestFixture {
     public static CreatePrincipalRequest USER_CREATE_REQUEST = CreatePrincipalRequest.of(
         SIGN_UP_REQUEST,
         EncodedPassword.from(ENCODED_PASSWORD)
-    );
-    public static UserResponse USER_RESPONSE = new UserResponse(
-        1L,
-        USERNAME,
-        NAME,
-        MASTER_ADMIN.getDescription(),
-        LocalDateTime.now()
     );
 
     public static SignInRequest SIGN_IN_REQUEST = new SignInRequest(USERNAME, PASSWORD);

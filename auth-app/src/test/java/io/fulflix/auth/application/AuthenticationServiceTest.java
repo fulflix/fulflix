@@ -45,7 +45,7 @@ class AuthenticationServiceTest extends AuthServiceTestHelper {
                 USER_DETAILS_RESPONSE);
             given(passwordEncoder.matches(
                 SIGN_IN_REQUEST.password(),
-                USER_DETAILS_RESPONSE.EncodedPassword())
+                USER_DETAILS_RESPONSE.encodedPassword())
             ).willReturn(false);
 
             // When & Then
@@ -57,7 +57,7 @@ class AuthenticationServiceTest extends AuthServiceTestHelper {
             verify(userAppClient, times(1)).retrieveUserCredential(anyString());
             verify(passwordEncoder, times(1)).matches(
                 SIGN_IN_REQUEST.password(),
-                USER_DETAILS_RESPONSE.EncodedPassword()
+                USER_DETAILS_RESPONSE.encodedPassword()
             );
         }
 
@@ -70,7 +70,7 @@ class AuthenticationServiceTest extends AuthServiceTestHelper {
 
             given(passwordEncoder.matches(
                 SIGN_IN_REQUEST.password(),
-                USER_DETAILS_RESPONSE.EncodedPassword())
+                USER_DETAILS_RESPONSE.encodedPassword())
             ).willReturn(true);
 
             given(tokenIssueService.issueAccessToken(TEST_FULFLIX_PRINCIPAL))
@@ -83,7 +83,7 @@ class AuthenticationServiceTest extends AuthServiceTestHelper {
             verify(userAppClient, times(1)).retrieveUserCredential(anyString());
             verify(passwordEncoder, times(1)).matches(
                 SIGN_IN_REQUEST.password(),
-                USER_DETAILS_RESPONSE.EncodedPassword()
+                USER_DETAILS_RESPONSE.encodedPassword()
             );
         }
 
