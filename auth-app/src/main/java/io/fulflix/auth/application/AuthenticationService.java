@@ -14,9 +14,9 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AuthenticationService {
 
-    private final UserAppClient userAppClient;
     private final PasswordEncoder passwordEncoder;
     private final TokenIssueService tokenIssueService;
+    private final UserAppClient userAppClient;
 
     public String authenticate(SignInRequest signInRequest) {
         FulflixPrincipal principal = verifyUser(signInRequest);
