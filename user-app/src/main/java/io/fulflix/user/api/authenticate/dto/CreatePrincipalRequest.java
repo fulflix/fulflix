@@ -7,7 +7,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 // TODO auth-app과 클래스 중복 개선 필요
-public record UserAuthorityCreateRequest(
+public record CreatePrincipalRequest(
     @NotBlank(message = "아이디를 입력하세요.")
     @Size(min = 3, max = 20, message = "아이디는 3자 이상 20자 이하로 입력하세요.")
     String username,

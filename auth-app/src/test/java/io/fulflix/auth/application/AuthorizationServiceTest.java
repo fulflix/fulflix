@@ -26,14 +26,14 @@ class AuthorizationServiceTest extends AuthServiceTestHelper {
     void authorization() {
         // Given
         given(passwordEncoder.encode(SIGN_UP_REQUEST.password())).willReturn("encoded password");
-        given(userAppClient.createUser(USER_CREATE_REQUEST)).willReturn(USER_RESPONSE);
+        given(userAppClient.createPrincipal(USER_CREATE_REQUEST)).willReturn(USER_RESPONSE);
 
         // When
         Long actual = authorizationService.authorization(SIGN_UP_REQUEST);
 
         // Then
         assertThat(actual).isEqualTo(USER_RESPONSE.id());
-        verify(userAppClient, times(1)).createUser(USER_CREATE_REQUEST);
+        verify(userAppClient, times(1)).createPrincipal(USER_CREATE_REQUEST);
     }
 
 }

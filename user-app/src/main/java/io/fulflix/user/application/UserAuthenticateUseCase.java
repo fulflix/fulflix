@@ -1,6 +1,6 @@
 package io.fulflix.user.application;
 
-import io.fulflix.user.api.authenticate.dto.UserAuthorityCreateRequest;
+import io.fulflix.user.api.authenticate.dto.CreatePrincipalRequest;
 import io.fulflix.user.api.authenticate.dto.UserCredentialResponse;
 import io.fulflix.user.exception.UserErrorCode;
 import io.fulflix.user.exception.UserException;
@@ -20,7 +20,7 @@ public class UserAuthenticateUseCase {
     private final UserRepo userRepo;
 
     @Transactional
-    public Long createUser(UserAuthorityCreateRequest request) {
+    public Long createUser(CreatePrincipalRequest request) {
         User transientUser = request.toEntity();
         User savedUser = saveUser(transientUser);
 

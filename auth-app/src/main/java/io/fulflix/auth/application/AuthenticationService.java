@@ -5,7 +5,7 @@ import io.fulflix.auth.domain.FulflixPrincipal;
 import io.fulflix.auth.exception.AuthErrorCode;
 import io.fulflix.auth.exception.AuthException;
 import io.fulflix.infra.client.UserAppClient;
-import io.fulflix.infra.client.dto.UserDetailsResponse;
+import io.fulflix.infra.client.dto.UserCredentialResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -25,7 +25,8 @@ public class AuthenticationService {
 
     // TODO 회원 조회 시 발생하는 예외의 상세한 처리 필요
     private FulflixPrincipal verifyUser(SignInRequest signInRequest) {
-        UserDetailsResponse response = userAppClient.retrieveUser(signInRequest.username());
+        UserCredentialResponse response = userAppClient.retrieveUserCredential(
+            signInRequest.username());
         checkPasswordIsMatched(signInRequest, response);
 
         return FulflixPrincipal.of(
@@ -37,11 +38,11 @@ public class AuthenticationService {
 
     private void checkPasswordIsMatched(
         SignInRequest signInRequest,
-        UserDetailsResponse userDetailsResponse
+        UserCredentialResponse userCredentialResponse
     ) {
         boolean matches = passwordEncoder.matches(
             signInRequest.password(),
-            userDetailsResponse.EncodedPassword()
+            userCredentialResponse.EncodedPassword()
         );
 
         if (!matches) {

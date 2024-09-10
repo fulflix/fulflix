@@ -1,7 +1,7 @@
 package io.fulflix.auth.application;
 
+import io.fulflix.auth.api.dto.CreatePrincipalRequest;
 import io.fulflix.auth.api.dto.SignUpRequest;
-import io.fulflix.auth.api.dto.UserCreateRequest;
 import io.fulflix.auth.domain.EncodedPassword;
 import io.fulflix.infra.client.UserAppClient;
 import lombok.RequiredArgsConstructor;
@@ -17,15 +17,15 @@ public class AuthorizationService {
 
     // TODO Kafka를 이용한 회원 생성 Event 발행
     public Long authorization(SignUpRequest signupRequest) {
-        UserCreateRequest userCreateRequest = encodePassword(signupRequest);
-        return userAppClient.createUser(userCreateRequest).id();
+        CreatePrincipalRequest createPrincipalRequest = encodePassword(signupRequest);
+        return userAppClient.createPrincipal(createPrincipalRequest).id();
     }
 
-    private UserCreateRequest encodePassword(SignUpRequest signupRequest) {
+    private CreatePrincipalRequest encodePassword(SignUpRequest signupRequest) {
         EncodedPassword encodedPassword = EncodedPassword.from(
             passwordEncoder.encode(signupRequest.password())
         );
-        return UserCreateRequest.of(signupRequest, encodedPassword);
+        return CreatePrincipalRequest.of(signupRequest, encodedPassword);
     }
 
 }

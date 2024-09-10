@@ -3,7 +3,7 @@ package io.fulflix.user.api.authenticate;
 import static io.fulflix.common.web.utils.ResponseEntityUtils.created;
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
-import io.fulflix.user.api.authenticate.dto.UserAuthorityCreateRequest;
+import io.fulflix.user.api.authenticate.dto.CreatePrincipalRequest;
 import io.fulflix.user.api.authenticate.dto.UserCredentialResponse;
 import io.fulflix.user.application.UserAuthenticateUseCase;
 import jakarta.validation.Valid;
@@ -30,7 +30,7 @@ public class UserAuthenticateController {
     private final UserAuthenticateUseCase userAuthenticateUseCase;
 
     @PostMapping("/principal")
-    ResponseEntity<Void> create(@Valid @RequestBody UserAuthorityCreateRequest request) {
+    ResponseEntity<Void> create(@Valid @RequestBody CreatePrincipalRequest request) {
         return created(
             GET_AN_USER_CREDENTIAL_URI_FORMAT,
             userAuthenticateUseCase.createUser(request)

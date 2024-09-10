@@ -1,13 +1,13 @@
 package io.fulflix.infra.client;
 
-import io.fulflix.auth.api.dto.UserCreateRequest;
-import io.fulflix.infra.client.dto.UserDetailsResponse;
+import io.fulflix.auth.api.dto.CreatePrincipalRequest;
+import io.fulflix.infra.client.dto.UserCredentialResponse;
 import io.fulflix.infra.client.dto.UserResponse;
 
 public interface UserAppClient {
 
-    UserResponse createUser(UserCreateRequest userCreateRequest);
+    UserResponse createPrincipal(CreatePrincipalRequest createPrincipalRequest);
 
-    UserDetailsResponse retrieveUser(String username);
+    UserCredentialResponse retrieveUserCredential(String username);
 
 }

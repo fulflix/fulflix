@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     static final String BASE_AUTH_PATH = "/auth";
-    private static final String USER_DETAILS_URI_FORMAT = "/user/{id}";
+    private static final String GET_AN_USER_URI_FORMAT = "/user/{id}";
 
     private final AuthorizationService authorizationService;
     private final AuthenticationService authenticationService;
@@ -36,7 +36,7 @@ public class AuthController {
     @PostMapping("/sign-up")
     ResponseEntity<Void> signUp(@Valid @RequestBody SignUpRequest signupRequest) {
         return created(
-            USER_DETAILS_URI_FORMAT,
+            GET_AN_USER_URI_FORMAT,
             authorizationService.authorization(signupRequest)
         );
     }
