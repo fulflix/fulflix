@@ -1,6 +1,6 @@
 package io.fulflix.fixture;
 
-import io.fulflix.user.api.authenticate.dto.UserAuthorityCreateRequest;
+import io.fulflix.user.api.authenticate.dto.CreatePrincipalRequest;
 import io.fulflix.user.api.authenticate.dto.UserCredentialResponse;
 import io.fulflix.user.repo.model.Role;
 
@@ -12,7 +12,7 @@ public class UserFixtures {
     public static final String ENCODED_PASSWORD = "endcoded password";
     public static final Role MASTER_ADMIN_ROLE = Role.MASTER_ADMIN;
 
-    public static final UserAuthorityCreateRequest USER_CREATE_REQUEST = new UserAuthorityCreateRequest(
+    public static final CreatePrincipalRequest USER_CREATE_REQUEST = new CreatePrincipalRequest(
         USERNAME,
         ENCODED_PASSWORD,
         NAME,
