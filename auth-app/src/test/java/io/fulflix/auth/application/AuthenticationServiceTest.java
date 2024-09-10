@@ -19,7 +19,7 @@ import org.junit.jupiter.api.Test;
 
 @DisplayName("Application:Authentication")
 class AuthenticationServiceTest extends AuthServiceTestHelper {
-    
+
     @Nested
     @DisplayName("회원 로그인 요청 시")
     class AuthenticationProcessTest {
@@ -28,19 +28,21 @@ class AuthenticationServiceTest extends AuthServiceTestHelper {
         @DisplayName("존재하지 않는 회원인 경우 예외 발생")
         void throwException_whenUserNotExist() {
             // Given
-            given(userAppClient.retrieveUser(anyString())).willThrow(RuntimeException.class);
+            given(userAppClient.retrieveUserCredential(anyString())).willThrow(
+                RuntimeException.class);
 
             // When & Then
             assertThatExceptionOfType(RuntimeException.class)
                 .isThrownBy(() -> authenticationService.authenticate(SIGN_IN_REQUEST));
-            verify(userAppClient, times(1)).retrieveUser(anyString());
+            verify(userAppClient, times(1)).retrieveUserCredential(anyString());
         }
 
         @Test
         @DisplayName("비밀번호가 일치하지 않는 경우 예외 발생")
         void throwException_whenPasswordNotMatched() {
             // Given
-            given(userAppClient.retrieveUser(anyString())).willReturn(USER_DETAILS_RESPONSE);
+            given(userAppClient.retrieveUserCredential(anyString())).willReturn(
+                USER_DETAILS_RESPONSE);
             given(passwordEncoder.matches(
                 SIGN_IN_REQUEST.password(),
                 USER_DETAILS_RESPONSE.EncodedPassword())
@@ -52,7 +54,7 @@ class AuthenticationServiceTest extends AuthServiceTestHelper {
                 .extracting(AuthException::getErrorCode)
                 .isEqualTo(AuthErrorCode.BAD_CREDENTIALS);
 
-            verify(userAppClient, times(1)).retrieveUser(anyString());
+            verify(userAppClient, times(1)).retrieveUserCredential(anyString());
             verify(passwordEncoder, times(1)).matches(
                 SIGN_IN_REQUEST.password(),
                 USER_DETAILS_RESPONSE.EncodedPassword()
@@ -63,7 +65,8 @@ class AuthenticationServiceTest extends AuthServiceTestHelper {
         @DisplayName("인증 성공 후 access token 발급")
         void authentication() {
             // Given
-            given(userAppClient.retrieveUser(anyString())).willReturn(USER_DETAILS_RESPONSE);
+            given(userAppClient.retrieveUserCredential(anyString())).willReturn(
+                USER_DETAILS_RESPONSE);
 
             given(passwordEncoder.matches(
                 SIGN_IN_REQUEST.password(),
@@ -77,7 +80,7 @@ class AuthenticationServiceTest extends AuthServiceTestHelper {
             String actual = authenticationService.authenticate(SIGN_IN_REQUEST);
 
             // Then
-            verify(userAppClient, times(1)).retrieveUser(anyString());
+            verify(userAppClient, times(1)).retrieveUserCredential(anyString());
             verify(passwordEncoder, times(1)).matches(
                 SIGN_IN_REQUEST.password(),
                 USER_DETAILS_RESPONSE.EncodedPassword()

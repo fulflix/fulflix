@@ -16,7 +16,7 @@ import io.fulflix.auth.domain.EncodedPassword;
 import io.fulflix.auth.domain.FulflixPrincipal;
 import io.fulflix.auth.utils.jwt.JwtProperties;
 import io.fulflix.auth.utils.jwt.JwtProvider;
-import io.fulflix.infra.client.dto.UserDetailsResponse;
+import io.fulflix.infra.client.dto.UserCredentialResponse;
 import io.fulflix.infra.client.dto.UserResponse;
 import java.time.LocalDateTime;
 
@@ -56,7 +56,7 @@ public abstract class AuthTestFixture {
     );
 
     public static SignInRequest SIGN_IN_REQUEST = new SignInRequest(USERNAME, PASSWORD);
-    public static UserDetailsResponse USER_DETAILS_RESPONSE = new UserDetailsResponse(
+    public static UserCredentialResponse USER_DETAILS_RESPONSE = new UserCredentialResponse(
         1L,
         USERNAME,
         ENCODED_PASSWORD,
