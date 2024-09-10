@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 public record UserCredentialResponse(
     Long id,
     String username,
-    String EncodedPassword,
+    String encodedPassword,
     Role role,
     LocalDateTime createdAt
 ) {

@@ -2,12 +2,14 @@ package io.fulflix.user.api.authenticate.dto;
 
 import io.fulflix.user.repo.model.Role;
 import io.fulflix.user.repo.model.User;
+import java.time.LocalDateTime;
 
 public record UserCredentialResponse(
-    Long userId,
+    Long id,
     String username,
     String encodedPassword,
-    Role role
+    Role role,
+    LocalDateTime createdAt
 ) {
 
     public static UserCredentialResponse from(User user) {
@@ -15,7 +17,8 @@ public record UserCredentialResponse(
             user.getId(),
             user.getUsername(),
             user.getPassword(),
-            user.getRole()
+            user.getRole(),
+            user.getCreatedAt()
         );
     }
 

@@ -42,7 +42,7 @@ public class AuthenticationService {
     ) {
         boolean matches = passwordEncoder.matches(
             signInRequest.password(),
-            userCredentialResponse.EncodedPassword()
+            userCredentialResponse.encodedPassword()
         );
 
         if (!matches) {
