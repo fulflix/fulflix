@@ -1,5 +1,6 @@
 package io.fulflix.auth.api;
 
+import static io.fulflix.auth.application.AuthorizationServiceTest.GET_USER_CREDENTIAL_URI;
 import static io.fulflix.auth.fixture.AuthTestFixture.ACCESS_TOKEN;
 import static io.fulflix.auth.fixture.AuthTestFixture.SIGN_IN_REQUEST;
 import static io.fulflix.auth.fixture.AuthTestFixture.SIGN_UP_REQUEST;
@@ -35,7 +36,8 @@ class AuthControllerTest extends AuthApiTestHelper {
     @DisplayName("[회원 가입][POST:201]")
     void signUp() throws Exception {
         // Given
-        given(authorizationService.authorization(SIGN_UP_REQUEST)).willReturn(1L);
+        given(authorizationService.authorization(SIGN_UP_REQUEST))
+            .willReturn(GET_USER_CREDENTIAL_URI);
 
         // When
         ResultActions resultActions = mockMvc.perform(post(SIGN_UP_URL)

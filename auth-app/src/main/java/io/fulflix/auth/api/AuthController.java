@@ -28,17 +28,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     static final String BASE_AUTH_PATH = "/auth";
-    private static final String GET_AN_USER_URI_FORMAT = "/user/{id}";
 
     private final AuthorizationService authorizationService;
     private final AuthenticationService authenticationService;
 
     @PostMapping("/sign-up")
     ResponseEntity<Void> signUp(@Valid @RequestBody SignUpRequest signupRequest) {
-        return created(
-            GET_AN_USER_URI_FORMAT,
-            authorizationService.authorization(signupRequest)
-        );
+        return created(authorizationService.authorization(signupRequest));
     }
 
     @PostMapping("/sign-in")
