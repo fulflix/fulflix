@@ -6,6 +6,7 @@ ext {
 dependencies {
     implementation project(WEB_COMMON_MODULE)
     implementation("org.springframework.security:spring-security-crypto")
+    implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
     implementation("io.jsonwebtoken:jjwt-api:${JJWT_VERSION}")
     implementation("io.jsonwebtoken:jjwt-jackson:${JJWT_VERSION}")
     implementation("io.jsonwebtoken:jjwt-impl:${JJWT_VERSION}")
