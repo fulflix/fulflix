@@ -21,6 +21,8 @@ public class UserAuthenticateUseCase {
 
     @Transactional
     public Long createUser(CreatePrincipalRequest request) {
+        // TODO validate(request);
+
         User transientUser = request.toEntity();
         User savedUser = saveUser(transientUser);
 
