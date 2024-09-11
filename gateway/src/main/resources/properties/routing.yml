@@ -12,6 +12,6 @@ spring:
         - id: user-app-authenticated
           uri: lb://user-app
           predicates:
-            - Path=/auth/**
+            - Path=/user/**
           filters:
             - JwtAuthorizationFilter
