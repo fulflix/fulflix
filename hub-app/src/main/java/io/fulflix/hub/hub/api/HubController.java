@@ -4,6 +4,10 @@ import io.fulflix.hub.hub.application.HubService;
 import io.fulflix.hub.hub.api.dto.HubRequestDto;
 import io.fulflix.hub.hub.api.dto.HubResponseDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,11 +31,23 @@ public class HubController {
         return ResponseEntity.ok(hub);
     }
 
-//    // 허브 전체 조회
-//    @GetMapping("/hubs")
-//    public Page<HubResponseDto> getAllHubs() {
-//
-//    }
+    // 허브 전체 조회
+    @GetMapping("/hubs")
+    public ResponseEntity<Page<HubResponseDto>> getAllHubs(@PageableDefault(
+            page = 0, size = 10, sort = "createdAt", direction = Sort.Direction.ASC
+    ) Pageable pageable) {
+        Page<HubResponseDto> hubResponseDto = hubService.getAllHubs(pageable);
+        return ResponseEntity.ok(hubResponseDto);
+    }
+
+    // 허브 이름으로 검색
+    @GetMapping("/hubs/search")
+    public ResponseEntity<Page<HubResponseDto>> searchHubs(@PageableDefault(
+            page = 0, size = 10, sort = "createdAt", direction = Sort.Direction.ASC
+    ) Pageable pageable, @RequestParam String keyword) {
+        Page<HubResponseDto> hubResponseDto = hubService.searchHubs(pageable, keyword);
+        return ResponseEntity.ok(hubResponseDto);
+    }
 
     // 허브 수정
     @PutMapping("/hub/{hubId}")
@@ -44,7 +60,7 @@ public class HubController {
     @DeleteMapping("/hub/{hubId}")
     public ResponseEntity<String> deleteHub(@PathVariable Long hubId) {
         hubService.deleteHub(hubId);
-        return ResponseEntity.ok("허브가 성공적으로 삭제되었습니다.");
+        return ResponseEntity.noContent().build();
     }
 
 }
