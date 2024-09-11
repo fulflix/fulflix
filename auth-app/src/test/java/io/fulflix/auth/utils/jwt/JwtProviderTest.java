@@ -1,5 +1,7 @@
 package io.fulflix.auth.utils.jwt;
 
+import static io.fulflix.auth.fixture.AuthTestFixture.TEST_FULFLIX_PRINCIPAL;
+import static io.fulflix.auth.fixture.AuthTestFixture.TEST_JWT_PROPERTIES;
 import static io.fulflix.auth.utils.jwt.SigningUtils.PRINCIPAL;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -17,7 +19,7 @@ class JwtProviderTest extends TokenTestHelper {
     @DisplayName("JWT 생성")
     void create() {
         // When
-        String given = JwtProvider.create(TEST_JWT_PROPERTIES, TEST_PRINCIPAL);
+        String given = JwtProvider.create(TEST_JWT_PROPERTIES, TEST_FULFLIX_PRINCIPAL);
 
         // Then
         Claims actual = parse(given, TEST_JWT_PROPERTIES);
@@ -30,7 +32,7 @@ class JwtProviderTest extends TokenTestHelper {
             () -> assertThat(actual.getExpiration()).as("토큰 유효기간 검증")
                 .isEqualTo(extractExpiration(actual.getIssuedAt())),
             () -> assertThat(actual.get(PRINCIPAL, FulflixPrincipal.class)).as("principal 검증")
-                .isInstanceOf(TEST_PRINCIPAL.getClass())
+                .isInstanceOf(TEST_FULFLIX_PRINCIPAL.getClass())
         );
     }
 

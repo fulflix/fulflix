@@ -1,11 +1,9 @@
 package io.fulflix.auth.api;
 
-import static io.fulflix.auth.fixture.AuthTestFixture.COMPANY_DELIVERY_MANAGER;
-import static io.fulflix.auth.fixture.AuthTestFixture.HUB_ADMIN;
-import static io.fulflix.auth.fixture.AuthTestFixture.HUB_COMPANY;
-import static io.fulflix.auth.fixture.AuthTestFixture.HUB_DELIVERY_MANAGER;
-import static io.fulflix.auth.fixture.AuthTestFixture.MASTER_ADMIN;
-import static io.fulflix.auth.fixture.AuthTestFixture.SUPPLY_COMPANY;
+import static io.fulflix.auth.application.AuthorizationServiceTest.GET_USER_CREDENTIAL_URI;
+import static io.fulflix.auth.fixture.AuthTestFixture.ACCESS_TOKEN;
+import static io.fulflix.auth.fixture.AuthTestFixture.SIGN_IN_REQUEST;
+import static io.fulflix.auth.fixture.AuthTestFixture.SIGN_UP_REQUEST;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -14,23 +12,18 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import io.fulflix.auth.api.dto.SignInRequest;
 import io.fulflix.auth.api.dto.SignUpRequest;
-import io.fulflix.auth.domain.Role;
 import io.fulflix.auth.exception.AuthErrorCode;
 import io.fulflix.auth.exception.AuthException;
 import io.fulflix.common.web.exception.event.ThrowsExceptionEvent;
 import io.fulflix.common.web.exception.event.ThrowsExceptionEventListener;
-import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.ArgumentCaptor;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.util.MimeTypeUtils;
 
-@DisplayName("API:Auth:sign-in")
+@DisplayName("API:Auth")
 class AuthControllerTest extends AuthApiTestHelper {
 
     private static final String SIGN_UP_URL = "/auth/sign-up";
@@ -39,34 +32,23 @@ class AuthControllerTest extends AuthApiTestHelper {
     @SpyBean
     protected ThrowsExceptionEventListener throwsExceptionEventListener;
 
-    @ParameterizedTest(name = "[{index}][{1}]")
-    @MethodSource
+    @Test
     @DisplayName("[회원 가입][POST:201]")
-    void signUp(final SignUpRequest signUpRequest, final String description) throws Exception {
+    void signUp() throws Exception {
         // Given
-        given(authorizationService.authorization(signUpRequest)).willReturn(1L);
+        given(authorizationService.authorization(SIGN_UP_REQUEST))
+            .willReturn(GET_USER_CREDENTIAL_URI);
 
         // When
         ResultActions resultActions = mockMvc.perform(post(SIGN_UP_URL)
             .contentType(MimeTypeUtils.APPLICATION_JSON_VALUE)
             .accept(MimeTypeUtils.APPLICATION_JSON_VALUE)
-            .content(objectMapper.writeValueAsBytes(signUpRequest))
+            .content(objectMapper.writeValueAsBytes(SIGN_UP_REQUEST))
         );
 
         // Then
         resultActions.andDo(print())
             .andExpect(status().isCreated());
-    }
-
-    private static Stream<Arguments> signUp() {
-        return Stream.of(
-            Arguments.of(MASTER_ADMIN, Role.MASTER_ADMIN.getDescription()),
-            Arguments.of(HUB_ADMIN, Role.HUB_ADMIN.getDescription()),
-            Arguments.of(HUB_COMPANY, Role.HUB_COMPANY.getDescription()),
-            Arguments.of(SUPPLY_COMPANY, Role.SUPPLY_COMPANY.getDescription()),
-            Arguments.of(HUB_DELIVERY_MANAGER, Role.HUB_DELIVERY_MANAGER.getDescription()),
-            Arguments.of(COMPANY_DELIVERY_MANAGER, Role.COMPANY_DELIVERY_MANAGER.getDescription())
-        );
     }
 
     @Test
@@ -91,13 +73,13 @@ class AuthControllerTest extends AuthApiTestHelper {
     @DisplayName("[로그인][POST:200]")
     void signIn() throws Exception {
         // Given
-        given(authenticationService.authenticate(signInRequest)).willReturn(accessToken);
+        given(authenticationService.authenticate(SIGN_IN_REQUEST)).willReturn(ACCESS_TOKEN);
 
         // When
         ResultActions resultActions = mockMvc.perform(post(SIGN_IN_URL)
             .contentType(MimeTypeUtils.APPLICATION_JSON_VALUE)
             .accept(MimeTypeUtils.APPLICATION_JSON_VALUE)
-            .content(objectMapper.writeValueAsBytes(signInRequest))
+            .content(objectMapper.writeValueAsBytes(SIGN_IN_REQUEST))
         );
 
         // Then
@@ -123,19 +105,18 @@ class AuthControllerTest extends AuthApiTestHelper {
             .andExpect(status().isBadRequest());
     }
 
-
     @Test
     @DisplayName("[로그인][POST:403]")
     void throwAuthException() throws Exception {
         // Given
-        given(authenticationService.authenticate(signInRequest))
+        given(authenticationService.authenticate(SIGN_IN_REQUEST))
             .willThrow(new AuthException(AuthErrorCode.BAD_CREDENTIALS));
 
         // When
         ResultActions resultActions = mockMvc.perform(post(SIGN_IN_URL)
             .contentType(MimeTypeUtils.APPLICATION_JSON_VALUE)
             .accept(MimeTypeUtils.APPLICATION_JSON_VALUE)
-            .content(objectMapper.writeValueAsBytes(signInRequest))
+            .content(objectMapper.writeValueAsBytes(SIGN_IN_REQUEST))
         );
 
         // Then

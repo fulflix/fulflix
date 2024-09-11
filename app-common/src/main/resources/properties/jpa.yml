@@ -1,9 +1,14 @@
 spring:
   jpa:
+    database: mysql
     open-in-view: false
     properties:
       hibernate:
         default_batch_fetch_size: 1000
+        format_sql: true
+        highlight_sql: true
+        jdbc.log-warnings: true
+        session.events.log.log_queries_slower_than_ms: 300
         jdbc:
           batch_size: 1000
           order_inserts: true
@@ -12,12 +17,12 @@ spring:
 spring:
   config.activate.on-profile: test
   jpa:
-    database: mysql
     hibernate.ddl-auto: create-drop
     properties:
       hibernate:
-        format_sql: true
-        highlight_sql: true
         generate_statistics: true
-        jdbc.log-warnings: true
-        session.events.log.log_queries_slower_than_ms: 300
+---
+spring:
+  config.activate.on-profile: local
+  jpa:
+    hibernate.ddl-auto: update

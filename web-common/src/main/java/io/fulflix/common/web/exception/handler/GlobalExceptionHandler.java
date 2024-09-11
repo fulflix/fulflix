@@ -24,6 +24,7 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 @Slf4j
 @RestControllerAdvice
@@ -73,6 +74,7 @@ public class GlobalExceptionHandler {
         MethodArgumentTypeMismatchException.class,
         HttpMessageNotReadableException.class,
         HttpMediaTypeNotAcceptableException.class,
+        NoResourceFoundException.class,
         HttpRequestMethodNotSupportedException.class,
         HttpMediaTypeNotSupportedException.class
     })

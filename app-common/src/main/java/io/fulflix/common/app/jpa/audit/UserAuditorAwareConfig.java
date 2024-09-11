@@ -11,7 +11,7 @@ public class UserAuditorAwareConfig {
 
     @Bean
     public AuditorAware<Long> getCurrentAuditor() {
-        return () -> Optional.of(UserContextHolder.getCurrentUser())
+        return () -> Optional.ofNullable(UserContextHolder.getCurrentUser())
             .map(Long.class::cast);
     }
 

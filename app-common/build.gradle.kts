@@ -21,6 +21,9 @@ val webCommonModule = ":web-common"
 dependencies {
     api(project(webCommonModule))
     api("org.springframework.boot:spring-boot-starter-data-jpa")
+    api("org.springframework.cloud:spring-cloud-starter-openfeign")
+
+    runtimeOnly("com.mysql:mysql-connector-j")
 
     testImplementation(project(path = webCommonModule, configuration = "archives"))
 }

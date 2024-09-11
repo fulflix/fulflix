@@ -224,3 +224,6 @@ gradle-app.setting
 
 ### logback logging files
 */logs/**
+
+### Docker:MySQL volume
+db/**

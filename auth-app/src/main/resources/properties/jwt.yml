@@ -2,15 +2,13 @@ spring:
   config.activate.on-profile: test
 jwt:
   audience: fulflix-service-app
-  expiration-minutes: 30
+  expiration-minutes: 1
   secret-key: test-fulflix-authenticate-secret-key
-logging:
-  level:
-    root: INFO
-    org.springframework.web: DEBUG
-
-  pattern:
-    #    console: "%d{yyyy-MM-dd HH:mm:ss} %-5level [%thread] %logger{36} - %msg%n"
-    console: "%d{yyyy-MM-dd HH:mm:ss} %highlight([%thread] %-5level) %logger{36} - %msg%n"
 
 ---
+spring:
+  config.activate.on-profile: local
+jwt:
+  audience: fulflix-service-app
+  expiration-minutes: 30
+  secret-key: local-fulflix-authenticate-secret-key

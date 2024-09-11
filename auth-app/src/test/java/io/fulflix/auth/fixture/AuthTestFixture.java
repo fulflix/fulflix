@@ -1,28 +1,59 @@
 package io.fulflix.auth.fixture;
 
-import com.navercorp.fixturemonkey.ArbitraryBuilder;
-import com.navercorp.fixturemonkey.FixtureMonkey;
+import static io.fulflix.auth.domain.Role.MASTER_ADMIN;
+import static io.fulflix.auth.utils.jwt.TokenTestHelper.AUDIENCE;
+import static io.fulflix.auth.utils.jwt.TokenTestHelper.EXPIRATION_MINUTES;
+import static io.fulflix.auth.utils.jwt.TokenTestHelper.ID;
+import static io.fulflix.auth.utils.jwt.TokenTestHelper.ISSUER;
+import static io.fulflix.auth.utils.jwt.TokenTestHelper.ROLES;
+import static io.fulflix.auth.utils.jwt.TokenTestHelper.TEST_PLAIN_SECRET_KEY;
+import static io.fulflix.auth.utils.jwt.TokenTestHelper.USERNAME;
+
+import io.fulflix.auth.api.dto.CreatePrincipalRequest;
+import io.fulflix.auth.api.dto.SignInRequest;
 import io.fulflix.auth.api.dto.SignUpRequest;
-import io.fulflix.auth.domain.Role;
-import io.fulflix.common.web.fixture.FixtureCommon;
+import io.fulflix.auth.domain.EncodedPassword;
+import io.fulflix.auth.domain.FulflixPrincipal;
+import io.fulflix.auth.utils.jwt.JwtProperties;
+import io.fulflix.auth.utils.jwt.JwtProvider;
+import io.fulflix.infra.client.dto.UserCredentialResponse;
+import java.time.LocalDateTime;
 
 public abstract class AuthTestFixture {
 
-    public static final FixtureMonkey fixtureGenerator = FixtureCommon.generate();
-    public static ArbitraryBuilder<SignUpRequest> signupRequestBuilder = fixtureGenerator
-        .giveMeBuilder(SignUpRequest.class);
+    public static final String NAME = "홍길동";
+    public static final String PASSWORD = "password";
+    public static final String ENCODED_PASSWORD = "encoded password";
 
-    public static SignUpRequest MASTER_ADMIN = signupRequestBuilder
-        .setLazy("type", () -> Role.MASTER_ADMIN).sample();
-    public static SignUpRequest HUB_ADMIN = signupRequestBuilder
-        .setLazy("type", () -> Role.HUB_ADMIN).sample();
-    public static SignUpRequest HUB_COMPANY = signupRequestBuilder
-        .setLazy("type", () -> Role.HUB_COMPANY).sample();
-    public static SignUpRequest SUPPLY_COMPANY = signupRequestBuilder
-        .setLazy("type", () -> Role.SUPPLY_COMPANY).sample();
-    public static SignUpRequest HUB_DELIVERY_MANAGER = signupRequestBuilder
-        .setLazy("type", () -> Role.HUB_DELIVERY_MANAGER).sample();
-    public static SignUpRequest COMPANY_DELIVERY_MANAGER = signupRequestBuilder
-        .setLazy("type", () -> Role.COMPANY_DELIVERY_MANAGER).sample();
+    public static FulflixPrincipal TEST_FULFLIX_PRINCIPAL = new FulflixPrincipal(ID, USERNAME,
+        ROLES);
+    public static JwtProperties TEST_JWT_PROPERTIES = new JwtProperties(
+        ISSUER,
+        AUDIENCE,
+        EXPIRATION_MINUTES,
+        TEST_PLAIN_SECRET_KEY
+    );
+    public static String ACCESS_TOKEN = JwtProvider.create(TEST_JWT_PROPERTIES,
+        TEST_FULFLIX_PRINCIPAL);
+
+    public static SignUpRequest SIGN_UP_REQUEST = new SignUpRequest(
+        USERNAME,
+        PASSWORD,
+        NAME,
+        MASTER_ADMIN
+    );
+    public static CreatePrincipalRequest USER_CREATE_REQUEST = CreatePrincipalRequest.of(
+        SIGN_UP_REQUEST,
+        EncodedPassword.from(ENCODED_PASSWORD)
+    );
+
+    public static SignInRequest SIGN_IN_REQUEST = new SignInRequest(USERNAME, PASSWORD);
+    public static UserCredentialResponse USER_DETAILS_RESPONSE = new UserCredentialResponse(
+        1L,
+        USERNAME,
+        ENCODED_PASSWORD,
+        MASTER_ADMIN,
+        LocalDateTime.now()
+    );
 
 }
