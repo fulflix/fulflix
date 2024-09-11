@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: hub-service
+  datasource:
+    url: jdbc:mysql://localhost:3306/hub
+    username: root
+    password: jjong9504
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      defer-datasource-initialization: true
+      hibernate:
+        show_sql: true
+        format_sql: true
+        use_sql_comments: true
+        dialect: org.hibernate.dialect.MySQLDialect  # Hibernate Dialect 설정
