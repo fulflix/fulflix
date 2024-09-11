@@ -2,7 +2,14 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: auth-app-without-authorized
+        - id: auth-app-allows-all
           uri: lb://auth-app
           predicates:
             - Path=/auth/**
+
+        - id: user-app-authenticated
+          uri: lb://user-app
+          predicates:
+            - Path=/auth/**
+          filters:
+            - JwtAuthorizationFilter
