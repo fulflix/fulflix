@@ -15,7 +15,6 @@ import static io.fulflix.common.app.jpa.audit.CommonAuditFields.DEFAULT_CONDITIO
 
 @Entity
 @Table(name = "p_hubs")
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
