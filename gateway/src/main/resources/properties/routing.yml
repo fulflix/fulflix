@@ -6,6 +6,8 @@ spring:
           uri: lb://auth-app
           predicates:
             - Path=/auth/**
+          filters:
+            - AllowsAllRequestFilter
 
         - id: user-app-authenticated
           uri: lb://user-app
