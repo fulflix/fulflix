@@ -1,6 +1,7 @@
-package io.fulflix.common.app.context.annotation;
+package io.fulflix.common.app.context.annotation.resolver;
 
-import io.fulflix.common.app.context.UserContextHolder;
+import io.fulflix.common.app.context.annotation.CurrentUser;
+import io.fulflix.common.app.context.holder.UserContextHolder;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;

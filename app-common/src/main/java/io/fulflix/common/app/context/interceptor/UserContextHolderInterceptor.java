@@ -1,5 +1,6 @@
-package io.fulflix.common.app.context;
+package io.fulflix.common.app.context.interceptor;
 
+import io.fulflix.common.app.context.holder.UserContextHolder;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.servlet.HandlerInterceptor;
