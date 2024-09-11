@@ -227,3 +227,6 @@ gradle-app.setting
 
 ### Docker:MySQL volume
 db/**
+
+### Docker:Kafka volume
+.data
