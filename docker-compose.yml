@@ -11,3 +11,9 @@ services:
       - MYSQL_ROOT_PASSWORD=password
       - MYSQL_USER=fulflix
       - MYSQL_PASSWORD=fulflix
+
+  fulflix-zipkin:
+    image: openzipkin/zipkin
+    container_name: zipkin
+    ports:
+      - 9411:9411
