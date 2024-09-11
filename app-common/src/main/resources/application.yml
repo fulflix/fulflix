@@ -6,5 +6,6 @@ spring:
       - classpath:properties/logging.yml
       - classpath:properties/eureka.yml
       - classpath:properties/actuator.yml
+      - classpath:properties/zipkin.yml
   profiles:
     active: local

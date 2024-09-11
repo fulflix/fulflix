@@ -10,3 +10,4 @@ spring:
       - classpath:properties/jwt.yml
       - classpath:properties/logging.yml
       - classpath:properties/eureka.yml
+      - classpath:properties/zipkin.yml
