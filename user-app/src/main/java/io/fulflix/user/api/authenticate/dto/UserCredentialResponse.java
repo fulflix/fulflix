@@ -1,6 +1,6 @@
 package io.fulflix.user.api.authenticate.dto;
 
-import io.fulflix.user.repo.model.Role;
+import io.fulflix.common.web.principal.Role;
 import io.fulflix.user.repo.model.User;
 import java.time.LocalDateTime;
 
