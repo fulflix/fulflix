@@ -1,5 +1,7 @@
 package io.fulflix.hub.hubroute.application;
 
+import io.fulflix.hub.hub.exception.HubErrorCode;
+import io.fulflix.hub.hub.exception.HubException;
 import io.fulflix.hub.hubroute.api.dto.HubRouteCreateDto;
 import io.fulflix.hub.hubroute.api.dto.HubRouteResponseDto;
 import io.fulflix.hub.hub.domain.Hub;
@@ -21,9 +23,9 @@ public class HubRouteService {
     @Transactional
     public HubRouteResponseDto createHubRoute(HubRouteCreateDto dto) {
         Hub departureHub = hubRepository.findById(dto.getDepartureHubId())
-                .orElseThrow(() -> new IllegalArgumentException("출발 허브가 존재하지 않습니다: " + dto.getDepartureHubId()));
+                .orElseThrow(() -> new HubException(HubErrorCode.HUB_NOT_FOUND));
         Hub arrivalHub = hubRepository.findById(dto.getArrivalHubId())
-                .orElseThrow(() -> new IllegalArgumentException("도착 허브가 존재하지 않습니다: " + dto.getArrivalHubId()));
+                .orElseThrow(() -> new HubException(HubErrorCode.HUB_NOT_FOUND));
 
         HubRoute hubRoute = HubRoute.builder()
                 .departureHub(departureHub)

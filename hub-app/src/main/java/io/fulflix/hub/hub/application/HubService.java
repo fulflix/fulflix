@@ -4,6 +4,8 @@ import io.fulflix.hub.hub.api.dto.HubRequestDto;
 import io.fulflix.hub.hub.api.dto.HubResponseDto;
 import io.fulflix.hub.hub.domain.Hub;
 import io.fulflix.hub.hub.domain.HubRepository;
+import io.fulflix.hub.hub.exception.HubErrorCode;
+import io.fulflix.hub.hub.exception.HubException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,6 +31,7 @@ public class HubService {
         return HubResponseDto.of(hub);
     }
 
+    // 허브 수정
     @Transactional
     public HubResponseDto updateHub(Long hubId, HubRequestDto hubRequestDto) {
         Hub hub = findHubById(hubId);
@@ -49,6 +52,7 @@ public class HubService {
         return HubResponseDto.of(savedHub);
     }
 
+    // 허브 삭제
     @Transactional
     public void deleteHub(Long hubId) {
         Hub hub = findHubById(hubId);
@@ -60,7 +64,7 @@ public class HubService {
 
     public Hub findHubById(Long id) {
         return hubRepository.findById(id).orElseThrow(
-                () -> new IllegalArgumentException("Hub not found with id " + id)
+                () -> new HubException(HubErrorCode.HUB_NOT_FOUND)
         );
     }
 }
