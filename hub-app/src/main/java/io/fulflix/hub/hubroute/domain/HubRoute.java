@@ -1,11 +1,9 @@
 package io.fulflix.hub.hubroute.domain;
 
+import io.fulflix.common.app.jpa.audit.Auditable;
 import io.fulflix.hub.hub.domain.Hub;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 
@@ -13,13 +11,14 @@ import static io.fulflix.common.app.jpa.audit.CommonAuditFields.DEFAULT_CONDITIO
 
 @Entity
 @Table(name = "p_hub_routes")
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @SQLDelete(sql = "UPDATE p_hub_routes SET is_deleted = true WHERE id = ?")
 @SQLRestriction(DEFAULT_CONDITION)
-public class HubRoute {
+public class HubRoute extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

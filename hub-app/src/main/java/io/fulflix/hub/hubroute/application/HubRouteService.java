@@ -8,12 +8,15 @@ import io.fulflix.hub.hub.domain.Hub;
 import io.fulflix.hub.hubroute.domain.HubRoute;
 import io.fulflix.hub.hub.domain.HubRepository;
 import io.fulflix.hub.hubroute.domain.HubRouteRepository;
+import io.fulflix.hub.hubroute.exception.HubRouteErrorCode;
+import io.fulflix.hub.hubroute.exception.HubRouteException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class HubRouteService {
     private final HubRouteRepository hubRouteRepository;
     private final HubRepository hubRepository;
@@ -37,6 +40,14 @@ public class HubRouteService {
         return mapToDto(savedHubRoute);
     }
 
+    // 허브 단건 조회
+    public HubRouteResponseDto getHubRoute(Long hubRouteId) {
+        HubRoute hubRoute = hubRouteRepository.findById(hubRouteId).orElseThrow(
+                () -> new HubRouteException(HubRouteErrorCode.HUB_ROUTE_NOT_FOUND)
+        );
+        return mapToDto(hubRoute);
+    }
+
     // entity -> dto
     private HubRouteResponseDto mapToDto(HubRoute hubRoute) {
         HubRouteResponseDto dto = new HubRouteResponseDto();
@@ -47,5 +58,6 @@ public class HubRouteService {
         dto.setRoute(hubRoute.getRoute());
         return dto;
     }
+
 
 }

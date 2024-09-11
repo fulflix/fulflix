@@ -6,9 +6,7 @@ import io.fulflix.hub.hubroute.api.dto.HubRouteResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -20,5 +18,12 @@ public class HubRouteController {
     public ResponseEntity<HubRouteResponseDto> createHubRoute(@RequestBody HubRouteCreateDto dto) {
         HubRouteResponseDto responseDto = hubRouteService.createHubRoute(dto);
         return new ResponseEntity<>(responseDto, HttpStatus.CREATED);
+    }
+
+    // 허브 경로 단건 조회
+    @GetMapping("/hub-route/{hubRouteId}")
+    public ResponseEntity<HubRouteResponseDto> getHubRoute(@PathVariable Long hubRouteId) {
+        HubRouteResponseDto responseDto = hubRouteService.getHubRoute(hubRouteId);
+        return ResponseEntity.ok(responseDto);
     }
 }
