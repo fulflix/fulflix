@@ -3,10 +3,7 @@ package io.fulflix.hub.hub.domain;
 
 import io.fulflix.common.app.jpa.audit.Auditable;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 
@@ -18,6 +15,8 @@ import static io.fulflix.common.app.jpa.audit.CommonAuditFields.DEFAULT_CONDITIO
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Getter
+@Setter
 //@SQLDelete(sql = "UPDATE p_hubs SET is_deleted = true WHERE id = ?")
 @SQLRestriction(DEFAULT_CONDITION) //@SQLRestriction("is_deleted = false")
 public class Hub extends Auditable {
