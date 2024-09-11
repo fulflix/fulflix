@@ -1,17 +1,18 @@
-package io.fulflix.common.app.context.annotation;
+package io.fulflix.common.app.context.annotation.resolver;
 
-import io.fulflix.common.app.context.UserContextHolder;
+import io.fulflix.common.app.context.annotation.CurrentUserRole;
+import io.fulflix.common.app.context.holder.UserRoleContextHolder;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
-public class CurrentUserArgumentResolver implements HandlerMethodArgumentResolver {
+public class CurrentUserRoleArgumentResolver implements HandlerMethodArgumentResolver {
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        return parameter.hasParameterAnnotation(CurrentUser.class);
+        return parameter.hasParameterAnnotation(CurrentUserRole.class);
     }
 
     @Override
@@ -21,7 +22,7 @@ public class CurrentUserArgumentResolver implements HandlerMethodArgumentResolve
         NativeWebRequest webRequest,
         WebDataBinderFactory binderFactory
     ) {
-        return UserContextHolder.getCurrentUser();
+        return UserRoleContextHolder.getCurrentUserRole();
     }
 
 }

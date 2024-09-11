@@ -1,12 +1,13 @@
-package io.fulflix.common.app.context;
+package io.fulflix.common.app.context.interceptor;
 
+import io.fulflix.common.app.context.holder.UserRoleContextHolder;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.servlet.HandlerInterceptor;
 
-public class UserContextHolderInterceptor implements HandlerInterceptor {
+public class UserRoleContextHolderInterceptor implements HandlerInterceptor {
 
-    public static final String X_USER_ID = "X-User-Id";
+    public static final String X_USER_ROLE = "X-User-Role";
 
     @Override
     public boolean preHandle(
@@ -14,13 +15,13 @@ public class UserContextHolderInterceptor implements HandlerInterceptor {
         HttpServletResponse response,
         Object handler
     ) {
-        String userId = getUserIdFromHeader(request);
-        UserContextHolder.setCurrentUser(userId);
+        String userId = getUserRoleFromHeader(request);
+        UserRoleContextHolder.setCurrentUserRole(userId);
         return true;
     }
 
-    private String getUserIdFromHeader(HttpServletRequest request) {
-        return request.getHeader(X_USER_ID);
+    private String getUserRoleFromHeader(HttpServletRequest request) {
+        return request.getHeader(X_USER_ROLE);
     }
 
     @Override
@@ -30,7 +31,7 @@ public class UserContextHolderInterceptor implements HandlerInterceptor {
         Object handler,
         Exception ex
     ) {
-        UserContextHolder.clear();
+        UserRoleContextHolder.clear();
     }
 
 }

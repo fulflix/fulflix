@@ -1,8 +1,9 @@
 package io.fulflix.fixture;
 
+import io.fulflix.common.web.principal.Role;
 import io.fulflix.user.api.authenticate.dto.CreatePrincipalRequest;
 import io.fulflix.user.api.authenticate.dto.UserCredentialResponse;
-import io.fulflix.user.repo.model.Role;
+import java.time.LocalDateTime;
 
 public class UserFixtures {
 
@@ -24,7 +25,8 @@ public class UserFixtures {
             USER_ID,
             USERNAME,
             ENCODED_PASSWORD,
-            MASTER_ADMIN_ROLE
+            MASTER_ADMIN_ROLE,
+            LocalDateTime.now()
         );
 
 }

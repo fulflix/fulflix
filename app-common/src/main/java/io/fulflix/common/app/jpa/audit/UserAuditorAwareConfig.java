@@ -1,6 +1,6 @@
 package io.fulflix.common.app.jpa.audit;
 
-import io.fulflix.common.app.context.UserContextHolder;
+import io.fulflix.common.app.context.holder.UserContextHolder;
 import java.util.Optional;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,7 +11,7 @@ public class UserAuditorAwareConfig {
 
     @Bean
     public AuditorAware<Long> getCurrentAuditor() {
-        return () -> Optional.ofNullable(UserContextHolder.getCurrentUser())
+        return () -> Optional.of(UserContextHolder.getCurrentUser())
             .map(Long.class::cast);
     }
 
