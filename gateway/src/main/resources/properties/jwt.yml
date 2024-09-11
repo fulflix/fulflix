@@ -1,0 +1,6 @@
+spring:
+  config.activate.on-profile: local
+jwt:
+  audience: fulflix-service-app
+  expiration-minutes: 30
+  secret-key: local-fulflix-authenticate-secret-key
