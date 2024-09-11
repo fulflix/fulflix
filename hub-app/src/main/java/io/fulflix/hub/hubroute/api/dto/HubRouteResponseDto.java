@@ -1,4 +1,4 @@
-package io.fulflix.hub.application.dto;
+package io.fulflix.hub.hubroute.api.dto;
 
 import lombok.*;
 

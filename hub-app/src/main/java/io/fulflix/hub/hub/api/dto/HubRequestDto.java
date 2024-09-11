@@ -1,6 +1,6 @@
-package io.fulflix.hub.application.dto;
+package io.fulflix.hub.hub.api.dto;
 
-import io.fulflix.hub.domain.Hub;
+import io.fulflix.hub.hub.domain.Hub;
 import lombok.*;
 
 @Getter

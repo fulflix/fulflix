@@ -1,11 +1,11 @@
-package io.fulflix.hub.application;
+package io.fulflix.hub.hubroute.application;
 
-import io.fulflix.hub.application.dto.HubRouteCreateDto;
-import io.fulflix.hub.application.dto.HubRouteResponseDto;
-import io.fulflix.hub.domain.Hub;
-import io.fulflix.hub.domain.HubRoute;
-import io.fulflix.hub.repository.HubRepository;
-import io.fulflix.hub.repository.HubRouteRepository;
+import io.fulflix.hub.hubroute.api.dto.HubRouteCreateDto;
+import io.fulflix.hub.hubroute.api.dto.HubRouteResponseDto;
+import io.fulflix.hub.hub.domain.Hub;
+import io.fulflix.hub.hubroute.domain.HubRoute;
+import io.fulflix.hub.hub.domain.HubRepository;
+import io.fulflix.hub.hubroute.domain.HubRouteRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

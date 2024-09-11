@@ -1,10 +1,9 @@
-package io.fulflix.hub.controller;
+package io.fulflix.hub.hub.api;
 
-import io.fulflix.hub.application.HubService;
-import io.fulflix.hub.application.dto.HubRequestDto;
-import io.fulflix.hub.application.dto.HubResponseDto;
+import io.fulflix.hub.hub.application.HubService;
+import io.fulflix.hub.hub.api.dto.HubRequestDto;
+import io.fulflix.hub.hub.api.dto.HubResponseDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -1,6 +1,5 @@
-package io.fulflix.hub.repository;
+package io.fulflix.hub.hub.domain;
 
-import io.fulflix.hub.domain.Hub;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface HubRepository extends JpaRepository<Hub, Long> {

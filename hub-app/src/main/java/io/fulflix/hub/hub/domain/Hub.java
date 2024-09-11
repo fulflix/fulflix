@@ -1,4 +1,4 @@
-package io.fulflix.hub.domain;
+package io.fulflix.hub.hub.domain;
 
 
 import jakarta.persistence.*;

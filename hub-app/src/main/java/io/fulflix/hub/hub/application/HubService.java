@@ -1,9 +1,9 @@
-package io.fulflix.hub.application;
+package io.fulflix.hub.hub.application;
 
-import io.fulflix.hub.application.dto.HubRequestDto;
-import io.fulflix.hub.application.dto.HubResponseDto;
-import io.fulflix.hub.domain.Hub;
-import io.fulflix.hub.repository.HubRepository;
+import io.fulflix.hub.hub.api.dto.HubRequestDto;
+import io.fulflix.hub.hub.api.dto.HubResponseDto;
+import io.fulflix.hub.hub.domain.Hub;
+import io.fulflix.hub.hub.domain.HubRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

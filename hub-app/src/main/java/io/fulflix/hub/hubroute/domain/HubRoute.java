@@ -1,5 +1,6 @@
-package io.fulflix.hub.domain;
+package io.fulflix.hub.hubroute.domain;
 
+import io.fulflix.hub.hub.domain.Hub;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

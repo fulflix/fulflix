@@ -1,10 +1,8 @@
-package io.fulflix.hub.controller;
+package io.fulflix.hub.hubroute.api;
 
-import io.fulflix.hub.application.HubRouteService;
-import io.fulflix.hub.application.dto.HubResponseDto;
-import io.fulflix.hub.application.dto.HubRouteCreateDto;
-import io.fulflix.hub.application.dto.HubRouteResponseDto;
-import io.fulflix.hub.repository.HubRouteRepository;
+import io.fulflix.hub.hubroute.application.HubRouteService;
+import io.fulflix.hub.hubroute.api.dto.HubRouteCreateDto;
+import io.fulflix.hub.hubroute.api.dto.HubRouteResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
