@@ -4,6 +4,9 @@ import static io.fulflix.user.api.mypage.UserMyPageController.USER_BASE_PATH;
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
 import io.fulflix.common.app.context.annotation.CurrentUser;
+import io.fulflix.common.app.context.annotation.CurrentUserRole;
+import io.fulflix.common.web.principal.Role;
+import io.fulflix.user.api.mypage.dto.UserResponse;
 import io.fulflix.user.application.UserMyPageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +27,10 @@ public class UserMyPageController {
     private final UserMyPageService userMyPageService;
 
     @GetMapping("/me")
-    ResponseEntity<?> me(@CurrentUser Long currentUser) {
+    ResponseEntity<UserResponse> me(
+        @CurrentUser Long currentUser,
+        @CurrentUserRole Role role
+    ) {
         return ResponseEntity.ok(userMyPageService.loadUserById(currentUser));
     }
 
