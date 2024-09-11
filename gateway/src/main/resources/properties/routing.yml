@@ -1,0 +1,17 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: auth-app-allows-all
+          uri: lb://auth-app
+          predicates:
+            - Path=/auth/**
+          filters:
+            - AllowsAllRequestFilter
+
+        - id: user-app-authenticated
+          uri: lb://user-app
+          predicates:
+            - Path=/auth/**
+          filters:
+            - JwtAuthorizationFilter
