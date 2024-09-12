@@ -28,8 +28,8 @@ class AuthenticationServiceTest extends AuthServiceTestHelper {
         @DisplayName("존재하지 않는 회원인 경우 예외 발생")
         void throwException_whenUserNotExist() {
             // Given
-            given(userAppClient.retrieveUserCredential(anyString())).willThrow(
-                RuntimeException.class);
+            given(userAppClient.retrieveUserCredential(anyString()))
+                .willThrow(RuntimeException.class);
 
             // When & Then
             assertThatExceptionOfType(RuntimeException.class)
@@ -41,8 +41,8 @@ class AuthenticationServiceTest extends AuthServiceTestHelper {
         @DisplayName("비밀번호가 일치하지 않는 경우 예외 발생")
         void throwException_whenPasswordNotMatched() {
             // Given
-            given(userAppClient.retrieveUserCredential(anyString())).willReturn(
-                USER_DETAILS_RESPONSE);
+            given(userAppClient.retrieveUserCredential(anyString()))
+                .willReturn(USER_DETAILS_RESPONSE);
             given(passwordEncoder.matches(
                 SIGN_IN_REQUEST.password(),
                 USER_DETAILS_RESPONSE.encodedPassword())
@@ -65,8 +65,8 @@ class AuthenticationServiceTest extends AuthServiceTestHelper {
         @DisplayName("인증 성공 후 access token 발급")
         void authentication() {
             // Given
-            given(userAppClient.retrieveUserCredential(anyString())).willReturn(
-                USER_DETAILS_RESPONSE);
+            given(userAppClient.retrieveUserCredential(anyString()))
+                .willReturn(USER_DETAILS_RESPONSE);
 
             given(passwordEncoder.matches(
                 SIGN_IN_REQUEST.password(),

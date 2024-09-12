@@ -1,8 +1,10 @@
 package io.fulflix.user.application;
 
+import static io.fulflix.user.exception.UserErrorCode.DUPLICATED_USERNAME;
+import static io.fulflix.user.exception.UserErrorCode.NOT_EXIST;
+
 import io.fulflix.user.api.authenticate.dto.CreatePrincipalRequest;
 import io.fulflix.user.api.authenticate.dto.UserCredentialResponse;
-import io.fulflix.user.exception.UserErrorCode;
 import io.fulflix.user.exception.UserException;
 import io.fulflix.user.repo.UserRepo;
 import io.fulflix.user.repo.model.User;
@@ -21,12 +23,18 @@ public class UserAuthenticateUseCase {
 
     @Transactional
     public Long createUser(CreatePrincipalRequest request) {
-        // TODO validate(request);
+        validateDuplicatedUsername(request.username());
 
         User transientUser = request.toEntity();
         User savedUser = saveUser(transientUser);
 
         return savedUser.getId();
+    }
+
+    private void validateDuplicatedUsername(String username) {
+        if (userRepo.existsByUsername(username)) {
+            throw new UserException(DUPLICATED_USERNAME, username);
+        }
     }
 
     private User saveUser(User transientUser) {
@@ -39,7 +47,7 @@ public class UserAuthenticateUseCase {
     public UserCredentialResponse loadUserCredentialByUsername(String username) {
         return userRepo.findByUsername(username)
             .map(UserCredentialResponse::from)
-            .orElseThrow(() -> new UserException(UserErrorCode.NOT_EXIST, username));
+            .orElseThrow(() -> new UserException(NOT_EXIST, username));
     }
 
 }
