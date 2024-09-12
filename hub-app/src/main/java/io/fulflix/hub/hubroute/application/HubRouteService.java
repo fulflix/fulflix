@@ -1,5 +1,6 @@
 package io.fulflix.hub.hubroute.application;
 
+import io.fulflix.hub.hub.api.dto.HubResponseDto;
 import io.fulflix.hub.hub.exception.HubErrorCode;
 import io.fulflix.hub.hub.exception.HubException;
 import io.fulflix.hub.hubroute.api.dto.HubRouteCreateDto;
@@ -66,8 +67,8 @@ public class HubRouteService {
     private HubRouteResponseDto mapToDto(HubRoute hubRoute) {
         HubRouteResponseDto dto = new HubRouteResponseDto();
         dto.setId(hubRoute.getId());
-        dto.setDepartureHubId(hubRoute.getDepartureHub().getId());
-        dto.setArrivalHubId(hubRoute.getArrivalHub().getId());
+        dto.setDepartureHub(HubResponseDto.of(hubRoute.getDepartureHub()));
+        dto.setArrivalHub(HubResponseDto.of(hubRoute.getArrivalHub()));
         dto.setDuration(hubRoute.getDuration());
         dto.setRoute(hubRoute.getRoute());
         return dto;
