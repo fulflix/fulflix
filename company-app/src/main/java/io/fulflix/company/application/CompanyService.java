@@ -74,6 +74,13 @@ public class CompanyService {
         return CompanyResponse.fromEntity(companyRepo.save(company));
     }
 
+    // 업체 삭제 (마스터 관리자, 허브 관리자)
+    public void deleteCompany(Long id) {
+        Company company = findCompanyById(id);
+        company.delete(); // isDeleted = true
+        companyRepo.save(company);
+    }
+
     // 업체 존재 확인
     private Company findCompanyById(Long id) {
         return companyRepo.findById(id)
@@ -90,4 +97,9 @@ public class CompanyService {
     // TODO 사용자 존재 확인
 
     // TODO 허브 존재 확인
+
+    // 관리자 권한 확인
+    private boolean isAdmin(String role) {
+        return role.equals("MASTER_ADMIN") || role.equals("HUB_ADMIN");
+    }
 }

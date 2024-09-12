@@ -64,4 +64,11 @@ public class CompanyController {
         CompanyResponse updatedCompany = companyService.updateCompany(id, updateCompanyRequest);
         return ResponseEntity.ok(updatedCompany);
     }
+
+    // 업체 삭제 (마스터 관리자, 허브 관리자)
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteCompany(@PathVariable Long id) {
+        companyService.deleteCompany(id);
+        return ResponseEntity.noContent().build(); // 204 No Content 응답
+    }
 }

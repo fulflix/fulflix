@@ -31,3 +31,8 @@ Content-Type: application/json
 {
     "companyName" : "예롱컴퍼니"
 }
+
+###
+
+## 업체 삭제 API
+DELETE http://localhost:8280/company/2
