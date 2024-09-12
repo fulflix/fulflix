@@ -6,7 +6,7 @@ eureka:
     fetch-registry: true
     register-with-eureka: true
     service-url:
-      defaultZone: http://admin:admin@host.docker.internal:8761/eureka/
+      defaultZone: http://admin:admin@localhost:8761/eureka/
 
   instance:
     prefer-ip-address: true
