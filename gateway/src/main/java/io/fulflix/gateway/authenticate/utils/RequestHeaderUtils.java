@@ -4,7 +4,6 @@ import io.fulflix.gateway.authenticate.exception.AuthErrorCode;
 import io.fulflix.gateway.authenticate.exception.UnAuthorizedException;
 import io.fulflix.gateway.authenticate.jwt.FulflixPrincipal;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.util.StringUtils;
 import org.springframework.web.server.ServerWebExchange;
 
@@ -54,25 +53,23 @@ public class RequestHeaderUtils {
         return !authorizationHeader.startsWith(BEARER_PREFIX);
     }
 
-    public static ServerWebExchange setPrincipalToRoutingHeader(
+    public static void setPrincipalToRoutingHeader(
         ServerWebExchange exchange,
         FulflixPrincipal principal
     ) {
-        ServerHttpRequest request = exchange.getRequest()
+        exchange.getRequest()
             .mutate()
             .header(X_USER_ID, String.valueOf(principal.id()))
             .header(X_USER_USERNAME, principal.username())
             .header(X_USER_ROLE, String.valueOf(principal.roles()))
             .build();
-        return exchange.mutate().request(request).build();
     }
 
-    public static ServerWebExchange setAnonymousToRoutingHeader(ServerWebExchange exchange) {
-        ServerHttpRequest request = exchange.getRequest()
+    public static void setAnonymousToRoutingHeader(ServerWebExchange exchange) {
+        exchange.getRequest()
             .mutate()
             .header(X_USER_ID, ANONYMOUS)
             .build();
-        return exchange.mutate().request(request).build();
     }
 
 }
