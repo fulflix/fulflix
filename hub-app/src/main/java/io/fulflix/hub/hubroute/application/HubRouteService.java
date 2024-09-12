@@ -11,6 +11,8 @@ import io.fulflix.hub.hubroute.domain.HubRouteRepository;
 import io.fulflix.hub.hubroute.exception.HubRouteErrorCode;
 import io.fulflix.hub.hubroute.exception.HubRouteException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -48,6 +50,18 @@ public class HubRouteService {
         return mapToDto(hubRoute);
     }
 
+    // 허브 경로 전체 조회
+    public Page<HubRouteResponseDto> getAllHubRoutes(Pageable pageable) {
+        Page<HubRoute> hubRoutes = hubRouteRepository.findAll(pageable);
+        return hubRoutes.map(this::mapToDto);
+    }
+
+    // 허브 경로 route 로 검색
+    public Page<HubRouteResponseDto> searchHubRoutes(Pageable pageable, String keyword) {
+        Page<HubRoute> hubRoutes = hubRouteRepository.findByRouteContaining(keyword, pageable);
+        return hubRoutes.map(this::mapToDto);
+    }
+
     // entity -> dto
     private HubRouteResponseDto mapToDto(HubRoute hubRoute) {
         HubRouteResponseDto dto = new HubRouteResponseDto();
@@ -58,6 +72,7 @@ public class HubRouteService {
         dto.setRoute(hubRoute.getRoute());
         return dto;
     }
+
 
 
 }
