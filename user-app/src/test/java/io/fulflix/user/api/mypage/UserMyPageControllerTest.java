@@ -35,8 +35,6 @@ class UserMyPageControllerTest extends UserApiTestHelper {
     @Test
     @DisplayName("내 정보 조회")
     void me() throws Exception {
-        // Given
-
         // When
         ResultActions resultActions = mockMvc.perform(get(userMyPageUrl)
             .headers(headers)
