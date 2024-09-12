@@ -49,6 +49,12 @@ public class CompanyService {
         return companies.map(CompanyResponse::fromEntity);
     }
 
+    // 업체 단일 조회 (마스터 관리자, 허브 관리자, 허브 업체)
+    public CompanyResponse getCompanyById(Long id) {
+        Company company = findCompanyById(id);
+        return CompanyResponse.fromEntity(company);
+    }
+
     // 업체 존재 확인
     private Company findCompanyById(Long id) {
         return companyRepo.findById(id)

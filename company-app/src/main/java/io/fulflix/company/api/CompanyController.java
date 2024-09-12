@@ -44,4 +44,13 @@ public class CompanyController {
         Page<CompanyResponse> companies = companyService.getAllCompanies(query, page, size, sortBy, sortDirection);
         return ResponseEntity.ok(companies);
     }
+
+    // 업체 단일 조회 (마스터 관리자, 허브 관리자, 허브 업체)
+    @GetMapping("/{id}")
+    public ResponseEntity<CompanyResponse> getCompany(
+            @PathVariable Long id
+    ) {
+        CompanyResponse company = companyService.getCompanyById(id);
+        return ResponseEntity.ok(company);
+    }
 }

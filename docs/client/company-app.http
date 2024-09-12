@@ -17,3 +17,9 @@ GET http://localhost:8280/company?query=컴퍼니&page=&size=&sortBy=&sortDirect
 Content-Type: application/json
 
 ###
+
+## 업체 단일 조회 API
+GET http://localhost:8280/company/1
+Content-Type: application/json
+
+###
