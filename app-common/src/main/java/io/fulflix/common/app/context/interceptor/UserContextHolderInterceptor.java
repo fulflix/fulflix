@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.servlet.HandlerInterceptor;
 
+// TODO web-common 계층으로 이동
 public class UserContextHolderInterceptor implements HandlerInterceptor {
 
     public static final String X_USER_ID = "X-User-Id";
