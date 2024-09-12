@@ -46,6 +46,8 @@ subprojects {
         testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
         testImplementation 'org.springframework.boot:spring-boot-starter-test'
         testImplementation 'org.testcontainers:junit-jupiter'
+        testImplementation 'org.springframework.cloud:spring-cloud-contract-wiremock'
+
     }
 
     ext['springCloudVersion'] = '2023.0.3'
