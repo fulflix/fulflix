@@ -23,3 +23,11 @@ GET http://localhost:8280/company/1
 Content-Type: application/json
 
 ###
+
+## 업체 수정 API
+PUT http://localhost:8280/company/1
+Content-Type: application/json
+
+{
+    "companyName" : "예롱컴퍼니"
+}

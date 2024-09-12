@@ -2,6 +2,7 @@ package io.fulflix.company.application;
 
 import io.fulflix.company.api.dto.CompanyResponse;
 import io.fulflix.company.api.dto.RegisterCompanyRequest;
+import io.fulflix.company.api.dto.UpdateCompanyRequest;
 import io.fulflix.company.domain.Company;
 import io.fulflix.company.exception.CompanyErrorCode;
 import io.fulflix.company.exception.CompanyException;
@@ -53,6 +54,24 @@ public class CompanyService {
     public CompanyResponse getCompanyById(Long id) {
         Company company = findCompanyById(id);
         return CompanyResponse.fromEntity(company);
+    }
+
+    // 업체 수정 (마스터 관리자, 허브 관리자, 허브 업체)
+    public CompanyResponse updateCompany(Long id, UpdateCompanyRequest updateCompanyRequest) {
+        Company company = findCompanyById(id);
+
+        if (updateCompanyRequest.getHubId() != null && !updateCompanyRequest.getHubId().equals(company.getHubId()))
+            company.updateHubId(updateCompanyRequest);
+
+        if (updateCompanyRequest.getCompanyName() != null && !updateCompanyRequest.getCompanyName().equals(company.getCompanyName())) {
+            checkCompanyDuplication(updateCompanyRequest.getCompanyName());
+            company.updateCompanyName(updateCompanyRequest);
+        }
+
+        if (updateCompanyRequest.getCompanyAddress() != null && !updateCompanyRequest.getCompanyAddress().equals(company.getCompanyAddress()))
+            company.updateCompanyAddress(updateCompanyRequest);
+
+        return CompanyResponse.fromEntity(companyRepo.save(company));
     }
 
     // 업체 존재 확인

@@ -1,5 +1,6 @@
 package io.fulflix.company.domain;
 
+import io.fulflix.company.api.dto.UpdateCompanyRequest;
 import io.fulflix.company.config.CompanyAuditable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -33,4 +34,19 @@ public class Company extends CompanyAuditable {
 
     @Column(name = "company_address", nullable = false)
     private String companyAddress;
+
+    // hubId 업데이트
+    public void updateHubId(UpdateCompanyRequest updateCompanyRequest) {
+        this.hubId = updateCompanyRequest.getHubId();
+    }
+
+    // companyName 업데이트
+    public void updateCompanyName(UpdateCompanyRequest updateCompanyRequest) {
+        this.companyName = updateCompanyRequest.getCompanyName();
+    }
+
+    // companyAddress 업데이트
+    public void updateCompanyAddress(UpdateCompanyRequest updateCompanyRequest) {
+        this.companyAddress = updateCompanyRequest.getCompanyAddress();
+    }
 }

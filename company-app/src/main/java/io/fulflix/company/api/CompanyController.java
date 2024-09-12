@@ -3,6 +3,7 @@ package io.fulflix.company.api;
 import io.fulflix.common.app.context.annotation.CurrentUser;
 import io.fulflix.company.api.dto.CompanyResponse;
 import io.fulflix.company.api.dto.RegisterCompanyRequest;
+import io.fulflix.company.api.dto.UpdateCompanyRequest;
 import io.fulflix.company.application.CompanyService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -52,5 +53,15 @@ public class CompanyController {
     ) {
         CompanyResponse company = companyService.getCompanyById(id);
         return ResponseEntity.ok(company);
+    }
+
+    // 업체 수정 (마스터 관리자, 허브 관리자, 허브 업체)
+    @PutMapping("/{id}")
+    public ResponseEntity<CompanyResponse> updateCompany(
+            @PathVariable Long id,
+            @Valid @RequestBody UpdateCompanyRequest updateCompanyRequest
+    ) {
+        CompanyResponse updatedCompany = companyService.updateCompany(id, updateCompanyRequest);
+        return ResponseEntity.ok(updatedCompany);
     }
 }
