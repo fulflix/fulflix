@@ -1,0 +1,12 @@
+ext {
+    APP_CORE = ":app-core"
+    WEB_CORE = ":web-core"
+}
+
+dependencies {
+    implementation project(APP_CORE)
+
+    testImplementation project(path: APP_CORE, configuration: "archives")
+    testImplementation project(path: WEB_CORE, configuration: "archives")
+    testRuntimeOnly("com.h2database:h2")
+}

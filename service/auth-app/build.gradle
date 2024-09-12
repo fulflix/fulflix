@@ -1,0 +1,16 @@
+ext {
+    WEB_CORE = ":web-core"
+    JJWT_VERSION = "0.12.6"
+}
+
+dependencies {
+    implementation project(WEB_CORE)
+    implementation("org.springframework.security:spring-security-crypto")
+    implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
+    implementation("io.jsonwebtoken:jjwt-api:${JJWT_VERSION}")
+    implementation("io.jsonwebtoken:jjwt-jackson:${JJWT_VERSION}")
+    implementation("io.jsonwebtoken:jjwt-impl:${JJWT_VERSION}")
+
+    testImplementation project(path: WEB_CORE, configuration: "archives")
+    testRuntimeOnly("com.h2database:h2")
+}

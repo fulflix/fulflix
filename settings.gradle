@@ -1,5 +1,0 @@
-rootProject.name = 'fulflix'
-
-include("web-common", "auth-app")
-include("app-common", "user-app", "hub-app", "company-app")
-include("eureka", "gateway")
