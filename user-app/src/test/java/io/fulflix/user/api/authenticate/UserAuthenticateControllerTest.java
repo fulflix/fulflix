@@ -1,8 +1,8 @@
 package io.fulflix.user.api.authenticate;
 
 import static io.fulflix.common.web.utils.UriComponentUtils.toResourceUri;
+import static io.fulflix.fixture.UserFixtures.CREATE_PRINCIPAL_REQUEST;
 import static io.fulflix.fixture.UserFixtures.USERNAME;
-import static io.fulflix.fixture.UserFixtures.USER_CREATE_REQUEST;
 import static io.fulflix.fixture.UserFixtures.USER_CREDENTIAL_RESPONSE;
 import static io.fulflix.user.api.authenticate.UserAuthenticateController.GET_AN_USER_CREDENTIAL_URI_FORMAT;
 import static org.mockito.BDDMockito.given;
@@ -33,13 +33,14 @@ class UserAuthenticateControllerTest extends UserApiTestHelper {
             GET_AN_USER_CREDENTIAL_URI_FORMAT,
             expectedUserId
         );
-        given(userAuthenticateUseCase.createUser(USER_CREATE_REQUEST)).willReturn(expectedUserId);
+        given(userAuthenticateUseCase.createUser(CREATE_PRINCIPAL_REQUEST)).willReturn(
+            expectedUserId);
 
         // When
         ResultActions resultActions = mockMvc.perform(post(principalUri)
             .contentType(MimeTypeUtils.APPLICATION_JSON_VALUE)
             .accept(MimeTypeUtils.APPLICATION_JSON_VALUE)
-            .content(objectMapper.writeValueAsBytes(USER_CREATE_REQUEST))
+            .content(objectMapper.writeValueAsBytes(CREATE_PRINCIPAL_REQUEST))
         );
 
         // Then
@@ -62,7 +63,7 @@ class UserAuthenticateControllerTest extends UserApiTestHelper {
             get(GET_AN_USER_CREDENTIAL_URI_FORMAT, USERNAME)
                 .contentType(MimeTypeUtils.APPLICATION_JSON_VALUE)
                 .accept(MimeTypeUtils.APPLICATION_JSON_VALUE)
-                .content(objectMapper.writeValueAsBytes(USER_CREATE_REQUEST)
+                .content(objectMapper.writeValueAsBytes(CREATE_PRINCIPAL_REQUEST)
                 ));
 
         // Then

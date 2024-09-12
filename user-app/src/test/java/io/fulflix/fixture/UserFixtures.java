@@ -13,7 +13,7 @@ public class UserFixtures {
     public static final String ENCODED_PASSWORD = "endcoded password";
     public static final Role MASTER_ADMIN_ROLE = Role.MASTER_ADMIN;
 
-    public static final CreatePrincipalRequest USER_CREATE_REQUEST = new CreatePrincipalRequest(
+    public static final CreatePrincipalRequest CREATE_PRINCIPAL_REQUEST = new CreatePrincipalRequest(
         USERNAME,
         ENCODED_PASSWORD,
         NAME,

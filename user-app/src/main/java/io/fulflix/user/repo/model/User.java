@@ -14,6 +14,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
+import java.util.Objects;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLRestriction;
@@ -56,6 +57,19 @@ public class User extends UserAuditable {
 
     public static User of(String username, String password, String name, Role role) {
         return new User(username, password, name, role);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof User user) {
+            return Objects.equals(id, user.id);
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 
 }
