@@ -19,10 +19,6 @@ spring:
         - id: hub-app-authenticated
           uri: lb://hub-app
           predicates:
-            - Path=/hub/**
-            - Path=/hubs/**
-            - Path=/hub-route/**
-            - Path=/hub-routes/**
-
+            - Path=/hub/**, /hubs/**, /hub-route/**, /hub-routes/**
           filters:
             - JwtAuthorizationFilter

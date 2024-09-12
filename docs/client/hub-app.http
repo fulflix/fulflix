@@ -1,23 +1,3 @@
-### GET request to example server
-GET https://examples.http-client.intellij.net/get
-    ?generated-in=IntelliJ IDEA
-
-###
-## 로그인 API
-POST http://localhost:8088/auth/sign-in
-Content-Type: application/json
-
-{
-  "username": "hong-gd",
-  "password": "password"
-}
-> {%
-    client.global.set("access_token", response.headers.valueOf("Authorization"))
-%}
-
-###
-
-
 ## 허브 생성 API
 POST http://localhost:8088/hub
 Content-Type: application/json
@@ -32,22 +12,20 @@ Authorization: Bearer {{access_token}}
 
 ###
 ## 허브 전체 조회 API
-GET http://localhost:8180/hubs
+GET http://localhost:8088/hubs
+Authorization: Bearer {{access_token}}
 
 ###
 ## 허브 단건 조회 API
-GET http://localhost:8180/hub/{hubId}
+GET http://localhost:8088/hub/1
+Authorization: Bearer {{access_token}}
 
 ###
-
-
-
-
-
 
 ## 허브 경로 생성 API
 POST http://localhost:8180/hub-route
 Content-Type: application/json
+Authorization: Bearer {{access_token}}
 
 {
   "departureHubId": 1,
