@@ -1,0 +1,10 @@
+ext {
+    APP_COMMON_MODULE = ":app-common"
+}
+
+dependencies {
+    implementation project(APP_COMMON_MODULE)
+
+    testImplementation project(path: APP_COMMON_MODULE, configuration: "archives")
+    testRuntimeOnly("com.h2database:h2")
+}
