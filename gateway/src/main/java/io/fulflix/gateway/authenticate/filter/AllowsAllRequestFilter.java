@@ -26,10 +26,10 @@ public class AllowsAllRequestFilter extends
 
             String jwt = extractAuthorizationHeader(exchange);
             if (hasNoAuthorizationHeader(jwt)) {
-                exchange = setAnonymousToRoutingHeader(exchange);
+                setAnonymousToRoutingHeader(exchange);
             } else {
                 FulflixPrincipal principal = JwtResolver.resolve(jwt, jwtProperties);
-                exchange = setPrincipalToRoutingHeader(exchange, principal);
+                setPrincipalToRoutingHeader(exchange, principal);
             }
 
             return chain.filter(exchange);
