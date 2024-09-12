@@ -15,11 +15,6 @@ public class HubRequestDto {
     private Double longitude;
 
     public static Hub toEntity(HubRequestDto dto) {
-        return Hub.builder()
-            .name(dto.getName())
-            .address(dto.getAddress())
-            .latitude(dto.getLatitude())
-            .longitude(dto.getLongitude())
-            .build();
+        return new Hub(dto.getName(), dto.getAddress(), dto.getLatitude(), dto.getLongitude());
     }
 }

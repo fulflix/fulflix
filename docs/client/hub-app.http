@@ -1,0 +1,26 @@
+### GET request to example server
+GET https://examples.http-client.intellij.net/get
+    ?generated-in=IntelliJ IDEA
+
+###
+
+## 허브 생성 API
+POST http://localhost:8180/hub
+Content-Type: application/json
+
+{
+  "name": "서울특별시 센터",
+  "address": "서울특별시 송파구 송파대로 55",
+  "latitude": 37.514575,
+  "longitude": 127.105392
+}
+
+###
+## 허브 전체 조회 API
+GET http://localhost:8180/hubs
+
+###
+## 허브 단건 조회 API
+GET http://localhost:8180/hub/{hubId}
+
+###
