@@ -1,0 +1,6 @@
+server:
+  port: 8280
+
+spring:
+  application:
+    name: company-app
