@@ -1,5 +1,6 @@
 package io.fulflix.hub.hubroute.api;
 
+import io.fulflix.hub.hubroute.api.dto.HubRouteUpdateDto;
 import io.fulflix.hub.hubroute.application.HubRouteService;
 import io.fulflix.hub.hubroute.api.dto.HubRouteCreateDto;
 import io.fulflix.hub.hubroute.api.dto.HubRouteResponseDto;
@@ -47,6 +48,13 @@ public class HubRouteController {
             String keyword
     ) {
         Page<HubRouteResponseDto> responseDto = hubRouteService.searchHubRoutes(pageable, keyword);
+        return ResponseEntity.ok(responseDto);
+    }
+
+    // 허브 경로 수정
+    @PutMapping("/hub-route/{hubRouteId}")
+    public ResponseEntity<HubRouteResponseDto> updateHubRoute(@PathVariable Long hubRouteId, @RequestBody HubRouteUpdateDto dto) {
+        HubRouteResponseDto responseDto = hubRouteService.updateHubRoute(hubRouteId, dto);
         return ResponseEntity.ok(responseDto);
     }
 }

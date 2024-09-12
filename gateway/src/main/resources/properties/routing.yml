@@ -15,3 +15,10 @@ spring:
             - Path=/user/**
           filters:
             - JwtAuthorizationFilter
+
+        - id: hub-app-authenticated
+          uri: lb://hub-app
+          predicates:
+            - Path=/hub/**, /hubs/**, /hub-route/**, /hub-routes/**
+          filters:
+            - JwtAuthorizationFilter

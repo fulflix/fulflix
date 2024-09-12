@@ -1,10 +1,12 @@
 package io.fulflix.hub.hubroute.application;
 
+import io.fulflix.hub.hub.api.dto.HubResponseDto;
 import io.fulflix.hub.hub.exception.HubErrorCode;
 import io.fulflix.hub.hub.exception.HubException;
 import io.fulflix.hub.hubroute.api.dto.HubRouteCreateDto;
 import io.fulflix.hub.hubroute.api.dto.HubRouteResponseDto;
 import io.fulflix.hub.hub.domain.Hub;
+import io.fulflix.hub.hubroute.api.dto.HubRouteUpdateDto;
 import io.fulflix.hub.hubroute.domain.HubRoute;
 import io.fulflix.hub.hub.domain.HubRepository;
 import io.fulflix.hub.hubroute.domain.HubRouteRepository;
@@ -27,10 +29,9 @@ public class HubRouteService {
     // 허브 경로 생성
     @Transactional
     public HubRouteResponseDto createHubRoute(HubRouteCreateDto dto) {
-        Hub departureHub = hubRepository.findById(dto.getDepartureHubId())
-                .orElseThrow(() -> new HubException(HubErrorCode.HUB_NOT_FOUND));
-        Hub arrivalHub = hubRepository.findById(dto.getArrivalHubId())
-                .orElseThrow(() -> new HubException(HubErrorCode.HUB_NOT_FOUND));
+
+        Hub departureHub = getHubById(dto.getDepartureHubId());
+        Hub arrivalHub = getHubById(dto.getArrivalHubId());
 
         HubRoute hubRoute = HubRoute.builder()
                 .departureHub(departureHub)
@@ -44,9 +45,7 @@ public class HubRouteService {
 
     // 허브 단건 조회
     public HubRouteResponseDto getHubRoute(Long hubRouteId) {
-        HubRoute hubRoute = hubRouteRepository.findById(hubRouteId).orElseThrow(
-                () -> new HubRouteException(HubRouteErrorCode.HUB_ROUTE_NOT_FOUND)
-        );
+        HubRoute hubRoute = findHubRouteById(hubRouteId);
         return mapToDto(hubRoute);
     }
 
@@ -66,13 +65,47 @@ public class HubRouteService {
     private HubRouteResponseDto mapToDto(HubRoute hubRoute) {
         HubRouteResponseDto dto = new HubRouteResponseDto();
         dto.setId(hubRoute.getId());
-        dto.setDepartureHubId(hubRoute.getDepartureHub().getId());
-        dto.setArrivalHubId(hubRoute.getArrivalHub().getId());
+        dto.setDepartureHub(HubResponseDto.of(hubRoute.getDepartureHub()));
+        dto.setArrivalHub(HubResponseDto.of(hubRoute.getArrivalHub()));
         dto.setDuration(hubRoute.getDuration());
         dto.setRoute(hubRoute.getRoute());
         return dto;
     }
 
+    // 허브 경로 조회 메서드
+    private HubRoute findHubRouteById(Long hubRouteId) {
+        return hubRouteRepository.findById(hubRouteId)
+                .orElseThrow(() -> new HubRouteException(HubRouteErrorCode.HUB_ROUTE_NOT_FOUND));
+    }
+
+    // 허브 조회 메서드
+    private Hub getHubById(Long hubId) {
+        return hubRepository.findById(hubId)
+                .orElseThrow(() -> new HubException(HubErrorCode.HUB_NOT_FOUND));
+    }
 
 
+    // 허브 경로 수정
+    @Transactional
+    public HubRouteResponseDto updateHubRoute(Long hubRouteId, HubRouteUpdateDto dto) {
+        HubRoute hubRoute = findHubRouteById(hubRouteId);
+
+        if (dto.getDepartureHubId() != null) {
+            Hub departureHub = getHubById(dto.getDepartureHubId());
+            hubRoute.setDepartureHub(departureHub);
+        }
+
+        if (dto.getArrivalHubId() != null) {
+            Hub arrivalHub = getHubById(dto.getArrivalHubId());
+            hubRoute.setArrivalHub(arrivalHub);
+        }
+
+        if (dto.getDuration() != null) {
+            hubRoute.setDuration(dto.getDuration());
+        }
+
+        HubRoute savedHubRoute = hubRouteRepository.save(hubRoute);
+        return mapToDto(savedHubRoute);
+
+    }
 }

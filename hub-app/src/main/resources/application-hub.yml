@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: hub-app
+server:
+  port: 8180

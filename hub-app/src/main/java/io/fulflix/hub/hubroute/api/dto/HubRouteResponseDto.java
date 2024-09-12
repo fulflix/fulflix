@@ -1,5 +1,6 @@
 package io.fulflix.hub.hubroute.api.dto;
 
+import io.fulflix.hub.hub.api.dto.HubResponseDto;
 import lombok.*;
 
 @Getter
@@ -9,8 +10,8 @@ import lombok.*;
 @Builder
 public class HubRouteResponseDto {
     private Long id;
-    private Long departureHubId;
-    private Long arrivalHubId;
+    private HubResponseDto departureHub;
+    private HubResponseDto arrivalHub;
     private Integer duration;
     private String route;
     private boolean isDeleted;
