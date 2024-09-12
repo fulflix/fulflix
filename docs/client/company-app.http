@@ -1,0 +1,12 @@
+## 업체 생성 API
+POST http://localhost:8280/company
+Content-Type: application/json
+
+{
+  "userId" : 1,
+  "hubId" : 1,
+  "companyName" : "예지컴퍼니",
+  "companyType" : "SUPPLIER",
+  "companyAddress" : "서울 마포구"
+}
+
