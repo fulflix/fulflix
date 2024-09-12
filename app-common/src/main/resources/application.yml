@@ -9,3 +9,6 @@ spring:
       - classpath:properties/zipkin.yml
   profiles:
     active: local
+
+  main:
+    allow-bean-definition-overriding: true
