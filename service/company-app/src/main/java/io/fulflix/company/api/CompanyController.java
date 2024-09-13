@@ -1,6 +1,8 @@
 package io.fulflix.company.api;
 
 import io.fulflix.common.app.context.annotation.CurrentUser;
+import io.fulflix.common.app.context.annotation.CurrentUserRole;
+import io.fulflix.common.web.principal.Role;
 import io.fulflix.company.api.dto.CompanyResponse;
 import io.fulflix.company.api.dto.RegisterCompanyRequest;
 import io.fulflix.company.api.dto.UpdateCompanyRequest;
@@ -27,9 +29,11 @@ public class CompanyController {
     // 업체 등록 (마스터 관리자, 허브 관리자)
     @PostMapping
     public ResponseEntity<Void> registerCompany(
-            @Valid @RequestBody RegisterCompanyRequest registerCompanyRequest
+            @Valid @RequestBody RegisterCompanyRequest registerCompanyRequest,
+            @CurrentUser Long currentUser,
+            @CurrentUserRole Role role
     ) {
-        companyService.registerCompany(registerCompanyRequest);
+        companyService.registerCompany(registerCompanyRequest, currentUser, role);
         return created("/company");
     }
 
