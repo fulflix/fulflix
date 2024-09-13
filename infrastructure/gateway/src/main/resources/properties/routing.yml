@@ -22,3 +22,11 @@ spring:
             - Path=/hub/**, /hubs/**, /hub-route/**, /hub-routes/**
           filters:
             - JwtAuthorizationFilter
+
+        - id: delivery-app-authenticated
+          uri: lb://delivery-app
+          predicates:
+            - Path=/delivery/**, /delivery-route/**
+          filters:
+            - JwtAuthorizationFilter
+
