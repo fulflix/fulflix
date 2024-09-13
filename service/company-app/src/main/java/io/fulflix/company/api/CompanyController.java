@@ -44,9 +44,11 @@ public class CompanyController {
             @RequestParam(defaultValue = "10") int size, // 페이지 크기
             @RequestParam(defaultValue = "createdAt") String sortBy, // 정렬 기준
             @RequestParam(defaultValue = "desc") String sortDirection, // 정렬 방향
-            @RequestParam(defaultValue = "0") int page // 페이지 번호
+            @RequestParam(defaultValue = "0") int page, // 페이지 번호
+            @CurrentUser Long currentUser,
+            @CurrentUserRole Role role
     ) {
-        Page<CompanyResponse> companies = companyService.getAllCompanies(query, page, size, sortBy, sortDirection);
+        Page<CompanyResponse> companies = companyService.getAllCompanies(query, page, size, sortBy, sortDirection, currentUser, role);
         return ResponseEntity.ok(companies);
     }
 

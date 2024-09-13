@@ -39,7 +39,10 @@ public class CompanyService {
     }
 
     // 업체 전체 조회 및 검색 (마스터 관리자, 허브 관리자)
-    public Page<CompanyResponse> getAllCompanies(String query, int page, int size, String sortBy, String sortDirection) {
+    public Page<CompanyResponse> getAllCompanies(String query, int page, int size, String sortBy, String sortDirection, Long currentUser, Role role) {
+        if (!isAdmin(role))
+            throw new CompanyException(CompanyErrorCode.UNAUTHORIZED_ACCESS);
+
         Page<Company> companies;
 
         // 페이지 크기 제한
