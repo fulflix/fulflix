@@ -22,37 +22,53 @@ Authorization: Bearer {{access_token}}
 
 ###
 
+## 허브 삭제 API
+DELETE http://localhost:8088/hub/3
+Authorization: Bearer {{access_token}}
+
+###
+
 ## 허브 경로 생성 API
-POST http://localhost:8180/hub-route
+POST http://localhost:8088/hub-route
 Content-Type: application/json
 Authorization: Bearer {{access_token}}
 
 {
-  "departureHubId": 1,
-  "arrivalHubId": 2,
-  "duration": 120
+  "departureHubId": 2,
+  "arrivalHubId": 1,
+  "duration": 22222
 }
 
 ###
 
 ###
 ## 허브 경로 전체 조회 API
-GET http://localhost:8180/hub-routes
+GET http://localhost:8088/hub-routes
+Authorization: Bearer {{access_token}}
 
 ###
 ## 허브 경로 단건 조회 API
-GET http://localhost:8180/hub-route/1
+GET http://localhost:8088/hub-route/1
+Authorization: Bearer {{access_token}}
 
 ###
 
 ## 허브 경로 수정 API
-PUT http://localhost:8180/hub-route/1
+PUT http://localhost:8088/hub-route/1
+Authorization: Bearer {{access_token}}
 Content-Type: application/json
 
 {
-  "departureHubId": 1,
-  "arrivalHubId": 2,
+  "departureHubId": 2,
+  "arrivalHubId": 1,
   "duration": 30
 }
+
+###
+
+
+## 허브 경로 삭제 API
+DELETE http://localhost:8088/hub-route/1
+Authorization: Bearer {{access_token}}
 
 ###

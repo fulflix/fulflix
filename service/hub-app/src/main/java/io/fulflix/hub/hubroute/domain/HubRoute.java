@@ -13,7 +13,7 @@ import static io.fulflix.common.app.jpa.audit.CommonAuditFields.DEFAULT_CONDITIO
 @Table(name = "p_hub_routes")
 @Getter
 @NoArgsConstructor
-//@SQLDelete(sql = "UPDATE p_hub_routes SET is_deleted = true WHERE id = ?")
+@SQLDelete(sql = "UPDATE p_hub_routes SET is_deleted = true WHERE id = ?")
 @SQLRestriction(DEFAULT_CONDITION)
 public class HubRoute extends Auditable {
 
