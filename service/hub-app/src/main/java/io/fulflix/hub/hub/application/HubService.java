@@ -72,7 +72,7 @@ public class HubService {
     @Transactional
     public void deleteHub(Long hubId) {
         Hub hub = findHubById(hubId);
-        hub.delete();
+        hubRepository.delete(hub);
     }
 
     public Hub findHubById(Long id) {

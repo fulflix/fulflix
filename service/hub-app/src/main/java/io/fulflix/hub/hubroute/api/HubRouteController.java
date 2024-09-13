@@ -57,4 +57,11 @@ public class HubRouteController {
         HubRouteResponseDto responseDto = hubRouteService.updateHubRoute(hubRouteId, dto);
         return ResponseEntity.ok(responseDto);
     }
+
+    // 허브 경로 삭
+    @DeleteMapping("/hub-route/{hubRouteId}")
+    public ResponseEntity<Void> deleteHubRoute(@PathVariable Long hubRouteId) {
+        hubRouteService.deleteHubRoute(hubRouteId);
+        return ResponseEntity.noContent().build();
+    }
 }

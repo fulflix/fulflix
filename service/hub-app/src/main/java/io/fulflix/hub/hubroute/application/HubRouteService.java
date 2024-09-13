@@ -22,9 +22,9 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class HubRouteService {
+
     private final HubRouteRepository hubRouteRepository;
     private final HubRepository hubRepository;
-
 
     // 허브 경로 생성
     @Transactional
@@ -61,30 +61,6 @@ public class HubRouteService {
         return hubRoutes.map(this::mapToDto);
     }
 
-    // entity -> dto
-    private HubRouteResponseDto mapToDto(HubRoute hubRoute) {
-        HubRouteResponseDto dto = new HubRouteResponseDto();
-        dto.setId(hubRoute.getId());
-        dto.setDepartureHub(HubResponseDto.of(hubRoute.getDepartureHub()));
-        dto.setArrivalHub(HubResponseDto.of(hubRoute.getArrivalHub()));
-        dto.setDuration(hubRoute.getDuration());
-        dto.setRoute(hubRoute.getRoute());
-        return dto;
-    }
-
-    // 허브 경로 조회 메서드
-    private HubRoute findHubRouteById(Long hubRouteId) {
-        return hubRouteRepository.findById(hubRouteId)
-                .orElseThrow(() -> new HubRouteException(HubRouteErrorCode.HUB_ROUTE_NOT_FOUND));
-    }
-
-    // 허브 조회 메서드
-    private Hub getHubById(Long hubId) {
-        return hubRepository.findById(hubId)
-                .orElseThrow(() -> new HubException(HubErrorCode.HUB_NOT_FOUND));
-    }
-
-
     // 허브 경로 수정
     @Transactional
     public HubRouteResponseDto updateHubRoute(Long hubRouteId, HubRouteUpdateDto dto) {
@@ -108,4 +84,39 @@ public class HubRouteService {
         return mapToDto(savedHubRoute);
 
     }
+
+    // 허브 경로 삭제
+    @Transactional
+    public void deleteHubRoute(Long hubRouteId) {
+        HubRoute hubRoute = findHubRouteById(hubRouteId);
+        hubRouteRepository.delete(hubRoute);
+    }
+
+
+
+
+
+    // entity -> dto
+    private HubRouteResponseDto mapToDto(HubRoute hubRoute) {
+        HubRouteResponseDto dto = new HubRouteResponseDto();
+        dto.setId(hubRoute.getId());
+        dto.setDepartureHub(HubResponseDto.of(hubRoute.getDepartureHub()));
+        dto.setArrivalHub(HubResponseDto.of(hubRoute.getArrivalHub()));
+        dto.setDuration(hubRoute.getDuration());
+        dto.setRoute(hubRoute.getRoute());
+        return dto;
+    }
+
+    // 허브 경로 조회 메서드
+    private HubRoute findHubRouteById(Long hubRouteId) {
+        return hubRouteRepository.findById(hubRouteId)
+                .orElseThrow(() -> new HubRouteException(HubRouteErrorCode.HUB_ROUTE_NOT_FOUND));
+    }
+
+    // 허브 조회 메서드
+    private Hub getHubById(Long hubId) {
+        return hubRepository.findById(hubId)
+                .orElseThrow(() -> new HubException(HubErrorCode.HUB_NOT_FOUND));
+    }
+
 }
