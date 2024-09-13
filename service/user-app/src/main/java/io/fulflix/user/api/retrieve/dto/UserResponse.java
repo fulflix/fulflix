@@ -1,4 +1,4 @@
-package io.fulflix.user.api.mypage.dto;
+package io.fulflix.user.api.retrieve.dto;
 
 import io.fulflix.user.repo.model.User;
 import java.time.LocalDateTime;

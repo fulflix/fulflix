@@ -22,9 +22,9 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class HubRouteService {
+
     private final HubRouteRepository hubRouteRepository;
     private final HubRepository hubRepository;
-
 
     // 허브 경로 생성
     @Transactional
@@ -39,8 +39,8 @@ public class HubRouteService {
                 .duration(dto.getDuration())
                 .build();
 
-        HubRoute savedHubRoute = hubRouteRepository.save(hubRoute);
-        return mapToDto(savedHubRoute);
+        hubRouteRepository.save(hubRoute);
+        return mapToDto(hubRoute);
     }
 
     // 허브 단건 조회
@@ -60,6 +60,37 @@ public class HubRouteService {
         Page<HubRoute> hubRoutes = hubRouteRepository.findByRouteContaining(keyword, pageable);
         return hubRoutes.map(this::mapToDto);
     }
+
+    // 허브 경로 수정
+    @Transactional
+    public HubRouteResponseDto updateHubRoute(Long hubRouteId, HubRouteUpdateDto dto) {
+
+        HubRoute hubRoute = findHubRouteById(hubRouteId);
+
+        if (dto.getDepartureHubId() != null) {
+            Hub departureHub = getHubById(dto.getDepartureHubId());
+            hubRoute.setDepartureHub(departureHub);
+        }
+
+        if (dto.getArrivalHubId() != null) {
+            Hub arrivalHub = getHubById(dto.getArrivalHubId());
+            hubRoute.setArrivalHub(arrivalHub);
+        }
+
+        if (dto.getDuration() != null) {
+            hubRoute.setDuration(dto.getDuration());
+        }
+
+        return mapToDto(hubRoute);
+    }
+
+    // 허브 경로 삭제
+    @Transactional
+    public void deleteHubRoute(Long hubRouteId) {
+        HubRoute hubRoute = findHubRouteById(hubRouteId);
+        hubRoute.delete();
+    }
+
 
     // entity -> dto
     private HubRouteResponseDto mapToDto(HubRoute hubRoute) {
@@ -84,28 +115,4 @@ public class HubRouteService {
                 .orElseThrow(() -> new HubException(HubErrorCode.HUB_NOT_FOUND));
     }
 
-
-    // 허브 경로 수정
-    @Transactional
-    public HubRouteResponseDto updateHubRoute(Long hubRouteId, HubRouteUpdateDto dto) {
-        HubRoute hubRoute = findHubRouteById(hubRouteId);
-
-        if (dto.getDepartureHubId() != null) {
-            Hub departureHub = getHubById(dto.getDepartureHubId());
-            hubRoute.setDepartureHub(departureHub);
-        }
-
-        if (dto.getArrivalHubId() != null) {
-            Hub arrivalHub = getHubById(dto.getArrivalHubId());
-            hubRoute.setArrivalHub(arrivalHub);
-        }
-
-        if (dto.getDuration() != null) {
-            hubRoute.setDuration(dto.getDuration());
-        }
-
-        HubRoute savedHubRoute = hubRouteRepository.save(hubRoute);
-        return mapToDto(savedHubRoute);
-
-    }
 }

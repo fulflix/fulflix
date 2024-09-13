@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -23,10 +24,8 @@ public class HubService {
     @Transactional
     public HubResponseDto createHub(HubRequestDto hubRequestDto) {
         Hub hub = HubRequestDto.toEntity(hubRequestDto);
-
-        Hub savedHub = hubRepository.save(hub);
-
-        return HubResponseDto.of(savedHub);
+        hubRepository.save(hub);
+        return HubResponseDto.of(hub);
     }
 
     // 허브 단건 조회
@@ -51,6 +50,7 @@ public class HubService {
     @Transactional
     public HubResponseDto updateHub(Long hubId, HubRequestDto hubRequestDto) {
         Hub hub = findHubById(hubId);
+
         if(hubRequestDto.getName() != null) {
             hub.setName(hubRequestDto.getName());
         }
@@ -63,9 +63,7 @@ public class HubService {
         if(hubRequestDto.getName() != null) {
             hub.setLongitude(hubRequestDto.getLongitude());
         }
-
-        Hub savedHub = hubRepository.save(hub);
-        return HubResponseDto.of(savedHub);
+        return HubResponseDto.of(hub);
     }
 
     // 허브 삭제
@@ -74,6 +72,9 @@ public class HubService {
         Hub hub = findHubById(hubId);
         hub.delete();
     }
+
+
+
 
     public Hub findHubById(Long id) {
         return hubRepository.findById(id).orElseThrow(

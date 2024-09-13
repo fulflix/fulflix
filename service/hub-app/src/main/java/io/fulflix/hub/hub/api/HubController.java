@@ -49,7 +49,7 @@ public class HubController {
     // 허브 전체 조회
     @GetMapping("/hubs")
     public ResponseEntity<Page<HubResponseDto>> getAllHubs(@PageableDefault(
-        page = 0, size = 10, sort = "createdAt", direction = Sort.Direction.ASC
+         sort = "createdAt", direction = Sort.Direction.ASC
     ) Pageable pageable) {
         Page<HubResponseDto> hubResponseDto = hubService.getAllHubs(pageable);
         return ResponseEntity.ok(hubResponseDto);
@@ -58,7 +58,7 @@ public class HubController {
     // 허브 이름으로 검색
     @GetMapping("/hubs/search")
     public ResponseEntity<Page<HubResponseDto>> searchHubs(@PageableDefault(
-        page = 0, size = 10, sort = "createdAt", direction = Sort.Direction.ASC
+        sort = "createdAt", direction = Sort.Direction.ASC
     ) Pageable pageable, @RequestParam String keyword) {
         Page<HubResponseDto> hubResponseDto = hubService.searchHubs(pageable, keyword);
         return ResponseEntity.ok(hubResponseDto);
@@ -74,7 +74,7 @@ public class HubController {
 
     // 허브 삭제
     @DeleteMapping("/hub/{hubId}")
-    public ResponseEntity<String> deleteHub(@PathVariable Long hubId) {
+    public ResponseEntity<Void> deleteHub(@PathVariable Long hubId) {
         hubService.deleteHub(hubId);
         return ResponseEntity.noContent().build();
     }
