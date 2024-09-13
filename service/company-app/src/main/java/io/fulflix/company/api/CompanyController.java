@@ -55,9 +55,11 @@ public class CompanyController {
     // 업체 단일 조회 (마스터 관리자, 허브 관리자, 허브 업체)
     @GetMapping("/{id}")
     public ResponseEntity<CompanyResponse> getCompany(
-            @PathVariable Long id
+            @PathVariable Long id,
+            @CurrentUser Long currentUser,
+            @CurrentUserRole Role role
     ) {
-        CompanyResponse company = companyService.getCompanyById(id);
+        CompanyResponse company = companyService.getCompanyById(id, currentUser, role);
         return ResponseEntity.ok(company);
     }
 
@@ -65,16 +67,22 @@ public class CompanyController {
     @PutMapping("/{id}")
     public ResponseEntity<CompanyResponse> updateCompany(
             @PathVariable Long id,
-            @Valid @RequestBody UpdateCompanyRequest updateCompanyRequest
+            @Valid @RequestBody UpdateCompanyRequest updateCompanyRequest,
+            @CurrentUser Long currentUser,
+            @CurrentUserRole Role role
     ) {
-        CompanyResponse updatedCompany = companyService.updateCompany(id, updateCompanyRequest);
+        CompanyResponse updatedCompany = companyService.updateCompany(id, updateCompanyRequest, currentUser, role);
         return ResponseEntity.ok(updatedCompany);
     }
 
     // 업체 삭제 (마스터 관리자, 허브 관리자)
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCompany(@PathVariable Long id) {
-        companyService.deleteCompany(id);
+    public ResponseEntity<Void> deleteCompany(
+            @PathVariable Long id,
+            @CurrentUser Long currentUser,
+            @CurrentUserRole Role role
+    ) {
+        companyService.deleteCompany(id, currentUser, role);
         return ResponseEntity.noContent().build(); // 204 No Content 응답
     }
 }

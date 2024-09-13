@@ -64,13 +64,19 @@ public class CompanyService {
     }
 
     // 업체 단일 조회 (마스터 관리자, 허브 관리자, 허브 업체)
-    public CompanyResponse getCompanyById(Long id) {
+    public CompanyResponse getCompanyById(Long id, Long currentUser, Role role) {
+        if (!isAdmin(role) && !isHubCompany(role))
+            throw new CompanyException(CompanyErrorCode.UNAUTHORIZED_ACCESS);
+
         Company company = findCompanyById(id);
         return CompanyResponse.fromEntity(company);
     }
 
     // 업체 수정 (마스터 관리자, 허브 관리자, 허브 업체)
-    public CompanyResponse updateCompany(Long id, UpdateCompanyRequest updateCompanyRequest) {
+    public CompanyResponse updateCompany(Long id, UpdateCompanyRequest updateCompanyRequest, Long currentUser, Role role) {
+        if (!isAdmin(role) && !isHubCompany(role))
+            throw new CompanyException(CompanyErrorCode.UNAUTHORIZED_ACCESS);
+
         Company company = findCompanyById(id);
 
         if (updateCompanyRequest.getHubId() != null && !updateCompanyRequest.getHubId().equals(company.getHubId()))
@@ -88,7 +94,10 @@ public class CompanyService {
     }
 
     // 업체 삭제 (마스터 관리자, 허브 관리자)
-    public void deleteCompany(Long id) {
+    public void deleteCompany(Long id, Long currentUser, Role role) {
+        if (!isAdmin(role))
+            throw new CompanyException(CompanyErrorCode.UNAUTHORIZED_ACCESS);
+
         Company company = findCompanyById(id);
         company.delete(); // isDeleted = true
         companyRepo.save(company);
