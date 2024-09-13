@@ -1,5 +1,6 @@
 package io.fulflix.company.application;
 
+import io.fulflix.common.web.principal.Role;
 import io.fulflix.company.api.dto.CompanyResponse;
 import io.fulflix.company.api.dto.RegisterCompanyRequest;
 import io.fulflix.company.api.dto.UpdateCompanyRequest;
@@ -22,14 +23,23 @@ public class CompanyService {
     private final CompanyRepo companyRepo;
 
     // 업체 등록 (마스터 관리자, 허브 관리자)
-    public void registerCompany(RegisterCompanyRequest registerCompanyRequest) {
+    public void registerCompany(RegisterCompanyRequest registerCompanyRequest, Long currentUser, Role role) {
+        validateAdminAuthority(role);
+
         checkCompanyDuplication(registerCompanyRequest.getCompanyName());
+
         Company company = RegisterCompanyRequest.toEntity(registerCompanyRequest);
+
+        company.assignOwnerId(registerCompanyRequest.getOwnerId());
+        company.applyCompanyCreated(currentUser);
+
         companyRepo.save(company);
     }
 
     // 업체 전체 조회 및 검색 (마스터 관리자, 허브 관리자)
-    public Page<CompanyResponse> getAllCompanies(String query, int page, int size, String sortBy, String sortDirection) {
+    public Page<CompanyResponse> getAllCompanies(String query, int page, int size, String sortBy, String sortDirection, Long currentUser, Role role) {
+        validateAdminAuthority(role);
+
         Page<Company> companies;
 
         // 페이지 크기 제한
@@ -51,13 +61,17 @@ public class CompanyService {
     }
 
     // 업체 단일 조회 (마스터 관리자, 허브 관리자, 허브 업체)
-    public CompanyResponse getCompanyById(Long id) {
+    public CompanyResponse getCompanyById(Long id, Long currentUser, Role role) {
+        validateAdminAndHubCompanyAuthority(role);
+
         Company company = findCompanyById(id);
         return CompanyResponse.fromEntity(company);
     }
 
     // 업체 수정 (마스터 관리자, 허브 관리자, 허브 업체)
-    public CompanyResponse updateCompany(Long id, UpdateCompanyRequest updateCompanyRequest) {
+    public CompanyResponse updateCompany(Long id, UpdateCompanyRequest updateCompanyRequest, Long currentUser, Role role) {
+        validateAdminAndHubCompanyAuthority(role);
+
         Company company = findCompanyById(id);
 
         if (updateCompanyRequest.getHubId() != null && !updateCompanyRequest.getHubId().equals(company.getHubId()))
@@ -75,31 +89,51 @@ public class CompanyService {
     }
 
     // 업체 삭제 (마스터 관리자, 허브 관리자)
-    public void deleteCompany(Long id) {
+    public void deleteCompany(Long id, Long currentUser, Role role) {
+        validateAdminAuthority(role);
+
         Company company = findCompanyById(id);
         company.delete(); // isDeleted = true
         companyRepo.save(company);
     }
 
-    // 업체 존재 확인
+    // 관리자 권한 확인
+    private boolean isAdmin(Role role) {
+        return role.isMasterAdmin() || role.isHubAdmin();
+    }
+
+    // 허브 업체 권한 확인
+    private boolean isHubCompany(Role role) {
+        return role.isHubCompany();
+    }
+
+    // 관리자 권한 확인 메서드
+    private void validateAdminAuthority(Role role) {
+        if (!isAdmin(role))
+            throw new CompanyException(CompanyErrorCode.UNAUTHORIZED_ACCESS);
+    }
+
+    // 관리자 권한, 허브 업체 권한 통합 메서드
+    private void validateAdminAndHubCompanyAuthority(Role role) {
+        if (!isAdmin(role) && !isHubCompany(role))
+            throw new CompanyException(CompanyErrorCode.UNAUTHORIZED_ACCESS);
+    }
+
+    // 삭제 여부와 상관없이 업체 존재 확인
     private Company findCompanyById(Long id) {
         return companyRepo.findById(id)
                 .orElseThrow(() -> new CompanyException(CompanyErrorCode.COMPANY_NOT_FOUND));
     }
 
-    // 업체 중복 확인
+    // TODO 삭제되지 않은 업체 존재 확인
+
+    // 업체명 중복 확인
     private void checkCompanyDuplication(String companyName) {
-        if (companyRepo.findByCompanyName(companyName).isPresent()) {
+        if (companyRepo.findByCompanyName(companyName).isPresent())
             throw new CompanyException(CompanyErrorCode.DUPLICATE_COMPANY_NAME);
-        }
     }
 
     // TODO 사용자 존재 확인
 
     // TODO 허브 존재 확인
-
-    // 관리자 권한 확인
-    private boolean isAdmin(String role) {
-        return role.equals("MASTER_ADMIN") || role.equals("HUB_ADMIN");
-    }
 }

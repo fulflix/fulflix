@@ -1,38 +1,59 @@
-## 업체 등록 API
-POST http://localhost:8280/company
+## 생산 업체 등록 API
+POST http://localhost:8088/company
 Content-Type: application/json
+Authorization: Bearer {{access_token}}
 
 {
-  "userId" : 1,
-  "hubId" : 1,
-  "companyName" : "예지컴퍼니",
+  "hubId" : 2,
+  "ownerId" : 4,
+  "companyName" : "섬유 가공품 생산 업체",
   "companyType" : "SUPPLIER",
-  "companyAddress" : "서울 마포구"
+  "companyAddress" : "경기도 고양시"
+}
+
+###
+
+## 수령 업체 등록 API
+POST http://localhost:8088/company
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+  "hubId" : 4,
+  "ownerId" : 5,
+  "companyName" : "바구니 제작 업체",
+  "companyType" : "RECEIVER",
+  "companyAddress" : "부산 수영구"
 }
 
 ###
 
 ## 업체 전체 조회 및 검색 API
-GET http://localhost:8280/company?query=컴퍼니&page=&size=&sortBy=&sortDirection=
+GET http://localhost:8088/company?query=플라스틱&page=&size=&sortBy=&sortDirection=
 Content-Type: application/json
+Authorization: Bearer {{access_token}}
 
 ###
 
 ## 업체 단일 조회 API
-GET http://localhost:8280/company/1
+GET http://localhost:8088/company/1
 Content-Type: application/json
+Authorization: Bearer {{access_token}}
 
 ###
 
 ## 업체 수정 API
-PUT http://localhost:8280/company/1
+PUT http://localhost:8088/company/1
 Content-Type: application/json
+Authorization: Bearer {{access_token}}
 
 {
-    "companyName" : "예롱컴퍼니"
+  "companyName" : "플라스틱 가공품 생산 업체"
 }
 
 ###
 
 ## 업체 삭제 API
-DELETE http://localhost:8280/company/2
+DELETE http://localhost:8088/company/3
+Content-Type: application/json
+Authorization: Bearer {{access_token}}

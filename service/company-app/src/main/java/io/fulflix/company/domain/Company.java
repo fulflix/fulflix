@@ -19,11 +19,11 @@ public class Company extends CompanyAuditable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "user_id", nullable = false)
-    private Long userId;
-
     @Column(name = "hub_id", nullable = false)
     private Long hubId;
+
+    @Column(name = "owner_Id", nullable = false)
+    private Long ownerId;
 
     @Column(name = "company_name", nullable = false, unique = true)
     private String companyName;
@@ -34,6 +34,11 @@ public class Company extends CompanyAuditable {
 
     @Column(name = "company_address", nullable = false)
     private String companyAddress;
+
+    // ownerId(업체) 설정
+    public void assignOwnerId(Long newOwnerId) {
+        this.ownerId = newOwnerId;
+    }
 
     // hubId 업데이트
     public void updateHubId(UpdateCompanyRequest updateCompanyRequest) {

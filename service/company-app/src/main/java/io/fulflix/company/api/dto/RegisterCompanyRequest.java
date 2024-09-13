@@ -12,11 +12,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RegisterCompanyRequest {
-    @NotNull(message = "User Id를 입력해 주세요.")
-    private Long userId;
-
     @NotNull(message = "Hub Id를 입력해 주세요.")
     private Long hubId;
+
+    @NotNull(message = "Owner Id를 입력해 주세요.")
+    private Long ownerId;
 
     @NotBlank(message = "업체명을 입력해 주세요.")
     private String companyName;
@@ -29,8 +29,8 @@ public class RegisterCompanyRequest {
 
     public static Company toEntity(RegisterCompanyRequest registerCompanyRequest) {
         return Company.builder()
-                .userId(registerCompanyRequest.userId)
                 .hubId(registerCompanyRequest.hubId)
+                .ownerId(registerCompanyRequest.ownerId)
                 .companyName(registerCompanyRequest.companyName)
                 .companyType(registerCompanyRequest.companyType)
                 .companyAddress(registerCompanyRequest.companyAddress)
