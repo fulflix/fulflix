@@ -25,4 +25,16 @@ public enum Role {
             .findFirst()
             .orElse(ANONYMOUS);
     }
+
+    public boolean isMasterAdmin() {
+        return this == MASTER_ADMIN;
+    }
+
+    public boolean isHubAdmin() {
+        return this == HUB_ADMIN;
+    }
+
+    public boolean isHubCompany() {
+        return this == HUB_COMPANY;
+    }
 }

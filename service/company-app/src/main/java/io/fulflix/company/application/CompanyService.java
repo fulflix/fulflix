@@ -24,9 +24,7 @@ public class CompanyService {
 
     // 업체 등록 (마스터 관리자, 허브 관리자)
     public void registerCompany(RegisterCompanyRequest registerCompanyRequest, Long currentUser, Role role) {
-
-        if (!isAdmin(role))
-            throw new CompanyException(CompanyErrorCode.UNAUTHORIZED_ACCESS);
+        validateAdminAuthority(role);
 
         checkCompanyDuplication(registerCompanyRequest.getCompanyName());
 
@@ -40,8 +38,7 @@ public class CompanyService {
 
     // 업체 전체 조회 및 검색 (마스터 관리자, 허브 관리자)
     public Page<CompanyResponse> getAllCompanies(String query, int page, int size, String sortBy, String sortDirection, Long currentUser, Role role) {
-        if (!isAdmin(role))
-            throw new CompanyException(CompanyErrorCode.UNAUTHORIZED_ACCESS);
+        validateAdminAuthority(role);
 
         Page<Company> companies;
 
@@ -65,8 +62,7 @@ public class CompanyService {
 
     // 업체 단일 조회 (마스터 관리자, 허브 관리자, 허브 업체)
     public CompanyResponse getCompanyById(Long id, Long currentUser, Role role) {
-        if (!isAdmin(role) && !isHubCompany(role))
-            throw new CompanyException(CompanyErrorCode.UNAUTHORIZED_ACCESS);
+        validateAdminAndHubCompanyAuthority(role);
 
         Company company = findCompanyById(id);
         return CompanyResponse.fromEntity(company);
@@ -74,8 +70,7 @@ public class CompanyService {
 
     // 업체 수정 (마스터 관리자, 허브 관리자, 허브 업체)
     public CompanyResponse updateCompany(Long id, UpdateCompanyRequest updateCompanyRequest, Long currentUser, Role role) {
-        if (!isAdmin(role) && !isHubCompany(role))
-            throw new CompanyException(CompanyErrorCode.UNAUTHORIZED_ACCESS);
+        validateAdminAndHubCompanyAuthority(role);
 
         Company company = findCompanyById(id);
 
@@ -95,8 +90,7 @@ public class CompanyService {
 
     // 업체 삭제 (마스터 관리자, 허브 관리자)
     public void deleteCompany(Long id, Long currentUser, Role role) {
-        if (!isAdmin(role))
-            throw new CompanyException(CompanyErrorCode.UNAUTHORIZED_ACCESS);
+        validateAdminAuthority(role);
 
         Company company = findCompanyById(id);
         company.delete(); // isDeleted = true
@@ -105,12 +99,24 @@ public class CompanyService {
 
     // 관리자 권한 확인
     private boolean isAdmin(Role role) {
-        return role.equals(Role.MASTER_ADMIN) || role.equals(Role.HUB_ADMIN);
+        return role.isMasterAdmin() || role.isHubAdmin();
     }
 
     // 허브 업체 권한 확인
     private boolean isHubCompany(Role role) {
-        return role.equals(Role.HUB_COMPANY);
+        return role.isHubCompany();
+    }
+
+    // 관리자 권한 확인 메서드
+    private void validateAdminAuthority(Role role) {
+        if (!isAdmin(role))
+            throw new CompanyException(CompanyErrorCode.UNAUTHORIZED_ACCESS);
+    }
+
+    // 관리자 권한, 허브 업체 권한 통합 메서드
+    private void validateAdminAndHubCompanyAuthority(Role role) {
+        if (!isAdmin(role) && !isHubCompany(role))
+            throw new CompanyException(CompanyErrorCode.UNAUTHORIZED_ACCESS);
     }
 
     // 삭제 여부와 상관없이 업체 존재 확인
