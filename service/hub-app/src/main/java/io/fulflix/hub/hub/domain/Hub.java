@@ -2,6 +2,7 @@ package io.fulflix.hub.hub.domain;
 
 
 import io.fulflix.common.app.jpa.audit.Auditable;
+import io.fulflix.hub.hub.api.dto.HubRequestDto;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.SQLDelete;
@@ -14,8 +15,7 @@ import static io.fulflix.common.app.jpa.audit.CommonAuditFields.DEFAULT_CONDITIO
 @Table(name = "p_hubs")
 @NoArgsConstructor
 @Getter
-//@SQLDelete(sql = "UPDATE p_hubs SET is_deleted = true WHERE id = ?")
-@SQLRestriction(DEFAULT_CONDITION) //@SQLRestriction("is_deleted = false")
+@SQLRestriction(DEFAULT_CONDITION)
 public class Hub extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,12 +29,6 @@ public class Hub extends Auditable {
 
     @Column(nullable = false)
     private Double latitude;
-
-    @Column(nullable = false)
-    private Double longitude;
-
-    @Column(name = "is_deleted")
-    private boolean isDeleted = false;
 
     public void setName(String name) {
         this.name = name;
@@ -52,9 +46,8 @@ public class Hub extends Auditable {
         this.longitude = longitude;
     }
 
-    public void setDeleted(boolean deleted) {
-        isDeleted = deleted;
-    }
+    @Column(nullable = false)
+    private Double longitude;
 
     // 생성자 (필수 필드만 설정)
     public Hub(String name, String address, double latitude, double longitude) {
@@ -63,4 +56,5 @@ public class Hub extends Auditable {
         this.latitude = latitude;
         this.longitude = longitude;
     }
+
 }

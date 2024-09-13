@@ -29,3 +29,10 @@ spring:
             - Path=/company/**
           filters:
             - JwtAuthorizationFilter
+            
+        - id: delivery-app-authenticated
+          uri: lb://delivery-app
+          predicates:
+            - Path=/delivery/**, /delivery-route/**
+          filters:
+            - JwtAuthorizationFilter

@@ -1,6 +1,6 @@
 package io.fulflix.user.application;
 
-import io.fulflix.user.api.mypage.dto.UserResponse;
+import io.fulflix.user.api.retrieve.dto.UserResponse;
 import io.fulflix.user.exception.UserErrorCode;
 import io.fulflix.user.exception.UserException;
 import io.fulflix.user.repo.UserRepo;

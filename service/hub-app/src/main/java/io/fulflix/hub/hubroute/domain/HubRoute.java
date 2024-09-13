@@ -13,7 +13,6 @@ import static io.fulflix.common.app.jpa.audit.CommonAuditFields.DEFAULT_CONDITIO
 @Table(name = "p_hub_routes")
 @Getter
 @NoArgsConstructor
-//@SQLDelete(sql = "UPDATE p_hub_routes SET is_deleted = true WHERE id = ?")
 @SQLRestriction(DEFAULT_CONDITION)
 public class HubRoute extends Auditable {
 
@@ -36,9 +35,6 @@ public class HubRoute extends Auditable {
 
     @Column
     private String route;
-
-    @Column(name = "is_deleted")
-    private boolean isDeleted = false;
 
     @PrePersist
     @PreUpdate
@@ -64,17 +60,12 @@ public class HubRoute extends Auditable {
         this.route = route;
     }
 
-    public void setDeleted(boolean deleted) {
-        isDeleted = deleted;
-    }
-
     // 생성자
     @Builder
-    public HubRoute(Hub departureHub, Hub arrivalHub, Integer duration, String route, boolean isDeleted) {
+    public HubRoute(Hub departureHub, Hub arrivalHub, Integer duration, String route) {
         this.departureHub = departureHub;
         this.arrivalHub = arrivalHub;
         this.duration = duration;
         this.route = route;
-        this.isDeleted = isDeleted;
     }
 }
