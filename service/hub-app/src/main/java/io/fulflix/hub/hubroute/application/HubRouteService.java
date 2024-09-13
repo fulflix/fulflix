@@ -89,11 +89,8 @@ public class HubRouteService {
     @Transactional
     public void deleteHubRoute(Long hubRouteId) {
         HubRoute hubRoute = findHubRouteById(hubRouteId);
-        hubRouteRepository.delete(hubRoute);
+        hubRoute.delete();
     }
-
-
-
 
 
     // entity -> dto
