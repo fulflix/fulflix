@@ -23,7 +23,7 @@ Authorization: Bearer {{access_token}}
 ###
 
 ## 허브 삭제 API
-DELETE http://localhost:8088/hub/3
+DELETE http://localhost:8088/hub/1
 Authorization: Bearer {{access_token}}
 
 ###
