@@ -39,8 +39,8 @@ public class HubRouteService {
                 .duration(dto.getDuration())
                 .build();
 
-        HubRoute savedHubRoute = hubRouteRepository.save(hubRoute);
-        return mapToDto(savedHubRoute);
+        hubRouteRepository.save(hubRoute);
+        return mapToDto(hubRoute);
     }
 
     // 허브 단건 조회
@@ -64,6 +64,7 @@ public class HubRouteService {
     // 허브 경로 수정
     @Transactional
     public HubRouteResponseDto updateHubRoute(Long hubRouteId, HubRouteUpdateDto dto) {
+
         HubRoute hubRoute = findHubRouteById(hubRouteId);
 
         if (dto.getDepartureHubId() != null) {
@@ -80,20 +81,15 @@ public class HubRouteService {
             hubRoute.setDuration(dto.getDuration());
         }
 
-        HubRoute savedHubRoute = hubRouteRepository.save(hubRoute);
-        return mapToDto(savedHubRoute);
-
+        return mapToDto(hubRoute);
     }
 
     // 허브 경로 삭제
     @Transactional
     public void deleteHubRoute(Long hubRouteId) {
         HubRoute hubRoute = findHubRouteById(hubRouteId);
-        hubRouteRepository.delete(hubRoute);
+        hubRoute.delete();
     }
-
-
-
 
 
     // entity -> dto
