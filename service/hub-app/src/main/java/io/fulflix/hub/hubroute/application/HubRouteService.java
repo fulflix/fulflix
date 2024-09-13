@@ -39,8 +39,8 @@ public class HubRouteService {
                 .duration(dto.getDuration())
                 .build();
 
-        HubRoute savedHubRoute = hubRouteRepository.save(hubRoute);
-        return mapToDto(savedHubRoute);
+        hubRouteRepository.save(hubRoute);
+        return mapToDto(hubRoute);
     }
 
     // 허브 단건 조회
@@ -80,6 +80,7 @@ public class HubRouteService {
         if (dto.getDuration() != null) {
             hubRoute.setDuration(dto.getDuration());
         }
+
         return mapToDto(hubRoute);
     }
 

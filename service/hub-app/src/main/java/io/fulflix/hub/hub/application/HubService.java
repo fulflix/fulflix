@@ -25,10 +25,8 @@ public class HubService {
     @Transactional
     public HubResponseDto createHub(HubRequestDto hubRequestDto) {
         Hub hub = HubRequestDto.toEntity(hubRequestDto);
-
-        Hub savedHub = hubRepository.save(hub);
-
-        return HubResponseDto.of(savedHub);
+        hubRepository.save(hub);
+        return HubResponseDto.of(hub);
     }
 
     // 허브 단건 조회
