@@ -62,7 +62,7 @@ public class HubRoute extends Auditable {
 
     // 생성자
     @Builder
-    public HubRoute(Hub departureHub, Hub arrivalHub, Integer duration, String route, boolean isDeleted) {
+    public HubRoute(Hub departureHub, Hub arrivalHub, Integer duration, String route) {
         this.departureHub = departureHub;
         this.arrivalHub = arrivalHub;
         this.duration = duration;

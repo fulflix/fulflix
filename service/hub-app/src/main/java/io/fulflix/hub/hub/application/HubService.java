@@ -12,7 +12,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -73,6 +72,9 @@ public class HubService {
         Hub hub = findHubById(hubId);
         hub.delete();
     }
+
+
+
 
     public Hub findHubById(Long id) {
         return hubRepository.findById(id).orElseThrow(
