@@ -31,3 +31,10 @@ Content-Type: application/json
 Authorization: Bearer {{access_token}}
 
 ###
+
+## 회원 상세 조회 API
+GET http://localhost:8088/user/1
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+###
