@@ -22,3 +22,10 @@ spring:
             - Path=/hub/**, /hubs/**, /hub-route/**, /hub-routes/**
           filters:
             - JwtAuthorizationFilter
+
+        - id: company-app-authenticated
+          uri: lb://company-app
+          predicates:
+            - Path=/company/**
+          filters:
+            - JwtAuthorizationFilter
