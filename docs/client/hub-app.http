@@ -12,7 +12,7 @@ Authorization: Bearer {{access_token}}
 
 ###
 ## 허브 전체 조회 API
-GET {{gateway}}/hubs
+GET {{gateway}}/hub
 Authorization: Bearer {{access_token}}
 
 ###
@@ -43,7 +43,7 @@ Authorization: Bearer {{access_token}}
 
 ###
 ## 허브 경로 전체 조회 API
-GET {{gateway}}/hub-routes
+GET {{gateway}}/hub-route
 Authorization: Bearer {{access_token}}
 
 ###
