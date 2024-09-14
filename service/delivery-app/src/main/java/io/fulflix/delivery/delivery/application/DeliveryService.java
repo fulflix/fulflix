@@ -8,7 +8,7 @@ import io.fulflix.delivery.delivery.domain.DeliveryRepository;
 import io.fulflix.delivery.delivery.domain.DeliveryStatus;
 import io.fulflix.delivery.delivery.exception.DeliveryErrorCode;
 import io.fulflix.delivery.delivery.exception.DeliveryException;
-import io.fulflix.delivery.delivery.infra.client.HubClient;
+import io.fulflix.infra.client.HubClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
