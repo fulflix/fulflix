@@ -76,7 +76,7 @@ public class CompanyService {
 
     // 업체 단일 조회 (마스터 관리자, 허브 관리자, 허브 업체)
     public CompanyResponse getCompanyById(Long id, Long currentUser, Role role) {
-        validateAdminAndHubCompanyAuthority(role);
+//        validateAdminAndHubCompanyAuthority(role);
 
         Company company = findCompanyById(id);
         return CompanyResponse.fromEntity(company);
@@ -84,7 +84,7 @@ public class CompanyService {
 
     // 업체 수정 (마스터 관리자, 허브 관리자, 허브 업체)
     public CompanyResponse updateCompany(Long id, UpdateCompanyRequest updateCompanyRequest, Long currentUser, Role role) {
-        validateAdminAndHubCompanyAuthority(role);
+//        validateAdminAndHubCompanyAuthority(role);
 
         Company company = findCompanyById(id);
 
@@ -111,19 +111,31 @@ public class CompanyService {
         companyRepo.save(company);
     }
 
-    // 관리자 권한 확인 예외처리 메서드
+    // 마스터 관리자 권한 확인 예외처리
+    private void validateMasterAdminAuthority(Role role) {
+        if (!isMasterAdmin(role))
+            throw new CompanyException(CompanyErrorCode.UNAUTHORIZED_ACCESS);
+    }
+
+    // 허브 관리자 권한 확인 예외처리
+    private void validateHubAdminAuthority(Role role) {
+        if (!isHubAdmin(role))
+            throw new CompanyException(CompanyErrorCode.UNAUTHORIZED_ACCESS);
+    }
+
+    // 마스터 관리자 & 허브 관리자 확인 예외처리
     private void validateAdminAuthority(Role role) {
         if (!isAdmin(role))
             throw new CompanyException(CompanyErrorCode.UNAUTHORIZED_ACCESS);
     }
 
-    // 관리자 권한, 허브 업체 권한 통합 예외처리 메서드
-    private void validateAdminAndHubCompanyAuthority(Role role) {
-        if (!isAdmin(role) && !isHubCompany(role))
+    // 마스터 관리자 & 허브 관리자 & 허브 업체 확인 예외처리
+    private void validateAdminAndHubCompanyAuthority(Role role, Company company, Long currentUser) {
+        if (!isAdmin(role) && (!isHubCompany(role) && !company.getOwnerId().equals(currentUser)))
             throw new CompanyException(CompanyErrorCode.UNAUTHORIZED_ACCESS);
     }
 
-    // 허브 존재 확인 예외처리 메서드 (FeignClient)
+    // 허브 존재 확인 예외처리 (FeignClient)
     private void checkHubExists(Long hubId) {
         try {
             HubResponse hubResponse = hubClient.getHubById(hubId);
@@ -132,7 +144,7 @@ public class CompanyService {
         }
     }
 
-    // 업체 사용자 존재 확인 예외처리 메서드 (FeignClient)
+    // 업체 사용자 존재 확인 예외처리 (FeignClient)
     private void checkUserExists(Long ownerId) {
         try {
             UserResponse userResponse = userClient.getUserById(ownerId);
@@ -141,7 +153,17 @@ public class CompanyService {
         }
     }
 
-    // 관리자 권한 확인
+    // 마스터 관리자 권한 확인
+    private boolean isMasterAdmin(Role role) {
+        return role.isMasterAdmin();
+    }
+
+    // 허브 관리자 권한 확인
+    private boolean isHubAdmin(Role role) {
+        return role.isHubAdmin();
+    }
+
+    // 마스터 관리자 & 허브 관리자 권한 확인
     private boolean isAdmin(Role role) {
         return role.isMasterAdmin() || role.isHubAdmin();
     }
