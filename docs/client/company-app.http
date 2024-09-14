@@ -56,13 +56,24 @@ Authorization: Bearer {{access_token}}
 
 ###
 
-## 업체 수정 API
-PUT http://localhost:8088/company/1
+## 업체 수정 API (hubId)
+PUT http://localhost:8088/company/2
 Content-Type: application/json
 Authorization: Bearer {{access_token}}
 
 {
-  "companyName" : "플라스틱 가공품 생산 업체"
+  "hubId" : 2
+}
+
+###
+
+## 업체 수정 API (companyName or companyAddress)
+PUT http://localhost:8088/company/2
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+  "companyName" : "섬유 가공품 생산 업체2"
 }
 
 ###

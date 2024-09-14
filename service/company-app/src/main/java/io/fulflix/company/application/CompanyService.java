@@ -116,12 +116,28 @@ public class CompanyService {
 
     // 업체 수정 (마스터 관리자, 허브 관리자, 허브 업체)
     public CompanyResponse updateCompany(Long id, UpdateCompanyRequest updateCompanyRequest, Long currentUser, Role role) {
-//        validateAdminAndHubCompanyAuthority(role);
+        Company company;
 
-        Company company = findCompanyById(id);
+        if (isMasterAdmin(role))
+            company = findCompanyById(id);
+        else if (isHubAdmin(role)) {
+            company = companyRepo.findByIdAndHubIdAndIsDeletedFalse(id, currentUser)
+                    .orElseThrow(() -> new CompanyException(CompanyErrorCode.UNAUTHORIZED_ACCESS));
+            // hubId 수정 안 되게 예외 처리
+            if (updateCompanyRequest.getHubId() != null)
+                throw new CompanyException(CompanyErrorCode.UNAUTHORIZED_ACCESS);
+        } else if (isHubCompany(role)) {
+            company = companyRepo.findByIdAndOwnerIdAndIsDeletedFalse(id, currentUser)
+                    .orElseThrow(() -> new CompanyException(CompanyErrorCode.UNAUTHORIZED_ACCESS));
+            // hubId 수정 안 되게 예외 처리
+            if (updateCompanyRequest.getHubId() != null)
+                throw new CompanyException(CompanyErrorCode.UNAUTHORIZED_ACCESS);
+        } else throw new CompanyException(CompanyErrorCode.UNAUTHORIZED_ACCESS);
 
-        if (updateCompanyRequest.getHubId() != null && !updateCompanyRequest.getHubId().equals(company.getHubId()))
+        if (updateCompanyRequest.getHubId() != null && !updateCompanyRequest.getHubId().equals(company.getHubId())) {
+            checkHubExists(updateCompanyRequest.getHubId());
             company.updateHubId(updateCompanyRequest);
+        }
 
         if (updateCompanyRequest.getCompanyName() != null && !updateCompanyRequest.getCompanyName().equals(company.getCompanyName())) {
             checkCompanyDuplication(updateCompanyRequest.getCompanyName());

@@ -92,14 +92,14 @@ public class CompanyController {
 
     // 업체 수정 (마스터 관리자, 허브 관리자, 허브 업체)
     @PutMapping("/{id}")
-    public ResponseEntity<CompanyResponse> updateCompany(
+    public ResponseEntity<Void> updateCompany(
             @PathVariable Long id,
             @Valid @RequestBody UpdateCompanyRequest updateCompanyRequest,
             @CurrentUser Long currentUser,
             @CurrentUserRole Role role
     ) {
         CompanyResponse updatedCompany = companyService.updateCompany(id, updateCompanyRequest, currentUser, role);
-        return ResponseEntity.ok(updatedCompany);
+        return ResponseEntity.noContent().build(); // 204 No Content 응답
     }
 
     // 업체 삭제 (마스터 관리자, 허브 관리자)
