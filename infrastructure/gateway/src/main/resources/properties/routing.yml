@@ -6,33 +6,23 @@ spring:
           uri: lb://auth-app
           predicates:
             - Path=/auth/**
-          filters:
-            - AllowsAllRequestFilter
 
         - id: user-app-authenticated
           uri: lb://user-app
           predicates:
             - Path=/user/**
-          filters:
-            - JwtAuthorizationFilter
-
-        - id: hub-app-authenticated
-          uri: lb://hub-app
-          predicates:
-            - Path=/hub/**, /hubs/**, /hub-route/**, /hub-routes/**
-          filters:
-            - JwtAuthorizationFilter
 
         - id: company-app-authenticated
           uri: lb://company-app
           predicates:
             - Path=/company/**
-          filters:
-            - JwtAuthorizationFilter
-            
+
+        - id: hub-app-authenticated
+          uri: lb://hub-app
+          predicates:
+            - Path=/hub/**, /hubs/**, /hub-route/**, /hub-routes/**
+
         - id: delivery-app-authenticated
           uri: lb://delivery-app
           predicates:
             - Path=/delivery/**, /delivery-route/**
-          filters:
-            - JwtAuthorizationFilter
