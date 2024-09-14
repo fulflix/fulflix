@@ -2,7 +2,7 @@ package io.fulflix.gateway.authenticate.utils;
 
 import io.fulflix.gateway.authenticate.exception.AuthErrorCode;
 import io.fulflix.gateway.authenticate.exception.UnAuthorizedException;
-import io.fulflix.gateway.authenticate.jwt.FulflixPrincipal;
+import io.fulflix.gateway.authenticate.domain.FulflixPrincipal;
 import org.springframework.http.HttpHeaders;
 import org.springframework.util.StringUtils;
 import org.springframework.web.server.ServerWebExchange;
