@@ -6,8 +6,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
-
 import static io.fulflix.common.app.feign.FeignClientConfig.FEIGN_CLIENT_BASE_PACKAGE;
 import static io.fulflix.common.web.utils.PropertiesCombineUtils.BASE_PACKAGE;
 @PropertySources({
@@ -17,7 +15,7 @@ import static io.fulflix.common.web.utils.PropertiesCombineUtils.BASE_PACKAGE;
             factory = YamlPropertySourceFactory.class
     )
 })
-//@EnableFeignClients(basePackages = FEIGN_CLIENT_BASE_PACKAGE)
+@EnableFeignClients//(basePackages = FEIGN_CLIENT_BASE_PACKAGE)
 @SpringBootApplication(scanBasePackages = BASE_PACKAGE)
 public class DeliveryAppApplication {
 

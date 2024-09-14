@@ -2,7 +2,7 @@
 @password="password"
 
 # @name 회원가입 API
-POST {{gateway}}/auth/sign-up
+POST localhost:8080/auth/sign-up
 Content-Type: application/json
 
 {
