@@ -68,14 +68,25 @@ public class CompanyController {
         return ResponseEntity.ok(companies);
     }
 
-    // 업체 단일 조회 (마스터 관리자, 허브 관리자, 허브 업체)
-    @GetMapping("/{id}")
-    public ResponseEntity<CompanyResponse> getCompany(
+    // 업체 단일 조회 (마스터 관리자)
+    @GetMapping("/admin/{id}")
+    public ResponseEntity<CompanyDetailResponse> getCompanyByIdForAdmin(
             @PathVariable Long id,
             @CurrentUser Long currentUser,
             @CurrentUserRole Role role
     ) {
-        CompanyResponse company = companyService.getCompanyById(id, currentUser, role);
+        CompanyDetailResponse company = companyService.getCompanyByIdForAdmin(id, currentUser, role);
+        return ResponseEntity.ok(company);
+    }
+
+    // 업체 단일 조회 (허브 관리자, 허브 업체)
+    @GetMapping("/hub/{id}")
+    public ResponseEntity<CompanyResponse> getCompanyByIdForHub(
+            @PathVariable Long id,
+            @CurrentUser Long currentUser,
+            @CurrentUserRole Role role
+    ) {
+        CompanyResponse company = companyService.getCompanyByIdForHub(id, currentUser, role);
         return ResponseEntity.ok(company);
     }
 

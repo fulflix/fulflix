@@ -91,11 +91,26 @@ public class CompanyService {
         return companies.map(CompanyResponse::fromEntity);
     }
 
-    // 업체 단일 조회 (마스터 관리자, 허브 관리자, 허브 업체)
-    public CompanyResponse getCompanyById(Long id, Long currentUser, Role role) {
-//        validateAdminAndHubCompanyAuthority(role);
+    // 업체 단일 조회 (마스터 관리자)
+    public CompanyDetailResponse getCompanyByIdForAdmin(Long id, Long currentUser, Role role) {
+        validateMasterAdminAuthority(role);
 
         Company company = findCompanyById(id);
+        return CompanyDetailResponse.fromEntity(company);
+    }
+
+    // 업체 단일 조회 (허브 관리자, 허브 업체)
+    public CompanyResponse getCompanyByIdForHub(Long id, Long currentUser, Role role) {
+        Company company;
+
+        if (isHubAdmin(role)) {
+            company = companyRepo.findByIdAndHubIdAndIsDeletedFalse(id, currentUser)
+                    .orElseThrow(() -> new CompanyException(CompanyErrorCode.COMPANY_NOT_FOUND));
+        } else if (isHubCompany(role)) {
+            company = companyRepo.findByIdAndOwnerIdAndIsDeletedFalse(id, currentUser)
+                    .orElseThrow(() -> new CompanyException(CompanyErrorCode.COMPANY_NOT_FOUND));
+        } else throw new CompanyException(CompanyErrorCode.UNAUTHORIZED_ACCESS);
+
         return CompanyResponse.fromEntity(company);
     }
 

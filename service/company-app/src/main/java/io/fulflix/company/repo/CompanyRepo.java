@@ -13,7 +13,7 @@ public interface CompanyRepo extends JpaRepository<Company, Long> {
     Optional<Company> findByCompanyName(String companyName);
     Optional<Company> findByIdAndIsDeletedFalse(Long id);
     
-    // 마스터 관리자용 전체 검색
+    // 마스터 관리자용 전체 조회 & 검색
     Page<Company> findByCompanyNameContaining(String companyName, Pageable pageable);
 
     // 허브 관리자용 전체 조회 & 검색
@@ -23,4 +23,10 @@ public interface CompanyRepo extends JpaRepository<Company, Long> {
     // 허브 업체용 전체 조회 & 검색
     Page<Company> findByOwnerIdAndCompanyNameContainingAndIsDeletedFalse(Long ownerId, String companyName, Pageable pageable);
     Page<Company> findByOwnerIdAndIsDeletedFalse(Long ownerId, Pageable pageable);
+
+    // 허브 관리자용 단일 조회
+    Optional<Company> findByIdAndHubIdAndIsDeletedFalse(Long id, Long currentUser);
+
+    // 허브 업체용 단일 조회
+    Optional<Company> findByIdAndOwnerIdAndIsDeletedFalse(Long id, Long currentUser);
 }

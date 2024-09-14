@@ -42,8 +42,15 @@ Authorization: Bearer {{access_token}}
 
 ###
 
-## 업체 단일 조회 API
-GET http://localhost:8088/company/1
+## 업체 단일 조회 API (마스터 관리자용)
+GET http://localhost:8088/company/admin/1
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+###
+
+## 업체 단일 조회 API (허브 관리자, 허브 업체용)
+GET http://localhost:8088/company/hub/1
 Content-Type: application/json
 Authorization: Bearer {{access_token}}
 
