@@ -3,13 +3,13 @@ package io.fulflix.delivery;
 import io.fulflix.common.web.config.YamlPropertySourceFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
+import static io.fulflix.common.app.feign.FeignClientConfig.FEIGN_CLIENT_BASE_PACKAGE;
 import static io.fulflix.common.web.utils.PropertiesCombineUtils.BASE_PACKAGE;
-
-@EnableJpaAuditing(modifyOnCreate = false)
 @PropertySources({
     @PropertySource(
             name = "delivery-app-properties",

@@ -5,8 +5,8 @@ Authorization: Bearer {{access_token}}
 
 {
   "orderId": 1,
-  "departureHubId": 1,
-  "arrivalHubId": 2,
+  "departureHubId": 2,
+  "arrivalHubId": 1,
   "deliveryAddress": "서울특별시 강남구 테헤란로 123, 45678",
   "recipient": "홍길동",
   "recipientSlackId": "hong.gildong.slack"

@@ -1,7 +1,5 @@
 package io.fulflix.delivery.delivery.api.dto;
 
-import io.fulflix.delivery.delivery.domain.DeliveryStatus;
-
 public record DeliveryCreateDto(
     Long orderId,
     Long departureHubId,
