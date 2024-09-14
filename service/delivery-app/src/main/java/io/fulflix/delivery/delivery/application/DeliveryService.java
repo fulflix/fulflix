@@ -83,7 +83,12 @@ public class DeliveryService {
         return DeliveryResponseDto.of(delivery);
     }
 
-
+    // 배송 삭제
+    @Transactional
+    public void deleteDelivery(Long deliveryId) {
+        Delivery delivery = findDeliveryById(deliveryId);
+        delivery.delete();
+    }
 
 
 
@@ -104,8 +109,4 @@ public class DeliveryService {
             throw new DeliveryException(errorCode);  // 주어진 에러 코드로 예외 처리
         }
     }
-
-
-
-
 }

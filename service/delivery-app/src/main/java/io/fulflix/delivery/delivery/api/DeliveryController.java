@@ -45,7 +45,7 @@ public class DeliveryController {
     }
 
     // 배송 주소로 검색
-    @GetMapping
+    @GetMapping("/search")
     public ResponseEntity<Page<DeliveryResponseDto>> searchDelivery(
             @PageableDefault(
                     sort = "createdAt", direction = Sort.Direction.ASC
@@ -60,5 +60,12 @@ public class DeliveryController {
     public ResponseEntity<DeliveryResponseDto> updateDelivery(@PathVariable Long deliveryId, @RequestBody DeliveryUpdateDto dto) {
         DeliveryResponseDto response = deliveryService.updateDelivery(deliveryId, dto);
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    // 배송 삭제
+    @DeleteMapping("/{deliveryId}")
+    public ResponseEntity<Void> deleteDelivery(@PathVariable Long deliveryId) {
+        deliveryService.deleteDelivery(deliveryId);
+        return ResponseEntity.noContent().build();
     }
 }
