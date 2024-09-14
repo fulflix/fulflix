@@ -1,3 +1,5 @@
+plugins { id("com.google.cloud.tools.jib") version "3.2.0" }
+
 ext {
     APP_CORE = ":app-core"
     WEB_CORE = ":web-core"
@@ -9,4 +11,17 @@ dependencies {
     testImplementation project(path: APP_CORE, configuration: "archives")
     testImplementation project(path: WEB_CORE, configuration: "archives")
     testRuntimeOnly("com.h2database:h2")
+}
+
+jib {
+    from {
+        image = "openjdk:17-jdk-slim"
+    }
+    to {
+        image = "${project.name}:latest"
+    }
+    container {
+        mainClass = "io.fulflix.hub.HubAppApplication"
+        creationTime = "USE_CURRENT_TIMESTAMP"
+    }
 }
