@@ -7,7 +7,7 @@ import io.fulflix.common.app.context.annotation.CurrentUser;
 import io.fulflix.common.app.context.annotation.CurrentUserRole;
 import io.fulflix.common.web.principal.Role;
 import io.fulflix.user.api.retrieve.dto.UserResponse;
-import io.fulflix.user.application.UserMyPageService;
+import io.fulflix.user.application.UserRetrieveService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,14 +24,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserMyPageController {
 
     public static final String USER_BASE_PATH = "/user";
-    private final UserMyPageService userMyPageService;
+    private final UserRetrieveService userRetrieveService;
 
     @GetMapping("/me")
     ResponseEntity<UserResponse> me(
         @CurrentUser Long currentUser,
         @CurrentUserRole Role role
     ) {
-        return ResponseEntity.ok(userMyPageService.loadUserById(currentUser));
+        return ResponseEntity.ok(userRetrieveService.loadUserById(currentUser));
     }
 
 }
