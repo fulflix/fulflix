@@ -25,7 +25,7 @@ public class DeliveryController {
 
     // 배송 수정
     @PutMapping("/{deliveryId}")
-    public ResponseEntity<DeliveryResponseDto> updateDelivery(@PathVariable Long deliveryId, DeliveryUpdateDto dto) {
+    public ResponseEntity<DeliveryResponseDto> updateDelivery(@PathVariable Long deliveryId, @RequestBody DeliveryUpdateDto dto) {
         DeliveryResponseDto response = deliveryService.updateDelivery(deliveryId, dto);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
