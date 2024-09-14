@@ -104,11 +104,45 @@ public class CompanyService {
 
     // 업체 삭제 (마스터 관리자, 허브 관리자)
     public void deleteCompany(Long id, Long currentUser, Role role) {
-        validateAdminAuthority(role);
+        Company company;
 
-        Company company = findCompanyById(id);
-        company.delete(); // isDeleted = true
+        if (isMasterAdmin(role)) {
+            company = findCompanyById(id);
+        } else if (isHubAdmin(role)) {
+            // 허브 관리자는 삭제되지 않은 업체만 조회 가능
+            company = companyRepo.findByIdAndIsDeletedFalse(id)
+                    .orElseThrow(() -> new CompanyException(CompanyErrorCode.UNAUTHORIZED_ACCESS));
+
+            // 현재 로그인한 사용자가 허브 업체와 일치한지 확인
+            if (!company.getHubId().equals(currentUser))
+                throw new CompanyException(CompanyErrorCode.UNAUTHORIZED_ACCESS);
+
+        } else {
+            // 마스터 관리자도 아니고 허브 관리자도 아닌 경우 예외 처리
+            throw new CompanyException(CompanyErrorCode.UNAUTHORIZED_ACCESS);
+        }
+
+        // 업체 삭제 처리
+        company.delete(); // isDeleted = true로 설정
         companyRepo.save(company);
+    }
+
+    // hubId 존재 확인 예외처리 (FeignClient)
+    private void checkHubExists(Long hubId) {
+        try {
+            HubResponse hubResponse = hubClient.getHubById(hubId);
+        } catch (FeignException.NotFound e) {
+            throw new HubException(HubErrorCode.HUB_NOT_FOUND);
+        }
+    }
+
+    // userId 존재 확인 예외처리 (FeignClient)
+    private void checkUserExists(Long ownerId) {
+        try {
+            UserResponse userResponse = userClient.getUserById(ownerId);
+        } catch (FeignException.NotFound e) {
+            throw new UserException(UserErrorCode.USER_NOT_FOUND);
+        }
     }
 
     // 마스터 관리자 권한 확인 예외처리
@@ -135,24 +169,6 @@ public class CompanyService {
             throw new CompanyException(CompanyErrorCode.UNAUTHORIZED_ACCESS);
     }
 
-    // 허브 존재 확인 예외처리 (FeignClient)
-    private void checkHubExists(Long hubId) {
-        try {
-            HubResponse hubResponse = hubClient.getHubById(hubId);
-        } catch (FeignException.NotFound e) {
-            throw new HubException(HubErrorCode.HUB_NOT_FOUND);
-        }
-    }
-
-    // 업체 사용자 존재 확인 예외처리 (FeignClient)
-    private void checkUserExists(Long ownerId) {
-        try {
-            UserResponse userResponse = userClient.getUserById(ownerId);
-        } catch (FeignException.NotFound e) {
-            throw new UserException(UserErrorCode.USER_NOT_FOUND);
-        }
-    }
-
     // 마스터 관리자 권한 확인
     private boolean isMasterAdmin(Role role) {
         return role.isMasterAdmin();
@@ -173,17 +189,21 @@ public class CompanyService {
         return role.isHubCompany();
     }
 
-    // 삭제 여부와 상관없이 업체 존재 확인 (관리자용)
+    // 업체명 중복 확인
+    private void checkCompanyDuplication(String companyName) {
+        if (companyRepo.findByCompanyName(companyName).isPresent())
+            throw new CompanyException(CompanyErrorCode.DUPLICATE_COMPANY_NAME);
+    }
+
+    // 삭제 여부와 상관없이 모든 업체 존재 확인 (관리자용)
     private Company findCompanyById(Long id) {
         return companyRepo.findById(id)
                 .orElseThrow(() -> new CompanyException(CompanyErrorCode.COMPANY_NOT_FOUND));
     }
 
-    // TODO 삭제되지 않은 업체 존재 확인 (업체용)
-
-    // 업체명 중복 확인
-    private void checkCompanyDuplication(String companyName) {
-        if (companyRepo.findByCompanyName(companyName).isPresent())
-            throw new CompanyException(CompanyErrorCode.DUPLICATE_COMPANY_NAME);
+    // is_deleted = false인 업체만 존재 확인 (허브 관리자 & 업체용)
+    private Company findActiveCompanyById(Long id) {
+        return companyRepo.findByIdAndIsDeletedFalse(id)
+                .orElseThrow(() -> new CompanyException(CompanyErrorCode.COMPANY_NOT_FOUND));
     }
 }

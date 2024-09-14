@@ -13,4 +13,5 @@ public interface CompanyRepo extends JpaRepository<Company, Long> {
     Optional<Company> findByCompanyName(String companyName);
     Page<Company> findAllByIsDeletedFalse(Pageable pageable);
     Page<Company> findByCompanyNameContainingAndIsDeletedFalse(String keyword, Pageable pageable);
+    Optional<Company> findByIdAndIsDeletedFalse(Long id);
 }
