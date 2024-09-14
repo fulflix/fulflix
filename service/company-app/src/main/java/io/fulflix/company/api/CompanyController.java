@@ -3,6 +3,7 @@ package io.fulflix.company.api;
 import io.fulflix.common.app.context.annotation.CurrentUser;
 import io.fulflix.common.app.context.annotation.CurrentUserRole;
 import io.fulflix.common.web.principal.Role;
+import io.fulflix.company.api.dto.CompanyDetailResponse;
 import io.fulflix.company.api.dto.CompanyResponse;
 import io.fulflix.company.api.dto.RegisterCompanyRequest;
 import io.fulflix.company.api.dto.UpdateCompanyRequest;
@@ -37,9 +38,9 @@ public class CompanyController {
         return created("/company");
     }
 
-    // 업체 전체 조회 및 검색 (마스터 관리자, 허브 관리자)
-    @GetMapping
-    public ResponseEntity<Page<CompanyResponse>> getAllCompanies(
+    // 업체 전체 조회 및 검색 (마스터 관리자)
+    @GetMapping("/admin")
+    public ResponseEntity<Page<CompanyDetailResponse>> getAllCompaniesForAdmin(
             @RequestParam(required = false, defaultValue = "") String query, // 검색
             @RequestParam(defaultValue = "10") int size, // 페이지 크기
             @RequestParam(defaultValue = "createdAt") String sortBy, // 정렬 기준
@@ -48,7 +49,22 @@ public class CompanyController {
             @CurrentUser Long currentUser,
             @CurrentUserRole Role role
     ) {
-        Page<CompanyResponse> companies = companyService.getAllCompanies(query, page, size, sortBy, sortDirection, currentUser, role);
+        Page<CompanyDetailResponse> companies = companyService.getAllCompaniesForAdmin(query, page, size, sortBy, sortDirection, currentUser, role);
+        return ResponseEntity.ok(companies);
+    }
+
+    // 업체 전체 조회 및 검색 (허브 관리자, 허브 업체)
+    @GetMapping("/hub")
+    public ResponseEntity<Page<CompanyResponse>> getAllCompaniesForHub(
+            @RequestParam(required = false, defaultValue = "") String query, // 검색
+            @RequestParam(defaultValue = "10") int size, // 페이지 크기
+            @RequestParam(defaultValue = "createdAt") String sortBy, // 정렬 기준
+            @RequestParam(defaultValue = "desc") String sortDirection, // 정렬 방향
+            @RequestParam(defaultValue = "0") int page, // 페이지 번호
+            @CurrentUser Long currentUser,
+            @CurrentUserRole Role role
+    ) {
+        Page<CompanyResponse> companies = companyService.getAllCompaniesForHub(query, page, size, sortBy, sortDirection, currentUser, role);
         return ResponseEntity.ok(companies);
     }
 

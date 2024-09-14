@@ -28,8 +28,15 @@ Authorization: Bearer {{access_token}}
 
 ###
 
-## 업체 전체 조회 및 검색 API
-GET http://localhost:8088/company?query=플라스틱&page=&size=&sortBy=&sortDirection=
+## 업체 전체 조회 및 검색 API (마스터 관리자용)
+GET http://localhost:8088/company/admin?query=&page=&size=&sortBy=&sortDirection=
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+###
+
+## 업체 전체 조회 및 검색 API (허브 관리자, 허브 업체용)
+GET http://localhost:8088/company/hub?query=&page=&size=&sortBy=&sortDirection=
 Content-Type: application/json
 Authorization: Bearer {{access_token}}
 

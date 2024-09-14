@@ -11,7 +11,16 @@ import java.util.Optional;
 @Repository
 public interface CompanyRepo extends JpaRepository<Company, Long> {
     Optional<Company> findByCompanyName(String companyName);
-    Page<Company> findAllByIsDeletedFalse(Pageable pageable);
-    Page<Company> findByCompanyNameContainingAndIsDeletedFalse(String keyword, Pageable pageable);
     Optional<Company> findByIdAndIsDeletedFalse(Long id);
+    
+    // 마스터 관리자용 전체 검색
+    Page<Company> findByCompanyNameContaining(String companyName, Pageable pageable);
+
+    // 허브 관리자용 전체 조회 & 검색
+    Page<Company> findByHubIdAndCompanyNameContainingAndIsDeletedFalse(Long hubId, String companyName, Pageable pageable);
+    Page<Company> findByHubIdAndIsDeletedFalse(Long hubId, Pageable pageable);
+
+    // 허브 업체용 전체 조회 & 검색
+    Page<Company> findByOwnerIdAndCompanyNameContainingAndIsDeletedFalse(Long ownerId, String companyName, Pageable pageable);
+    Page<Company> findByOwnerIdAndIsDeletedFalse(Long ownerId, Pageable pageable);
 }
