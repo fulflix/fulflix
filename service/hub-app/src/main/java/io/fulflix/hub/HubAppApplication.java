@@ -9,7 +9,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @PropertySources({
     @PropertySource(
@@ -18,7 +17,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
         factory = YamlPropertySourceFactory.class
     )
 })
-@EnableFeignClients(basePackages = FEIGN_CLIENT_BASE_PACKAGE)
+@EnableFeignClients//(basePackages = FEIGN_CLIENT_BASE_PACKAGE)
 @SpringBootApplication(scanBasePackages = BASE_PACKAGE)
 public class HubAppApplication {
 
