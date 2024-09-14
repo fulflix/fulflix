@@ -6,9 +6,6 @@ ext {
 dependencies {
     implementation project(APP_CORE)
 
-    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
-
-
     testImplementation project(path: APP_CORE, configuration: "archives")
     testImplementation project(path: WEB_CORE, configuration: "archives")
     testRuntimeOnly("com.h2database:h2")

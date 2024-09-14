@@ -16,7 +16,7 @@ Content-Type: application/json
 
 # @name 로그인 API
 #POST {{gateway}}/auth/sign-in
-POST http://localhost:8080/auth/sign-in
+POST {{gateway}}/auth/sign-in
 Content-Type: application/json
 
 {

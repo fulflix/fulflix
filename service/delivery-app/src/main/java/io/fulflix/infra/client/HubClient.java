@@ -1,12 +1,12 @@
-package io.fulflix.delivery.delivery.infra.client;
+package io.fulflix.infra.client;
 
 import io.fulflix.common.app.feign.FeignClientConfig;
-import io.fulflix.delivery.delivery.infra.client.dto.HubResponseDto;
+import io.fulflix.infra.client.dto.HubResponseDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import static io.fulflix.delivery.delivery.infra.client.HubClient.HUB_APP_CLIENT;
+import static io.fulflix.infra.client.HubClient.HUB_APP_CLIENT;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @FeignClient(name = HUB_APP_CLIENT, configuration = FeignClientConfig.class)

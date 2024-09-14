@@ -1,4 +1,4 @@
-package io.fulflix.delivery.delivery.infra.client.dto;
+package io.fulflix.infra.client.dto;
 
 import lombok.Builder;
 import lombok.Getter;

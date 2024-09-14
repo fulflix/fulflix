@@ -15,7 +15,7 @@ import static io.fulflix.common.web.utils.PropertiesCombineUtils.BASE_PACKAGE;
             factory = YamlPropertySourceFactory.class
     )
 })
-@EnableFeignClients//(basePackages = FEIGN_CLIENT_BASE_PACKAGE)
+@EnableFeignClients(basePackages = FEIGN_CLIENT_BASE_PACKAGE)
 @SpringBootApplication(scanBasePackages = BASE_PACKAGE)
 public class DeliveryAppApplication {
 
