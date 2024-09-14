@@ -4,6 +4,7 @@ object DependencyVersions {
 
 dependencies {
     implementation("org.springframework.cloud:spring-cloud-starter-gateway")
+    implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("io.jsonwebtoken:jjwt-api:${DependencyVersions.JJWT_VERSION}")
     implementation("io.jsonwebtoken:jjwt-jackson:${DependencyVersions.JJWT_VERSION}")
     runtimeOnly("io.jsonwebtoken:jjwt-impl:${DependencyVersions.JJWT_VERSION}")
