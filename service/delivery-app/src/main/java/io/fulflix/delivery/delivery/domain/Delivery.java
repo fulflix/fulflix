@@ -5,11 +5,15 @@ import io.fulflix.delivery.delivery.api.dto.DeliveryUpdateDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLRestriction;
+
+import static io.fulflix.common.app.jpa.audit.CommonAuditFields.DEFAULT_CONDITION;
 
 @Getter
 @NoArgsConstructor
 @Entity
 @Table(name = "p_delivery")
+@SQLRestriction(DEFAULT_CONDITION)
 public class Delivery extends Auditable {
 
     @Id
