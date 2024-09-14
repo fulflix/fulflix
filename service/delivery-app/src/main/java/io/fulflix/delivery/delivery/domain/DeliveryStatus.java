@@ -15,7 +15,4 @@ public enum DeliveryStatus {
         this.description = description;
     }
 
-    public String getDescription() {
-        return description;
-    }
 }

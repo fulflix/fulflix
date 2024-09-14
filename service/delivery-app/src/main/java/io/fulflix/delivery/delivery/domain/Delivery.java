@@ -1,6 +1,7 @@
 package io.fulflix.delivery.delivery.domain;
 
 import io.fulflix.common.app.jpa.audit.Auditable;
+import io.fulflix.delivery.delivery.api.dto.DeliveryUpdateDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -50,6 +51,28 @@ public class Delivery extends Auditable {
     public static Delivery create(Long orderId, DeliveryStatus status, Long departureHubId, Long arrivalHubId,
                                   String deliveryAddress, String recipient, String recipientSlackId) {
         return new Delivery(orderId, status, departureHubId, arrivalHubId, deliveryAddress, recipient, recipientSlackId);
+    }
+
+
+    public void update(DeliveryUpdateDto dto) {
+        if (dto.status() != null) {
+            this.status = dto.status();
+        }
+        if (dto.departureHubId() != null) {
+            this.departureHubId = dto.departureHubId();
+        }
+        if (dto.arrivalHubId() != null) {
+            this.arrivalHubId = dto.arrivalHubId();
+        }
+        if (dto.deliveryAddress() != null) {
+            this.deliveryAddress = dto.deliveryAddress();
+        }
+        if (dto.recipient() != null) {
+            this.recipient = dto.recipient();
+        }
+        if (dto.recipientSlackId() != null) {
+            this.recipientSlackId = dto.recipientSlackId();
+        }
     }
 
 
