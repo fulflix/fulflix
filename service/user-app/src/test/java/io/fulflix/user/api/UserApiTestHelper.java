@@ -24,17 +24,6 @@ import org.springframework.http.HttpHeaders;
 })
 public class UserApiTestHelper extends WebMvcTestBase {
 
-    public static final HttpHeaders MOCK_HEADERS = new HttpHeaders();
-
-    static {
-        final String userId = "1";
-        final String role = Role.MASTER_ADMIN.name();
-
-        MOCK_HEADERS.add(X_USER_ID, userId);
-        MOCK_HEADERS.add(X_USER_ROLE, role);
-        MOCK_HEADERS.add(CONTENT_TYPE, APPLICATION_JSON_VALUE);
-        MOCK_HEADERS.add(ACCEPT, APPLICATION_JSON_VALUE);
-    }
 
     @MockBean
     protected UserAuthenticateUseCase userAuthenticateUseCase;
