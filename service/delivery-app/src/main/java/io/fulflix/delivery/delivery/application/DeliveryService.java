@@ -22,13 +22,13 @@ public class DeliveryService {
     @Transactional
     public DeliveryResponseDto createDelivery(DeliveryCreateDto dto) {
         Delivery delivery = Delivery.create(
-                dto.getOrderId(),
-                dto.getStatus(),
-                dto.getDepartureHubId(),
-                dto.getArrivalHubId(),
-                dto.getDeliveryAddress(),
-                dto.getRecipient(),
-                dto.getRecipientSlackId()
+                dto.orderId(),
+                dto.status(),
+                dto.departureHubId(),
+                dto.arrivalHubId(),
+                dto.deliveryAddress(),
+                dto.recipient(),
+                dto.recipientSlackId()
         );
         deliveryRepository.save(delivery);
         return DeliveryResponseDto.of(delivery);
