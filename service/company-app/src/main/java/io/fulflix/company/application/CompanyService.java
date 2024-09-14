@@ -1,5 +1,6 @@
 package io.fulflix.company.application;
 
+import feign.FeignException;
 import io.fulflix.common.web.principal.Role;
 import io.fulflix.company.api.dto.CompanyResponse;
 import io.fulflix.company.api.dto.RegisterCompanyRequest;
@@ -8,6 +9,14 @@ import io.fulflix.company.domain.Company;
 import io.fulflix.company.exception.CompanyErrorCode;
 import io.fulflix.company.exception.CompanyException;
 import io.fulflix.company.repo.CompanyRepo;
+import io.fulflix.infra.client.exception.HubErrorCode;
+import io.fulflix.infra.client.exception.HubException;
+import io.fulflix.infra.client.exception.UserErrorCode;
+import io.fulflix.infra.client.exception.UserException;
+import io.fulflix.infra.client.hub.HubClient;
+import io.fulflix.infra.client.hub.HubResponse;
+import io.fulflix.infra.client.user.UserClient;
+import io.fulflix.infra.client.user.UserResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -21,10 +30,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class CompanyService {
     private final CompanyRepo companyRepo;
+    private final HubClient hubClient;
+    private final UserClient userClient;
 
     // 업체 등록 (마스터 관리자, 허브 관리자)
     public void registerCompany(RegisterCompanyRequest registerCompanyRequest, Long currentUser, Role role) {
         validateAdminAuthority(role);
+
+        checkHubExists(registerCompanyRequest.getHubId());
+        checkUserExists(registerCompanyRequest.getOwnerId());
 
         checkCompanyDuplication(registerCompanyRequest.getCompanyName());
 
@@ -97,6 +111,36 @@ public class CompanyService {
         companyRepo.save(company);
     }
 
+    // 관리자 권한 확인 예외처리 메서드
+    private void validateAdminAuthority(Role role) {
+        if (!isAdmin(role))
+            throw new CompanyException(CompanyErrorCode.UNAUTHORIZED_ACCESS);
+    }
+
+    // 관리자 권한, 허브 업체 권한 통합 예외처리 메서드
+    private void validateAdminAndHubCompanyAuthority(Role role) {
+        if (!isAdmin(role) && !isHubCompany(role))
+            throw new CompanyException(CompanyErrorCode.UNAUTHORIZED_ACCESS);
+    }
+
+    // 허브 존재 확인 예외처리 메서드 (FeignClient)
+    private void checkHubExists(Long hubId) {
+        try {
+            HubResponse hubResponse = hubClient.getHubById(hubId);
+        } catch (FeignException.NotFound e) {
+            throw new HubException(HubErrorCode.HUB_NOT_FOUND);
+        }
+    }
+
+    // 업체 사용자 존재 확인 예외처리 메서드 (FeignClient)
+    private void checkUserExists(Long ownerId) {
+        try {
+            UserResponse userResponse = userClient.getUserById(ownerId);
+        } catch (FeignException.NotFound e) {
+            throw new UserException(UserErrorCode.USER_NOT_FOUND);
+        }
+    }
+
     // 관리자 권한 확인
     private boolean isAdmin(Role role) {
         return role.isMasterAdmin() || role.isHubAdmin();
@@ -107,33 +151,17 @@ public class CompanyService {
         return role.isHubCompany();
     }
 
-    // 관리자 권한 확인 메서드
-    private void validateAdminAuthority(Role role) {
-        if (!isAdmin(role))
-            throw new CompanyException(CompanyErrorCode.UNAUTHORIZED_ACCESS);
-    }
-
-    // 관리자 권한, 허브 업체 권한 통합 메서드
-    private void validateAdminAndHubCompanyAuthority(Role role) {
-        if (!isAdmin(role) && !isHubCompany(role))
-            throw new CompanyException(CompanyErrorCode.UNAUTHORIZED_ACCESS);
-    }
-
-    // 삭제 여부와 상관없이 업체 존재 확인
+    // 삭제 여부와 상관없이 업체 존재 확인 (관리자용)
     private Company findCompanyById(Long id) {
         return companyRepo.findById(id)
                 .orElseThrow(() -> new CompanyException(CompanyErrorCode.COMPANY_NOT_FOUND));
     }
 
-    // TODO 삭제되지 않은 업체 존재 확인
+    // TODO 삭제되지 않은 업체 존재 확인 (업체용)
 
     // 업체명 중복 확인
     private void checkCompanyDuplication(String companyName) {
         if (companyRepo.findByCompanyName(companyName).isPresent())
             throw new CompanyException(CompanyErrorCode.DUPLICATE_COMPANY_NAME);
     }
-
-    // TODO 사용자 존재 확인
-
-    // TODO 허브 존재 확인
 }
