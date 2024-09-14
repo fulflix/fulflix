@@ -1,11 +1,11 @@
 ## 배송 생성 API
-POST localhost:8088/delivery
+POST {{gateway}}/delivery
 Content-Type: application/json
 Authorization: Bearer {{access_token}}
 
 {
   "orderId": 1,
-  "departureHubId": 1,
+  "departureHubId": 2,
   "arrivalHubId": 5,
   "deliveryAddress": "서울특별시 강남구 테헤란로 123, 45678",
   "recipient": "홍길동",
@@ -21,11 +21,33 @@ Authorization: Bearer {{access_token}}
 
 {
   "status": "ARRIVED",
-  "departureHubId": 1,
-  "arrivalHubId": 2,
+  "departureHubId": 2,
+  "arrivalHubId": 4,
   "deliveryAddress": "서울특별시 강남구 테헤란로 123, 45678",
   "recipient": "홍길동",
   "recipientSlackId": "hong.gildong.slack"
 }
+
+###
+
+## 배송 전체 조회 API
+GET {{gateway}}/delivery
+Authorization: Bearer {{access_token}}
+
+###
+
+## 배송 주소로 검색 API
+GET {{gateway}}/delivery/search?keyword=서울
+Authorization: Bearer {{access_token}}
+
+###
+## 배송 단건 조회 API
+GET {{gateway}}/delivery/1
+Authorization: Bearer {{access_token}}
+
+###
+## 배송 삭제 조회 API
+DELETE {{gateway}}/delivery/1
+Authorization: Bearer {{access_token}}
 
 ###

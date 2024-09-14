@@ -12,7 +12,7 @@ Authorization: Bearer {{access_token}}
 
 ###
 ## 허브 전체 조회 API
-GET localhost:8088/hub
+GET {{gateway}}/hub
 Authorization: Bearer {{access_token}}
 
 ###
