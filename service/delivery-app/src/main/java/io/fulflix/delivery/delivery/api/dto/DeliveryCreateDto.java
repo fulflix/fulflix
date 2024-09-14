@@ -4,7 +4,6 @@ import io.fulflix.delivery.delivery.domain.DeliveryStatus;
 
 public record DeliveryCreateDto(
     Long orderId,
-    DeliveryStatus status,
     Long departureHubId,
     Long arrivalHubId,
     String deliveryAddress,

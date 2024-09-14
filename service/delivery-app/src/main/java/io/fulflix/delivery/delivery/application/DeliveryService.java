@@ -5,6 +5,7 @@ import io.fulflix.delivery.delivery.api.dto.DeliveryResponseDto;
 import io.fulflix.delivery.delivery.api.dto.DeliveryUpdateDto;
 import io.fulflix.delivery.delivery.domain.Delivery;
 import io.fulflix.delivery.delivery.domain.DeliveryRepository;
+import io.fulflix.delivery.delivery.domain.DeliveryStatus;
 import io.fulflix.delivery.delivery.exception.DeliveryErrorCode;
 import io.fulflix.delivery.delivery.exception.DeliveryException;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +24,7 @@ public class DeliveryService {
     public DeliveryResponseDto createDelivery(DeliveryCreateDto dto) {
         Delivery delivery = Delivery.create(
                 dto.orderId(),
-                dto.status(),
+                DeliveryStatus.PENDING_HUB,
                 dto.departureHubId(),
                 dto.arrivalHubId(),
                 dto.deliveryAddress(),
