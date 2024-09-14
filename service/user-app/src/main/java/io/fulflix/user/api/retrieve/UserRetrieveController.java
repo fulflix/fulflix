@@ -7,7 +7,7 @@ import io.fulflix.common.app.context.annotation.CurrentUser;
 import io.fulflix.common.app.context.annotation.CurrentUserRole;
 import io.fulflix.common.web.principal.Role;
 import io.fulflix.user.api.retrieve.dto.UserResponse;
-import io.fulflix.user.application.UserMyPageService;
+import io.fulflix.user.application.UserRetrieveService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class UserRetrieveController {
 
-    private final UserMyPageService userMyPageService;
+    private final UserRetrieveService userRetrieveService;
 
     @GetMapping("/{id}")
     ResponseEntity<UserResponse> getDetailUser(
@@ -38,7 +38,7 @@ public class UserRetrieveController {
         @PathVariable Long id
     ) {
         log.info("[CurrentUser : {}, {}], [Request : {}]", currentUser, role.name(), id);
-        return ResponseEntity.ok(userMyPageService.loadUserById(id));
+        return ResponseEntity.ok(userRetrieveService.loadUserById(id));
     }
 
     @GetMapping
@@ -48,7 +48,7 @@ public class UserRetrieveController {
         @PageableDefault Pageable pageable
     ) {
         log.info("[CurrentUser : {}, {}], [Request : {}]", currentUser, role.name(), pageable);
-        return ResponseEntity.ok(userMyPageService.loadAllUsersByPageable(pageable));
+        return ResponseEntity.ok(userRetrieveService.loadAllUsersByPageable(pageable));
     }
 
 }

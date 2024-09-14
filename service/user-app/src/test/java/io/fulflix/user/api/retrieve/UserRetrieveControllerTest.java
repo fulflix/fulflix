@@ -30,7 +30,7 @@ class UserRetrieveControllerTest extends UserApiTestHelper {
     void retrieveUser() throws Exception {
         // Given
         final Long userId = 2L;
-        given(userMyPageService.loadUserById(userId)).willReturn(USER_RESPONSE);
+        given(userRetrieveService.loadUserById(userId)).willReturn(USER_RESPONSE);
 
         // When
         ResultActions resultActions = mockMvc.perform(get(RETRIEVE_PATH, userId)
@@ -46,7 +46,7 @@ class UserRetrieveControllerTest extends UserApiTestHelper {
     @DisplayName("회원 목록 조회")
     void retrieveUser2() throws Exception {
         // Given
-        given(userMyPageService.loadAllUsersByPageable(any(Pageable.class)))
+        given(userRetrieveService.loadAllUsersByPageable(any(Pageable.class)))
             .willReturn(PAGE_USER_RESPONSE);
 
         // When
