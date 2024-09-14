@@ -42,11 +42,10 @@ services:
       - "8080:8080"
     environment:
       - eureka.client.service-url.defaultZone=http://admin:admin@fulflix-eureka:8761/eureka/
-      - eureka.instance.lease-renewal-interval-in-second=20
+      - management.zipkin.tracing.endpoint=http://fulflix-zipkin:9411/api/v2/spans
       - spring.datasource.url=jdbc:mysql://fulflix-mysql:3306/fulflix?useUnicode=yes&characterEncoding=UTF-8&rewriteBatchedStatements=true
       - spring.datasource.username=root
       - spring.datasource.password=password
-      - management.zipkin.tracing.endpoint=http://fulflix-zipkin:9411/api/v2/spans
     depends_on:
       - fulflix-eureka
       - fulflix-mysql
@@ -58,11 +57,10 @@ services:
       - "8081:8081"
     environment:
       - eureka.client.service-url.defaultZone=http://admin:admin@fulflix-eureka:8761/eureka/
-      - eureka.instance.lease-renewal-interval-in-second=20
+      - management.zipkin.tracing.endpoint=http://fulflix-zipkin:9411/api/v2/spans
       - spring.datasource.url=jdbc:mysql://fulflix-mysql:3306/fulflix?useUnicode=yes&characterEncoding=UTF-8&rewriteBatchedStatements=true
       - spring.datasource.username=root
       - spring.datasource.password=password
-      - management.zipkin.tracing.endpoint=http://fulflix-zipkin:9411/api/v2/spans
     depends_on:
       - fulflix-eureka
       - fulflix-mysql
