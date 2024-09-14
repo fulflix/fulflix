@@ -10,6 +10,8 @@ import io.fulflix.delivery.delivery.exception.DeliveryErrorCode;
 import io.fulflix.delivery.delivery.exception.DeliveryException;
 import io.fulflix.infra.client.HubClient;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,6 +45,24 @@ public class DeliveryService {
         );
         deliveryRepository.save(delivery);
         return DeliveryResponseDto.of(delivery);
+    }
+
+    // 배송 단건 조회
+    public DeliveryResponseDto getDelivery(Long deliveryId) {
+        Delivery delivery = findDeliveryById(deliveryId);
+        return DeliveryResponseDto.of(delivery);
+    }
+
+    // 배송 전체 조회
+    public Page<DeliveryResponseDto> getAllDelivery(Pageable pageable) {
+        Page<Delivery> deliveryPage = deliveryRepository.findAll(pageable);
+        return deliveryPage.map(DeliveryResponseDto::of);
+    }
+
+    // 배송 주소로 검색
+    public Page<DeliveryResponseDto> searchDelivery(String keyword, Pageable pageable) {
+        Page<Delivery> deliveryPage = deliveryRepository.findByDeliveryAddressContaining(keyword, pageable);
+        return deliveryPage.map(DeliveryResponseDto::of);
     }
 
     // 배송 수정
@@ -84,5 +104,8 @@ public class DeliveryService {
             throw new DeliveryException(errorCode);  // 주어진 에러 코드로 예외 처리
         }
     }
+
+
+
 
 }
