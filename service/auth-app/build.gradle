@@ -1,3 +1,5 @@
+plugins { id("com.google.cloud.tools.jib") version "3.2.0" }
+
 ext {
     WEB_CORE = ":web-core"
     JJWT_VERSION = "0.12.6"
@@ -13,4 +15,17 @@ dependencies {
 
     testImplementation project(path: WEB_CORE, configuration: "archives")
     testRuntimeOnly("com.h2database:h2")
+}
+
+jib {
+    from {
+        image = "openjdk:17-jdk-slim"
+    }
+    to {
+        image = "${project.name}:latest"
+    }
+    container {
+        mainClass = "io.fulflix.auth.AuthApp"
+        creationTime = "USE_CURRENT_TIMESTAMP"
+    }
 }

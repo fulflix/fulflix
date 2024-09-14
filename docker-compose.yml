@@ -2,7 +2,7 @@ services:
   fulflix-mysql:
     image: mysql:8.0
     container_name: fulflix_mysql
-    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --lower_case_table_names=1
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --lower_case_table_names=1 --max-connections=600
     ports:
       - 3306:3306
     environment:
@@ -17,3 +17,50 @@ services:
     container_name: zipkin
     ports:
       - 9411:9411
+
+  fulflix-eureka:
+    image: eureka:latest
+    container_name: eureka
+    ports:
+      - "8761:8761"
+
+  fulflix-gateway:
+    image: gateway:latest
+    container_name: gateway
+    ports:
+      - "8088:8088"
+    environment:
+      - eureka.client.service-url.defaultZone=http://admin:admin@fulflix-eureka:8761/eureka/
+      - management.zipkin.tracing.endpoint=http://fulflix-zipkin:9411/api/v2/spans
+    depends_on:
+      - fulflix-eureka
+
+  auth-app:
+    image: auth-app:latest
+    container_name: auth-app
+    ports:
+      - "8080:8080"
+    environment:
+      - eureka.client.service-url.defaultZone=http://admin:admin@fulflix-eureka:8761/eureka/
+      - management.zipkin.tracing.endpoint=http://fulflix-zipkin:9411/api/v2/spans
+      - spring.datasource.url=jdbc:mysql://fulflix-mysql:3306/fulflix?useUnicode=yes&characterEncoding=UTF-8&rewriteBatchedStatements=true
+      - spring.datasource.username=root
+      - spring.datasource.password=password
+    depends_on:
+      - fulflix-eureka
+      - fulflix-mysql
+
+  user-app:
+    image: user-app:latest
+    container_name: user-app
+    ports:
+      - "8081:8081"
+    environment:
+      - eureka.client.service-url.defaultZone=http://admin:admin@fulflix-eureka:8761/eureka/
+      - management.zipkin.tracing.endpoint=http://fulflix-zipkin:9411/api/v2/spans
+      - spring.datasource.url=jdbc:mysql://fulflix-mysql:3306/fulflix?useUnicode=yes&characterEncoding=UTF-8&rewriteBatchedStatements=true
+      - spring.datasource.username=root
+      - spring.datasource.password=password
+    depends_on:
+      - fulflix-eureka
+      - fulflix-mysql
