@@ -30,6 +30,9 @@ public class HubRouteService {
     @Transactional
     public HubRouteResponseDto createHubRoute(HubRouteCreateDto dto) {
 
+        // 출발 허브 도착 허브 ID 비교
+        validateHubIds(dto.getDepartureHubId(), dto.getArrivalHubId());
+
         Hub departureHub = getHubById(dto.getDepartureHubId());
         Hub arrivalHub = getHubById(dto.getArrivalHubId());
 
@@ -66,6 +69,11 @@ public class HubRouteService {
     public HubRouteResponseDto updateHubRoute(Long hubRouteId, HubRouteUpdateDto dto) {
 
         HubRoute hubRoute = findHubRouteById(hubRouteId);
+
+        // 출발 허브 도착 허브 ID 비교
+        if (dto.getDepartureHubId() != null && dto.getArrivalHubId() != null) {
+            validateHubIds(dto.getDepartureHubId(), dto.getArrivalHubId());
+        }
 
         if (dto.getDepartureHubId() != null) {
             Hub departureHub = getHubById(dto.getDepartureHubId());
@@ -113,6 +121,13 @@ public class HubRouteService {
     private Hub getHubById(Long hubId) {
         return hubRepository.findById(hubId)
                 .orElseThrow(() -> new HubException(HubErrorCode.HUB_NOT_FOUND));
+    }
+
+    // 출발 허브 도칙 허브 ID 비교 메서드
+    private void validateHubIds(Long departureHubId, Long arrivalHubId) {
+        if (departureHubId.equals(arrivalHubId)) {
+            throw new HubRouteException(HubRouteErrorCode.SAME_DEPARTURE_AND_ARRIVAL);
+        }
     }
 
 }
