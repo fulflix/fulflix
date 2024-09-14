@@ -1,8 +1,8 @@
-@username="hong-gd"
+@username="hong-gd11"
 @password="password"
 
 # @name 회원가입 API
-POST localhost:8080/auth/sign-up
+POST {{gateway}}/auth/sign-up
 Content-Type: application/json
 
 {
@@ -15,7 +15,6 @@ Content-Type: application/json
 ###
 
 # @name 로그인 API
-#POST {{gateway}}/auth/sign-in
 POST {{gateway}}/auth/sign-in
 Content-Type: application/json
 
