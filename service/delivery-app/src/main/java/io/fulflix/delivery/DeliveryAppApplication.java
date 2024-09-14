@@ -5,9 +5,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 import static io.fulflix.common.web.utils.PropertiesCombineUtils.BASE_PACKAGE;
 
+@EnableJpaAuditing(modifyOnCreate = false)
 @PropertySources({
     @PropertySource(
             name = "delivery-app-properties",
