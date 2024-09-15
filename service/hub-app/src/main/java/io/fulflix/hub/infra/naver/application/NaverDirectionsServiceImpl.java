@@ -3,11 +3,7 @@ package io.fulflix.hub.infra.naver.application;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.fulflix.hub.hub.domain.Hub;
-import io.fulflix.hub.hubroute.domain.HubRoute;
-
 import io.fulflix.hub.infra.naver.dto.RouteInfo;
-import org.json.JSONObject;
-import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
