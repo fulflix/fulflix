@@ -97,7 +97,7 @@ public class CompanyController {
             @CurrentUser Long currentUser,
             @CurrentUserRole Role role
     ) {
-        CompanyResponse updatedCompany = companyService.updateCompany(id, updateCompanyRequest, currentUser, role);
+        companyFacade.updateCompany(id, updateCompanyRequest, currentUser, role);
         return ResponseEntity.noContent().build(); // 204 No Content 응답
     }
 

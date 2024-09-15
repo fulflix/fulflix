@@ -71,97 +71,12 @@ public class CompanyService {
         return companies.map(CompanyDetailResponse::fromEntity);
     }
 
-    // 업체 전체 조회 및 검색 (허브 관리자, 허브 업체)
-    public Page<CompanyResponse> getAllCompaniesForHub(String query, Pageable pageable, Long currentUser, Role role) {
-        if (pageable.getPageSize() != 10 && pageable.getPageSize() != 30 && pageable.getPageSize() != 50) {
-            pageable = PageRequest.of(pageable.getPageNumber(), 10, pageable.getSort());
-        }
-
-        // 허브 관리자, 허브 업체 : 삭제되지 않은 업체 + 소속 허브의 업체만 조회
-        Page<Company> companies;
-
-        if (isHubAdmin(role)) {
-            if (query != null && !query.isEmpty()) {
-                companies = companyRepo.findByHubIdAndCompanyNameContainingAndIsDeletedFalse(currentUser, query, pageable);
-            } else {
-                companies = companyRepo.findByHubIdAndIsDeletedFalse(currentUser, pageable);
-            }
-        } else if (isHubCompany(role)) {
-            if (query != null && !query.isEmpty()) {
-                companies = companyRepo.findByOwnerIdAndCompanyNameContainingAndIsDeletedFalse(currentUser, query, pageable);
-            } else {
-                companies = companyRepo.findByOwnerIdAndIsDeletedFalse(currentUser, pageable);
-            }
-        } else {
-            throw new CompanyException(CompanyErrorCode.UNAUTHORIZED_ACCESS);
-        }
-
-        return companies.map(CompanyResponse::fromEntity);
-    }
-
     // 업체 단일 조회 (마스터 관리자)
     public CompanyDetailResponse getCompanyByIdForAdmin(Long id, Long currentUser, Role role) {
         validateMasterAdminAuthority(role);
 
         Company company = findCompanyById(id);
         return CompanyDetailResponse.fromEntity(company);
-    }
-
-    // 업체 단일 조회 (허브 관리자, 허브 업체)
-    public CompanyResponse getCompanyByIdForHub(Long id, Long currentUser, Role role) {
-        Company company;
-
-        if (isHubAdmin(role)) {
-            company = companyRepo.findByIdAndHubIdAndIsDeletedFalse(id, currentUser)
-                    .orElseThrow(() -> new CompanyException(CompanyErrorCode.COMPANY_NOT_FOUND));
-        } else if (isHubCompany(role)) {
-            company = companyRepo.findByIdAndOwnerIdAndIsDeletedFalse(id, currentUser)
-                    .orElseThrow(() -> new CompanyException(CompanyErrorCode.COMPANY_NOT_FOUND));
-        } else {
-            throw new CompanyException(CompanyErrorCode.UNAUTHORIZED_ACCESS);
-        }
-
-        return CompanyResponse.fromEntity(company);
-    }
-
-    // 업체 수정 (마스터 관리자, 허브 관리자, 허브 업체)
-    public CompanyResponse updateCompany(Long id, UpdateCompanyRequest updateCompanyRequest, Long currentUser, Role role) {
-        Company company;
-
-        if (isMasterAdmin(role)) {
-            company = findCompanyById(id);
-        } else if (isHubAdmin(role)) {
-            company = companyRepo.findByIdAndHubIdAndIsDeletedFalse(id, currentUser)
-                    .orElseThrow(() -> new CompanyException(CompanyErrorCode.UNAUTHORIZED_ACCESS));
-            // hubId 수정 안 되게 예외 처리
-            if (updateCompanyRequest.getHubId() != null) {
-                throw new CompanyException(CompanyErrorCode.UNAUTHORIZED_ACCESS);
-            }
-        } else if (isHubCompany(role)) {
-            company = companyRepo.findByIdAndOwnerIdAndIsDeletedFalse(id, currentUser)
-                    .orElseThrow(() -> new CompanyException(CompanyErrorCode.UNAUTHORIZED_ACCESS));
-            // hubId 수정 안 되게 예외 처리
-            if (updateCompanyRequest.getHubId() != null) {
-                throw new CompanyException(CompanyErrorCode.UNAUTHORIZED_ACCESS);
-            }
-        } else {
-            throw new CompanyException(CompanyErrorCode.UNAUTHORIZED_ACCESS);
-        }
-
-        if (updateCompanyRequest.getHubId() != null && !updateCompanyRequest.getHubId().equals(company.getHubId())) {
-            checkHubExists(updateCompanyRequest.getHubId());
-            company.updateHubId(updateCompanyRequest);
-        }
-
-        if (updateCompanyRequest.getCompanyName() != null && !updateCompanyRequest.getCompanyName().equals(company.getCompanyName())) {
-            checkCompanyDuplication(updateCompanyRequest.getCompanyName());
-            company.updateCompanyName(updateCompanyRequest);
-        }
-
-        if (updateCompanyRequest.getCompanyAddress() != null && !updateCompanyRequest.getCompanyAddress().equals(company.getCompanyAddress()))
-            company.updateCompanyAddress(updateCompanyRequest);
-
-        return CompanyResponse.fromEntity(companyRepo.save(company));
     }
 
     // 업체 삭제 (마스터 관리자, 허브 관리자)
