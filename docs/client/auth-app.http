@@ -1,0 +1,29 @@
+@username="hong-gd11"
+@password="password"
+
+# @name 회원가입 API
+POST {{gateway}}/auth/sign-up
+Content-Type: application/json
+
+{
+  "username": {{username}},
+  "password": {{password}},
+  "name": "홍길동",
+  "type": "MASTER_ADMIN"
+}
+
+###
+
+# @name 로그인 API
+POST {{gateway}}/auth/sign-in
+Content-Type: application/json
+
+{
+  "username": {{username}},
+  "password": {{password}}
+}
+> {%
+  client.global.set("access_token", response.headers.valueOf("Authorization"))
+%}
+
+###

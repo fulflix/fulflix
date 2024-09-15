@@ -33,7 +33,7 @@ public class HubRouteController {
     }
 
     // 허브 경로 전체 조회
-    @GetMapping("/hub-routes")
+    @GetMapping("/hub-route")
     public ResponseEntity<Page<HubRouteResponseDto>> getAllHubRoutes(
             @PageableDefault(sort = "createdAt", direction = Sort.Direction.ASC) Pageable pageable
             ) {
@@ -42,7 +42,7 @@ public class HubRouteController {
     }
 
     // 허브 경로 route 로 검색
-    @GetMapping("/hub-routes/search")
+    @GetMapping("/hub-route/search")
     public ResponseEntity<Page<HubRouteResponseDto>> searchHubRoutes(
             @PageableDefault(sort = "createdAt", direction = Sort.Direction.ASC) Pageable pageable,
             String keyword
@@ -58,7 +58,7 @@ public class HubRouteController {
         return ResponseEntity.ok(responseDto);
     }
 
-    // 허브 경로 삭
+    // 허브 경로 삭제
     @DeleteMapping("/hub-route/{hubRouteId}")
     public ResponseEntity<Void> deleteHubRoute(@PathVariable Long hubRouteId) {
         hubRouteService.deleteHubRoute(hubRouteId);

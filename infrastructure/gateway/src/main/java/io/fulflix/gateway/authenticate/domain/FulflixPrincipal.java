@@ -1,4 +1,4 @@
-package io.fulflix.gateway.authenticate.jwt;
+package io.fulflix.gateway.authenticate.domain;
 
 public record FulflixPrincipal(
     Long id,

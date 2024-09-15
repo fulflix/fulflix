@@ -12,7 +12,8 @@ public class HubRouteResponseDto {
     private Long id;
     private HubResponseDto departureHub;
     private HubResponseDto arrivalHub;
-    private Integer duration;
+    private Long duration;
+    private Double distance;
     private String route;
     private boolean isDeleted;
 }

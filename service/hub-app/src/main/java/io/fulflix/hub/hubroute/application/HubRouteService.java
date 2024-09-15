@@ -12,6 +12,8 @@ import io.fulflix.hub.hub.domain.HubRepository;
 import io.fulflix.hub.hubroute.domain.HubRouteRepository;
 import io.fulflix.hub.hubroute.exception.HubRouteErrorCode;
 import io.fulflix.hub.hubroute.exception.HubRouteException;
+import io.fulflix.hub.infra.naver.application.NaverDirectionsService;
+import io.fulflix.hub.infra.naver.dto.RouteInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,21 +27,30 @@ public class HubRouteService {
 
     private final HubRouteRepository hubRouteRepository;
     private final HubRepository hubRepository;
+    private final NaverDirectionsService naverDirectionsService;
 
     // 허브 경로 생성
     @Transactional
     public HubRouteResponseDto createHubRoute(HubRouteCreateDto dto) {
 
+        // 출발 허브 도착 허브 ID 비교
+        validateHubIds(dto.getDepartureHubId(), dto.getArrivalHubId());
+
         Hub departureHub = getHubById(dto.getDepartureHubId());
         Hub arrivalHub = getHubById(dto.getArrivalHubId());
+
+
+        RouteInfo routeInfo = naverDirectionsService.getRouteInfo(departureHub, arrivalHub);
 
         HubRoute hubRoute = HubRoute.builder()
                 .departureHub(departureHub)
                 .arrivalHub(arrivalHub)
-                .duration(dto.getDuration())
+                .duration(routeInfo.duration())
+                .distance(routeInfo.distance())
                 .build();
 
         hubRouteRepository.save(hubRoute);
+
         return mapToDto(hubRoute);
     }
 
@@ -66,6 +77,11 @@ public class HubRouteService {
     public HubRouteResponseDto updateHubRoute(Long hubRouteId, HubRouteUpdateDto dto) {
 
         HubRoute hubRoute = findHubRouteById(hubRouteId);
+
+        // 출발 허브 도착 허브 ID 비교
+        if (dto.getDepartureHubId() != null && dto.getArrivalHubId() != null) {
+            validateHubIds(dto.getDepartureHubId(), dto.getArrivalHubId());
+        }
 
         if (dto.getDepartureHubId() != null) {
             Hub departureHub = getHubById(dto.getDepartureHubId());
@@ -99,6 +115,7 @@ public class HubRouteService {
         dto.setDepartureHub(HubResponseDto.of(hubRoute.getDepartureHub()));
         dto.setArrivalHub(HubResponseDto.of(hubRoute.getArrivalHub()));
         dto.setDuration(hubRoute.getDuration());
+        dto.setDistance(hubRoute.getDistance());
         dto.setRoute(hubRoute.getRoute());
         return dto;
     }
@@ -113,6 +130,13 @@ public class HubRouteService {
     private Hub getHubById(Long hubId) {
         return hubRepository.findById(hubId)
                 .orElseThrow(() -> new HubException(HubErrorCode.HUB_NOT_FOUND));
+    }
+
+    // 출발 허브 도칙 허브 ID 비교 메서드
+    private void validateHubIds(Long departureHubId, Long arrivalHubId) {
+        if (departureHubId.equals(arrivalHubId)) {
+            throw new HubRouteException(HubRouteErrorCode.SAME_DEPARTURE_AND_ARRIVAL);
+        }
     }
 
 }

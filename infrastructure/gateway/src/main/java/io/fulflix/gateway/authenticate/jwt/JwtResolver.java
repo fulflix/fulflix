@@ -4,6 +4,7 @@ import static io.fulflix.gateway.authenticate.utils.SigningUtils.PRINCIPAL;
 
 import io.fulflix.gateway.authenticate.exception.AuthErrorCode;
 import io.fulflix.gateway.authenticate.exception.UnAuthorizedException;
+import io.fulflix.gateway.authenticate.domain.FulflixPrincipal;
 import io.fulflix.gateway.authenticate.utils.SigningUtils;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
