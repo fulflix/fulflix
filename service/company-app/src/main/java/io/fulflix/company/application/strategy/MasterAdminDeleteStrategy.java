@@ -8,6 +8,7 @@ import io.fulflix.company.exception.CompanyException;
 import io.fulflix.company.repo.CompanyRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @RequiredArgsConstructor
@@ -25,6 +26,6 @@ public class MasterAdminDeleteStrategy implements CompanyDeleteStrategy {
 
     @Override
     public boolean isMatched(Role role) {
-        return false;
+        return role.isMasterAdmin();
     }
 }
