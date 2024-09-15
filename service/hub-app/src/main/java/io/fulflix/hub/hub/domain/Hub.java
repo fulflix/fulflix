@@ -30,6 +30,9 @@ public class Hub extends Auditable {
     @Column(nullable = false)
     private Double latitude;
 
+    @Column(nullable = false)
+    private Double longitude;
+
     public void setName(String name) {
         this.name = name;
     }
@@ -46,8 +49,6 @@ public class Hub extends Auditable {
         this.longitude = longitude;
     }
 
-    @Column(nullable = false)
-    private Double longitude;
 
     // 생성자 (필수 필드만 설정)
     public Hub(String name, String address, double latitude, double longitude) {
