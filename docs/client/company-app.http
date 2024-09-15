@@ -1,5 +1,5 @@
 ## 생산 업체 등록 API
-POST http://localhost:8088/company
+POST {{gateway}}/company
 Content-Type: application/json
 Authorization: Bearer {{access_token}}
 
@@ -14,7 +14,7 @@ Authorization: Bearer {{access_token}}
 ###
 
 ## 수령 업체 등록 API
-POST http://localhost:8088/company
+POST {{gateway}}/company
 Content-Type: application/json
 Authorization: Bearer {{access_token}}
 
@@ -79,6 +79,6 @@ Authorization: Bearer {{access_token}}
 ###
 
 ## 업체 삭제 API
-DELETE http://localhost:8088/company/3
+DELETE {{gateway}}/company/1
 Content-Type: application/json
 Authorization: Bearer {{access_token}}

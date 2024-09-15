@@ -47,7 +47,7 @@ public class HubController {
     }
 
     // 허브 전체 조회
-    @GetMapping("/hubs")
+    @GetMapping("/hub")
     public ResponseEntity<Page<HubResponseDto>> getAllHubs(@PageableDefault(
          sort = "createdAt", direction = Sort.Direction.ASC
     ) Pageable pageable) {
@@ -56,7 +56,7 @@ public class HubController {
     }
 
     // 허브 이름으로 검색
-    @GetMapping("/hubs/search")
+    @GetMapping("/hub/search")
     public ResponseEntity<Page<HubResponseDto>> searchHubs(@PageableDefault(
         sort = "createdAt", direction = Sort.Direction.ASC
     ) Pageable pageable, @RequestParam String keyword) {
