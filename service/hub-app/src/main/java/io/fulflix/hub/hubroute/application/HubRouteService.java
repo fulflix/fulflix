@@ -12,6 +12,8 @@ import io.fulflix.hub.hub.domain.HubRepository;
 import io.fulflix.hub.hubroute.domain.HubRouteRepository;
 import io.fulflix.hub.hubroute.exception.HubRouteErrorCode;
 import io.fulflix.hub.hubroute.exception.HubRouteException;
+import io.fulflix.hub.infra.naver.application.NaverDirectionsService;
+import io.fulflix.hub.infra.naver.dto.RouteInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,6 +27,7 @@ public class HubRouteService {
 
     private final HubRouteRepository hubRouteRepository;
     private final HubRepository hubRepository;
+    private final NaverDirectionsService naverDirectionsService;
 
     // 허브 경로 생성
     @Transactional
@@ -36,13 +39,18 @@ public class HubRouteService {
         Hub departureHub = getHubById(dto.getDepartureHubId());
         Hub arrivalHub = getHubById(dto.getArrivalHubId());
 
+
+        RouteInfo routeInfo = naverDirectionsService.getRouteInfo(departureHub, arrivalHub);
+
         HubRoute hubRoute = HubRoute.builder()
                 .departureHub(departureHub)
                 .arrivalHub(arrivalHub)
-                .duration(dto.getDuration())
+                .duration(routeInfo.duration())
+                .distance(routeInfo.distance())
                 .build();
 
         hubRouteRepository.save(hubRoute);
+
         return mapToDto(hubRoute);
     }
 
@@ -107,6 +115,7 @@ public class HubRouteService {
         dto.setDepartureHub(HubResponseDto.of(hubRoute.getDepartureHub()));
         dto.setArrivalHub(HubResponseDto.of(hubRoute.getArrivalHub()));
         dto.setDuration(hubRoute.getDuration());
+        dto.setDistance(hubRoute.getDistance());
         dto.setRoute(hubRoute.getRoute());
         return dto;
     }
