@@ -3,9 +3,7 @@ package io.fulflix.company.application;
 import feign.FeignException;
 import io.fulflix.common.web.principal.Role;
 import io.fulflix.company.api.dto.CompanyDetailResponse;
-import io.fulflix.company.api.dto.CompanyResponse;
 import io.fulflix.company.api.dto.RegisterCompanyRequest;
-import io.fulflix.company.api.dto.UpdateCompanyRequest;
 import io.fulflix.company.domain.Company;
 import io.fulflix.company.exception.CompanyErrorCode;
 import io.fulflix.company.exception.CompanyException;
@@ -23,7 +21,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Slf4j
