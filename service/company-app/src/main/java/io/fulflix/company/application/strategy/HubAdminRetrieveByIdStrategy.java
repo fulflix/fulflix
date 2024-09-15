@@ -17,9 +17,9 @@ public class HubAdminRetrieveByIdStrategy implements CompanyRetrieveByIdStrategy
 
     @Override
     public CompanyResponse retrieveCompanyById(Long id, Long currentUser, Role role) {
-        Company company = companyRepo.findByIdAndHubIdAndIsDeletedFalse(id, currentUser)
+        return companyRepo.findByIdAndHubIdAndIsDeletedFalse(id, currentUser)
+                .map(CompanyResponse::fromEntity)
                 .orElseThrow(() -> new CompanyException(CompanyErrorCode.COMPANY_NOT_FOUND));
-        return CompanyResponse.fromEntity(company);
     }
 
     @Override

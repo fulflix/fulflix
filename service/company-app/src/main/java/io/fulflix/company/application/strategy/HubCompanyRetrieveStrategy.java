@@ -35,7 +35,7 @@ public class HubCompanyRetrieveStrategy implements CompanyRetrieveStrategy {
     }
 
     @Override
-    public boolean isMatched(Role role) { // HUB_COMPANY
+    public boolean isMatched(Role role) {
         return role.isHubCompany();
     }
 
