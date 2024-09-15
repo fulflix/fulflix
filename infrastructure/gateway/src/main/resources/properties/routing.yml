@@ -26,3 +26,8 @@ spring:
           uri: lb://delivery-app
           predicates:
             - Path=/delivery/**, /delivery-route/**
+
+        - id: product-app-authenticated
+          uri: lb://product-app
+          predicates:
+            - Path=/product/**
