@@ -8,6 +8,7 @@ import io.fulflix.company.exception.CompanyException;
 import io.fulflix.company.repo.CompanyRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @RequiredArgsConstructor
@@ -15,12 +16,12 @@ public class HubAdminDeleteStrategy implements CompanyDeleteStrategy {
     private final CompanyRepo companyRepo;
 
     @Override
+    @Transactional
     public void deleteCompany(Long id, Long currentUser, Role role) {
         Company company = companyRepo.findByIdAndHubIdAndIsDeletedFalse(id, currentUser)
                 .orElseThrow(() -> new CompanyException(CompanyErrorCode.UNAUTHORIZED_ACCESS));
 
-        company.delete(); // isDeleted = true로 설정
-        companyRepo.save(company);
+        company.delete();
     }
 
     @Override

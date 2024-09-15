@@ -16,12 +16,12 @@ public class MasterAdminDeleteStrategy implements CompanyDeleteStrategy {
     private final CompanyRepo companyRepo;
 
     @Override
+    @Transactional
     public void deleteCompany(Long id, Long currentUser, Role role) {
         Company company = companyRepo.findById(id)
                 .orElseThrow(() -> new CompanyException(CompanyErrorCode.COMPANY_NOT_FOUND));
 
-        company.delete(); // isDeleted = true로 설정
-        companyRepo.save(company);
+        company.delete();
     }
 
     @Override
