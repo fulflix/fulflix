@@ -52,49 +52,45 @@ public class CompanyService {
     }
 
     // 업체 전체 조회 및 검색 (마스터 관리자)
-    public Page<CompanyDetailResponse> getAllCompaniesForAdmin(String query, int page, int size, String sortBy, String sortDirection, Long currentUser, Role role) {
+    public Page<CompanyDetailResponse> getAllCompaniesForAdmin(String query, Pageable pageable, Long currentUser, Role role) {
         validateMasterAdminAuthority(role);
 
-        if (size != 10 && size != 30 && size != 50) {
-            size = 10;
+        if (pageable.getPageSize() != 10 && pageable.getPageSize() != 30 && pageable.getPageSize() != 50) {
+            pageable = PageRequest.of(pageable.getPageNumber(), 10, pageable.getSort());
         }
-        Sort.Direction direction = sortDirection.equalsIgnoreCase("asc") ? Sort.Direction.ASC : Sort.Direction.DESC;
-        Pageable sortedPageable = PageRequest.of(page, size, Sort.by(direction, sortBy));
 
         // 마스터 관리자 : 삭제된 업체까지 모두 조회
         Page<Company> companies;
 
         if (query != null && !query.isEmpty()) {
-            companies = companyRepo.findByCompanyNameContaining(query, sortedPageable); // 검색어 있으면
+            companies = companyRepo.findByCompanyNameContaining(query, pageable); // 검색어 있으면
         } else {
-            companies = companyRepo.findAll(sortedPageable); // 검색어 없으면
+            companies = companyRepo.findAll(pageable); // 검색어 없으면
         }
 
         return companies.map(CompanyDetailResponse::fromEntity);
     }
 
     // 업체 전체 조회 및 검색 (허브 관리자, 허브 업체)
-    public Page<CompanyResponse> getAllCompaniesForHub(String query, int page, int size, String sortBy, String sortDirection, Long currentUser, Role role) {
-        if (size != 10 && size != 30 && size != 50) {
-            size = 10;
+    public Page<CompanyResponse> getAllCompaniesForHub(String query, Pageable pageable, Long currentUser, Role role) {
+        if (pageable.getPageSize() != 10 && pageable.getPageSize() != 30 && pageable.getPageSize() != 50) {
+            pageable = PageRequest.of(pageable.getPageNumber(), 10, pageable.getSort());
         }
-        Sort.Direction direction = sortDirection.equalsIgnoreCase("asc") ? Sort.Direction.ASC : Sort.Direction.DESC;
-        Pageable sortedPageable = PageRequest.of(page, size, Sort.by(direction, sortBy));
 
         // 허브 관리자, 허브 업체 : 삭제되지 않은 업체 + 소속 허브의 업체만 조회
         Page<Company> companies;
 
         if (isHubAdmin(role)) {
             if (query != null && !query.isEmpty()) {
-                companies = companyRepo.findByHubIdAndCompanyNameContainingAndIsDeletedFalse(currentUser, query, sortedPageable);
+                companies = companyRepo.findByHubIdAndCompanyNameContainingAndIsDeletedFalse(currentUser, query, pageable);
             } else {
-                companies = companyRepo.findByHubIdAndIsDeletedFalse(currentUser, sortedPageable);
+                companies = companyRepo.findByHubIdAndIsDeletedFalse(currentUser, pageable);
             }
         } else if (isHubCompany(role)) {
             if (query != null && !query.isEmpty()) {
-                companies = companyRepo.findByOwnerIdAndCompanyNameContainingAndIsDeletedFalse(currentUser, query, sortedPageable);
+                companies = companyRepo.findByOwnerIdAndCompanyNameContainingAndIsDeletedFalse(currentUser, query, pageable);
             } else {
-                companies = companyRepo.findByOwnerIdAndIsDeletedFalse(currentUser, sortedPageable);
+                companies = companyRepo.findByOwnerIdAndIsDeletedFalse(currentUser, pageable);
             }
         } else {
             throw new CompanyException(CompanyErrorCode.UNAUTHORIZED_ACCESS);

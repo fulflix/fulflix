@@ -6,7 +6,7 @@ Authorization: Bearer {{access_token}}
 {
   "hubId" : 2,
   "ownerId" : 4,
-  "companyName" : "섬유 가공품 생산 업체",
+  "companyName" : "플라스틱 가공품 생산 업체",
   "companyType" : "SUPPLIER",
   "companyAddress" : "경기도 고양시"
 }
@@ -29,14 +29,14 @@ Authorization: Bearer {{access_token}}
 ###
 
 ## 업체 전체 조회 및 검색 API (마스터 관리자용)
-GET http://localhost:8088/company/admin?query=&page=&size=&sortBy=&sortDirection=
+GET http://localhost:8088/company/admin?query=생산&page=&size=20&sort=createdAt,asc
 Content-Type: application/json
 Authorization: Bearer {{access_token}}
 
 ###
 
 ## 업체 전체 조회 및 검색 API (허브 관리자, 허브 업체용)
-GET http://localhost:8088/company/hub?query=&page=&size=&sortBy=&sortDirection=
+GET http://localhost:8088/company/hub?query=플라스틱&page=&size=20&sort=
 Content-Type: application/json
 Authorization: Bearer {{access_token}}
 

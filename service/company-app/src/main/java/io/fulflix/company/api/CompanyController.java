@@ -11,6 +11,9 @@ import io.fulflix.company.application.CompanyService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,14 +45,11 @@ public class CompanyController {
     @GetMapping("/admin")
     public ResponseEntity<Page<CompanyDetailResponse>> getAllCompaniesForAdmin(
             @RequestParam(required = false, defaultValue = "") String query, // 검색
-            @RequestParam(defaultValue = "10") int size, // 페이지 크기
-            @RequestParam(defaultValue = "createdAt") String sortBy, // 정렬 기준
-            @RequestParam(defaultValue = "desc") String sortDirection, // 정렬 방향
-            @RequestParam(defaultValue = "0") int page, // 페이지 번호
+            @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable, // 페이징 및 정렬
             @CurrentUser Long currentUser,
             @CurrentUserRole Role role
     ) {
-        Page<CompanyDetailResponse> companies = companyService.getAllCompaniesForAdmin(query, page, size, sortBy, sortDirection, currentUser, role);
+        Page<CompanyDetailResponse> companies = companyService.getAllCompaniesForAdmin(query, pageable, currentUser, role);
         return ResponseEntity.ok(companies);
     }
 
@@ -57,14 +57,11 @@ public class CompanyController {
     @GetMapping("/hub")
     public ResponseEntity<Page<CompanyResponse>> getAllCompaniesForHub(
             @RequestParam(required = false, defaultValue = "") String query, // 검색
-            @RequestParam(defaultValue = "10") int size, // 페이지 크기
-            @RequestParam(defaultValue = "createdAt") String sortBy, // 정렬 기준
-            @RequestParam(defaultValue = "desc") String sortDirection, // 정렬 방향
-            @RequestParam(defaultValue = "0") int page, // 페이지 번호
+            @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable, // 페이징 및 정렬
             @CurrentUser Long currentUser,
             @CurrentUserRole Role role
     ) {
-        Page<CompanyResponse> companies = companyService.getAllCompaniesForHub(query, page, size, sortBy, sortDirection, currentUser, role);
+        Page<CompanyResponse> companies = companyService.getAllCompaniesForHub(query, pageable, currentUser, role);
         return ResponseEntity.ok(companies);
     }
 
