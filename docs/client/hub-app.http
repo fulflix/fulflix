@@ -34,9 +34,8 @@ Content-Type: application/json
 Authorization: Bearer {{access_token}}
 
 {
-  "departureHubId": 2,
-  "arrivalHubId": 3,
-  "duration": 22222
+  "departureHubId": 18,
+  "arrivalHubId": 19
 }
 
 ###

@@ -12,5 +12,5 @@ import lombok.Setter;
 public class HubRouteUpdateDto {
     private Long departureHubId;
     private Long arrivalHubId;
-    private Integer duration;
+    private Long duration;
 }

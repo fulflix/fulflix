@@ -30,8 +30,11 @@ public class HubRoute extends Auditable {
     @JoinColumn(name = "arrival_hub_id", nullable = false)
     private Hub arrivalHub;
 
-    @Column(nullable = false)
-    private Integer duration;
+    @Column
+    private Long duration;
+
+    @Column
+    private Double distance;
 
     @Column
     private String route;
@@ -52,8 +55,12 @@ public class HubRoute extends Auditable {
         this.arrivalHub = arrivalHub;
     }
 
-    public void setDuration(Integer duration) {
+    public void setDuration(Long duration) {
         this.duration = duration;
+    }
+
+    public void setDistance(Double distance) {
+        this.distance = distance;
     }
 
     public void setRoute(String route) {
@@ -62,10 +69,11 @@ public class HubRoute extends Auditable {
 
     // 생성자
     @Builder
-    public HubRoute(Hub departureHub, Hub arrivalHub, Integer duration, String route) {
+    public HubRoute(Hub departureHub, Hub arrivalHub, Long duration, Double distance, String route) {
         this.departureHub = departureHub;
         this.arrivalHub = arrivalHub;
         this.duration = duration;
+        this.distance = distance;
         this.route = route;
     }
 }
