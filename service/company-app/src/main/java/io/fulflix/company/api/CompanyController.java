@@ -85,7 +85,7 @@ public class CompanyController {
             @CurrentUser Long currentUser,
             @CurrentUserRole Role role
     ) {
-        CompanyResponse company = companyService.getCompanyByIdForHub(id, currentUser, role);
+        CompanyResponse company = companyFacade.getCompanyByIdForHub(id, currentUser, role);
         return ResponseEntity.ok(company);
     }
 

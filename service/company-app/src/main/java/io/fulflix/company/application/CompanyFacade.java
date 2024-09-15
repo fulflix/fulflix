@@ -15,9 +15,11 @@ import java.util.List;
 public class CompanyFacade {
 
     private final List<CompanyRetrieveStrategy> companyRetrieveStrategies;
+    private final List<CompanyRetrieveByIdStrategy> companyRetrieveByIdStrategies;
     // HubAdminCompanyRetrieveStrategy - 허브 관리자
     // HubCompanyRetrieveStrategy - 허브 업체
 
+    // 전체 조회 및 검색
     public Page<CompanyResponse> getAllCompaniesForHub(
         String query,
         Pageable pageable,
@@ -35,4 +37,12 @@ public class CompanyFacade {
             .retrieveCompanies(query, pageable, currentUser, role);
     }
 
+    // 단일 조회
+    public CompanyResponse getCompanyByIdForHub(Long id, Long currentUser, Role role) {
+        return companyRetrieveByIdStrategies.stream()
+                .filter(it -> it.isMatched(role))
+                .findAny()
+                .orElseThrow()
+                .retrieveCompanyById(id, currentUser, role);
+    }
 }
