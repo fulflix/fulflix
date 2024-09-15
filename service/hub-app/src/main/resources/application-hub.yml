@@ -5,5 +5,5 @@ server:
   port: 8180
 
 naver:
-  client-id: o0al42bcsp
-  client-secret: 92tSRFcxfuT4Wtdt1sabWbNWtFKFFapESELxbSFK
+  client-id:
+  client-secret: 
