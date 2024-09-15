@@ -11,32 +11,32 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class AdminCompanyRetrieveStrategy implements CompanyRetrieveStrategy {
+public class HubAdminRetrieveStrategy implements CompanyRetrieveStrategy {
 
     private final CompanyRepo companyRepo;
 
     @Override
     public Page<CompanyResponse> retrieveCompanies(
-        String query,
-        Pageable pageable,
-        Long currentUser,
-        Role role
+            String query,
+            Pageable pageable,
+            Long currentUser,
+            Role role
     ) {
         if (hasQuery(query)) {
             return companyRepo.findByHubIdAndCompanyNameContainingAndIsDeletedFalse(
-                currentUser,
-                query,
-                pageable
+                    currentUser,
+                    query,
+                    pageable
             ).map(CompanyResponse::fromEntity);
         }
 
         return companyRepo.findByHubIdAndIsDeletedFalse(currentUser, pageable)
-            .map(CompanyResponse::fromEntity);
+                .map(CompanyResponse::fromEntity);
     }
 
     @Override
-    public boolean isMatched(Role role) { // MASTER_ADMIN
-        return role.isMasterAdmin(); // true
+    public boolean isMatched(Role role) { // HUB_ADMIN
+        return role.isHubAdmin();
     }
 
     @Override

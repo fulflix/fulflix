@@ -7,6 +7,7 @@ import io.fulflix.company.api.dto.CompanyDetailResponse;
 import io.fulflix.company.api.dto.CompanyResponse;
 import io.fulflix.company.api.dto.RegisterCompanyRequest;
 import io.fulflix.company.api.dto.UpdateCompanyRequest;
+import io.fulflix.company.application.CompanyFacade;
 import io.fulflix.company.application.CompanyService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +30,7 @@ import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 )
 public class CompanyController {
     private final CompanyService companyService;
+    private final CompanyFacade companyFacade;
 
     // 업체 등록 (마스터 관리자, 허브 관리자)
     @PostMapping
@@ -61,7 +63,7 @@ public class CompanyController {
             @CurrentUser Long currentUser,
             @CurrentUserRole Role role
     ) {
-        Page<CompanyResponse> companies = companyService.getAllCompaniesForHub(query, pageable, currentUser, role);
+        Page<CompanyResponse> companies = companyFacade.getAllCompaniesForHub(query, pageable, currentUser, role);
         return ResponseEntity.ok(companies);
     }
 
