@@ -55,23 +55,29 @@ public class CompanyService {
     public Page<CompanyDetailResponse> getAllCompaniesForAdmin(String query, int page, int size, String sortBy, String sortDirection, Long currentUser, Role role) {
         validateMasterAdminAuthority(role);
 
-        if (size != 10 && size != 30 && size != 50) size = 10;
+        if (size != 10 && size != 30 && size != 50) {
+            size = 10;
+        }
         Sort.Direction direction = sortDirection.equalsIgnoreCase("asc") ? Sort.Direction.ASC : Sort.Direction.DESC;
         Pageable sortedPageable = PageRequest.of(page, size, Sort.by(direction, sortBy));
 
         // 마스터 관리자 : 삭제된 업체까지 모두 조회
         Page<Company> companies;
 
-        if (query != null && !query.isEmpty())
+        if (query != null && !query.isEmpty()) {
             companies = companyRepo.findByCompanyNameContaining(query, sortedPageable); // 검색어 있으면
-        else companies = companyRepo.findAll(sortedPageable); // 검색어 없으면
+        } else {
+            companies = companyRepo.findAll(sortedPageable); // 검색어 없으면
+        }
 
         return companies.map(CompanyDetailResponse::fromEntity);
     }
 
     // 업체 전체 조회 및 검색 (허브 관리자, 허브 업체)
     public Page<CompanyResponse> getAllCompaniesForHub(String query, int page, int size, String sortBy, String sortDirection, Long currentUser, Role role) {
-        if (size != 10 && size != 30 && size != 50) size = 10;
+        if (size != 10 && size != 30 && size != 50) {
+            size = 10;
+        }
         Sort.Direction direction = sortDirection.equalsIgnoreCase("asc") ? Sort.Direction.ASC : Sort.Direction.DESC;
         Pageable sortedPageable = PageRequest.of(page, size, Sort.by(direction, sortBy));
 
@@ -79,14 +85,20 @@ public class CompanyService {
         Page<Company> companies;
 
         if (isHubAdmin(role)) {
-            if (query != null && !query.isEmpty())
+            if (query != null && !query.isEmpty()) {
                 companies = companyRepo.findByHubIdAndCompanyNameContainingAndIsDeletedFalse(currentUser, query, sortedPageable);
-            else companies = companyRepo.findByHubIdAndIsDeletedFalse(currentUser, sortedPageable);
+            } else {
+                companies = companyRepo.findByHubIdAndIsDeletedFalse(currentUser, sortedPageable);
+            }
         } else if (isHubCompany(role)) {
-            if (query != null && !query.isEmpty())
+            if (query != null && !query.isEmpty()) {
                 companies = companyRepo.findByOwnerIdAndCompanyNameContainingAndIsDeletedFalse(currentUser, query, sortedPageable);
-            else companies = companyRepo.findByOwnerIdAndIsDeletedFalse(currentUser, sortedPageable);
-        } else throw new CompanyException(CompanyErrorCode.UNAUTHORIZED_ACCESS);
+            } else {
+                companies = companyRepo.findByOwnerIdAndIsDeletedFalse(currentUser, sortedPageable);
+            }
+        } else {
+            throw new CompanyException(CompanyErrorCode.UNAUTHORIZED_ACCESS);
+        }
 
         return companies.map(CompanyResponse::fromEntity);
     }
@@ -109,7 +121,9 @@ public class CompanyService {
         } else if (isHubCompany(role)) {
             company = companyRepo.findByIdAndOwnerIdAndIsDeletedFalse(id, currentUser)
                     .orElseThrow(() -> new CompanyException(CompanyErrorCode.COMPANY_NOT_FOUND));
-        } else throw new CompanyException(CompanyErrorCode.UNAUTHORIZED_ACCESS);
+        } else {
+            throw new CompanyException(CompanyErrorCode.UNAUTHORIZED_ACCESS);
+        }
 
         return CompanyResponse.fromEntity(company);
     }
@@ -118,21 +132,25 @@ public class CompanyService {
     public CompanyResponse updateCompany(Long id, UpdateCompanyRequest updateCompanyRequest, Long currentUser, Role role) {
         Company company;
 
-        if (isMasterAdmin(role))
+        if (isMasterAdmin(role)) {
             company = findCompanyById(id);
-        else if (isHubAdmin(role)) {
+        } else if (isHubAdmin(role)) {
             company = companyRepo.findByIdAndHubIdAndIsDeletedFalse(id, currentUser)
                     .orElseThrow(() -> new CompanyException(CompanyErrorCode.UNAUTHORIZED_ACCESS));
             // hubId 수정 안 되게 예외 처리
-            if (updateCompanyRequest.getHubId() != null)
+            if (updateCompanyRequest.getHubId() != null) {
                 throw new CompanyException(CompanyErrorCode.UNAUTHORIZED_ACCESS);
+            }
         } else if (isHubCompany(role)) {
             company = companyRepo.findByIdAndOwnerIdAndIsDeletedFalse(id, currentUser)
                     .orElseThrow(() -> new CompanyException(CompanyErrorCode.UNAUTHORIZED_ACCESS));
             // hubId 수정 안 되게 예외 처리
-            if (updateCompanyRequest.getHubId() != null)
+            if (updateCompanyRequest.getHubId() != null) {
                 throw new CompanyException(CompanyErrorCode.UNAUTHORIZED_ACCESS);
-        } else throw new CompanyException(CompanyErrorCode.UNAUTHORIZED_ACCESS);
+            }
+        } else {
+            throw new CompanyException(CompanyErrorCode.UNAUTHORIZED_ACCESS);
+        }
 
         if (updateCompanyRequest.getHubId() != null && !updateCompanyRequest.getHubId().equals(company.getHubId())) {
             checkHubExists(updateCompanyRequest.getHubId());
@@ -162,8 +180,9 @@ public class CompanyService {
                     .orElseThrow(() -> new CompanyException(CompanyErrorCode.UNAUTHORIZED_ACCESS));
 
             // 현재 로그인한 사용자가 허브 업체와 일치한지 확인
-            if (!company.getHubId().equals(currentUser))
+            if (!company.getHubId().equals(currentUser)) {
                 throw new CompanyException(CompanyErrorCode.UNAUTHORIZED_ACCESS);
+            }
 
         } else {
             // 마스터 관리자도 아니고 허브 관리자도 아닌 경우 예외 처리
@@ -195,32 +214,30 @@ public class CompanyService {
 
     // 마스터 관리자 권한 확인 예외처리
     private void validateMasterAdminAuthority(Role role) {
-        if (!isMasterAdmin(role))
+        if (!isMasterAdmin(role)) {
             throw new CompanyException(CompanyErrorCode.UNAUTHORIZED_ACCESS);
+        }
     }
 
     // 허브 관리자 권한 확인 예외처리
     private void validateHubAdminAuthority(Role role) {
-        if (!isHubAdmin(role))
+        if (!isHubAdmin(role)) {
             throw new CompanyException(CompanyErrorCode.UNAUTHORIZED_ACCESS);
+        }
     }
 
     // 허브 업체 권한 확인 예외처리
     private void validateHubCompanyAuthority(Role role) {
-        if (!isHubCompany(role))
+        if (!isHubCompany(role)) {
             throw new CompanyException(CompanyErrorCode.UNAUTHORIZED_ACCESS);
+        }
     }
 
     // 마스터 관리자 & 허브 관리자 확인 예외처리
     private void validateAdminAuthority(Role role) {
-        if (!isAdmin(role))
+        if (!isAdmin(role)) {
             throw new CompanyException(CompanyErrorCode.UNAUTHORIZED_ACCESS);
-    }
-
-    // 마스터 관리자 & 허브 관리자 & 허브 업체 확인 예외처리
-    private void validateAdminAndHubCompanyAuthority(Role role) {
-        if (!isAdmin(role) && !isHubCompany(role))
-            throw new CompanyException(CompanyErrorCode.UNAUTHORIZED_ACCESS);
+        }
     }
 
     // 마스터 관리자 권한 확인
@@ -245,8 +262,9 @@ public class CompanyService {
 
     // 업체명 중복 확인
     private void checkCompanyDuplication(String companyName) {
-        if (companyRepo.findByCompanyName(companyName).isPresent())
+        if (companyRepo.findByCompanyName(companyName).isPresent()) {
             throw new CompanyException(CompanyErrorCode.DUPLICATE_COMPANY_NAME);
+        }
     }
 
     // 삭제 여부와 상관없이 모든 업체 존재 확인 (관리자용)
