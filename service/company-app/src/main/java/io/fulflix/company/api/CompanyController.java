@@ -108,7 +108,7 @@ public class CompanyController {
             @CurrentUser Long currentUser,
             @CurrentUserRole Role role
     ) {
-        companyService.deleteCompany(id, currentUser, role);
+        companyFacade.deleteCompany(id, currentUser, role);
         return ResponseEntity.noContent().build(); // 204 No Content 응답
     }
 }

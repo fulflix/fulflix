@@ -79,32 +79,6 @@ public class CompanyService {
         return CompanyDetailResponse.fromEntity(company);
     }
 
-    // 업체 삭제 (마스터 관리자, 허브 관리자)
-    public void deleteCompany(Long id, Long currentUser, Role role) {
-        Company company;
-
-        if (isMasterAdmin(role)) {
-            company = findCompanyById(id);
-        } else if (isHubAdmin(role)) {
-            // 허브 관리자는 삭제되지 않은 업체만 조회 가능
-            company = companyRepo.findByIdAndIsDeletedFalse(id)
-                    .orElseThrow(() -> new CompanyException(CompanyErrorCode.UNAUTHORIZED_ACCESS));
-
-            // 현재 로그인한 사용자가 허브 업체와 일치한지 확인
-            if (!company.getHubId().equals(currentUser)) {
-                throw new CompanyException(CompanyErrorCode.UNAUTHORIZED_ACCESS);
-            }
-
-        } else {
-            // 마스터 관리자도 아니고 허브 관리자도 아닌 경우 예외 처리
-            throw new CompanyException(CompanyErrorCode.UNAUTHORIZED_ACCESS);
-        }
-
-        // 업체 삭제 처리
-        company.delete(); // isDeleted = true로 설정
-        companyRepo.save(company);
-    }
-
     // hubId 존재 확인 예외처리 (FeignClient)
     private void checkHubExists(Long hubId) {
         try {

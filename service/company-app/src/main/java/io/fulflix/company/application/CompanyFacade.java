@@ -20,8 +20,7 @@ public class CompanyFacade {
     private final List<CompanyRetrieveStrategy> companyRetrieveStrategies;
     private final List<CompanyRetrieveByIdStrategy> companyRetrieveByIdStrategies;
     private final List<CompanyUpdateStrategy> companyUpdateStrategies;
-    // HubAdminCompanyRetrieveStrategy - 허브 관리자
-    // HubCompanyRetrieveStrategy - 허브 업체
+    private final List<CompanyDeleteStrategy> companyDeleteStrategies;
 
     // 전체 조회 및 검색
     public Page<CompanyResponse> getAllCompaniesForHub(
@@ -57,5 +56,14 @@ public class CompanyFacade {
                 .findAny()
                 .orElseThrow(() -> new CompanyException(CompanyErrorCode.UNAUTHORIZED_ACCESS))
                 .updateCompany(id, updateCompanyRequest, currentUser, role);
+    }
+
+    // 삭제
+    public void deleteCompany(Long id, Long currentUser, Role role) {
+        companyDeleteStrategies.stream()
+                .filter(strategy -> strategy.isMatched(role))
+                .findAny()
+                .orElseThrow(() -> new CompanyException(CompanyErrorCode.UNAUTHORIZED_ACCESS))
+                .deleteCompany(id, currentUser, role);
     }
 }
