@@ -1,4 +1,13 @@
 spring:
+  config.activate.on-profile: test
+  cloud:
+    discovery:
+      enabled: false
+
+    config:
+      allow-override: false
+---
+spring:
   config.activate.on-profile: local
 
 eureka:
