@@ -20,4 +20,6 @@ public interface ProductRepo extends JpaRepository<Product, Long> {
     Page<Product> findByProductNameContainingAndIsDeletedFalse(String product, Pageable pageable);
     Page<Product> findByStockQuantityGreaterThanEqualAndIsDeletedFalse(Integer stockQuantity, Pageable pageable);
     Page<Product> findByIsDeletedFalse(Pageable pageable);
+    // 단일 조회 (삭제 미포함)
+    Optional<Product> findByIdAndIsDeletedFalse(Long id);
 }

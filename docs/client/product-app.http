@@ -36,3 +36,10 @@ Authorization: Bearer {{access_token}}
 GET {{gateway}}/product/admin/1
 Content-Type: application/json
 Authorization: Bearer {{access_token}}
+
+###
+
+# @name 업체 단일 조회 API (허브 관리자, 허브 업체, 허브 배송 담당자, 업체 배송 담당자)
+GET {{gateway}}/product/hub/1
+Content-Type: application/json
+Authorization: Bearer {{access_token}}

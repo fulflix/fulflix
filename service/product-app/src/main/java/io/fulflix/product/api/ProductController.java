@@ -91,4 +91,15 @@ public class ProductController {
         ProductDetailResponse product = productService.getProductForAdmin(id, currentUser, role);
         return ResponseEntity.ok(product);
     }
+
+    // 단일 상품 조회 (허브 관리자, 허브 업체, 허브 배송 담당자, 업체 배송 담당자)
+    @GetMapping("/hub/{id}")
+    public ResponseEntity<ProductResponse> getProductForHub(
+            @PathVariable Long id,
+            @CurrentUser Long currentUser,
+            @CurrentUserRole Role role
+    ) {
+        ProductResponse product = productService.getProductForHub(id, currentUser, role);
+        return ResponseEntity.ok(product);
+    }
 }
