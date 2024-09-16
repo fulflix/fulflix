@@ -77,6 +77,16 @@ public class ProductService {
         return products.map(ProductDetailResponse::fromEntity);
     }
 
+    // 단일 상품 조회 (마스터 관리자)
+    public ProductDetailResponse getProductForAdmin(Long id, Long currentUser, Role role) {
+        validateMasterAdminAuthority(role);
+
+        Product product = productRepo.findById(id)
+                .orElseThrow(() -> new ProductException(ProductErrorCode.PRODUCT_NOT_FOUND));
+
+        return ProductDetailResponse.fromEntity(product);
+    }
+
     private void validateMasterAdminAuthority(Role role) {
         if (!role.isMasterAdmin()) {
             throw new ProductException(ProductErrorCode.UNAUTHORIZED_ACCESS);
@@ -88,4 +98,6 @@ public class ProductService {
             throw new ProductException(ProductErrorCode.UNAUTHORIZED_ACCESS);
         }
     }
+
+
 }

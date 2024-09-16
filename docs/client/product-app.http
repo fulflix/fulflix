@@ -32,3 +32,7 @@ Authorization: Bearer {{access_token}}
 
 ###
 
+# @name 업체 단일 조회 API (마스터 관리자)
+GET {{gateway}}/product/admin/1
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
