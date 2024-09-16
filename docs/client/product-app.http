@@ -43,3 +43,15 @@ Authorization: Bearer {{access_token}}
 GET {{gateway}}/product/hub/1
 Content-Type: application/json
 Authorization: Bearer {{access_token}}
+
+###
+
+# @name 업체 수정 API
+PUT {{gateway}}/product/3
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+  "productName" : "합성 섬유33",
+  "stockQuantity": 1
+}

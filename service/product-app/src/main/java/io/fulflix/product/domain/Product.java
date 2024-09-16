@@ -1,5 +1,6 @@
 package io.fulflix.product.domain;
 
+import io.fulflix.product.api.dto.UpdateProductRequest;
 import io.fulflix.product.config.ProductAuditable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -29,4 +30,14 @@ public class Product extends ProductAuditable {
 
     @Column(name = "stock_quantity", nullable = false)
     private Integer stockQuantity;
+
+    // productName 업데이트
+    public void updateProductName(UpdateProductRequest updateProductRequest) {
+        this.productName = updateProductRequest.getProductName();
+    }
+
+    // stockQuantity 업데이트
+    public void updateStockQuantity(UpdateProductRequest updateProductRequest) {
+        this.stockQuantity = updateProductRequest.getStockQuantity();
+    }
 }
