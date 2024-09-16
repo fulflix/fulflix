@@ -80,4 +80,26 @@ public class ProductController {
         Page<ProductResponse> products = productService.getAllProductsForHub(product, stockQuantity, pageable, currentUser, role);
         return ResponseEntity.ok(products);
     }
+
+    // 단일 상품 조회 (마스터 관리자)
+    @GetMapping("/admin/{id}")
+    public ResponseEntity<ProductDetailResponse> getProductForAdmin(
+            @PathVariable Long id,
+            @CurrentUser Long currentUser,
+            @CurrentUserRole Role role
+    ) {
+        ProductDetailResponse product = productService.getProductForAdmin(id, currentUser, role);
+        return ResponseEntity.ok(product);
+    }
+
+    // 단일 상품 조회 (허브 관리자, 허브 업체, 허브 배송 담당자, 업체 배송 담당자)
+    @GetMapping("/hub/{id}")
+    public ResponseEntity<ProductResponse> getProductForHub(
+            @PathVariable Long id,
+            @CurrentUser Long currentUser,
+            @CurrentUserRole Role role
+    ) {
+        ProductResponse product = productService.getProductForHub(id, currentUser, role);
+        return ResponseEntity.ok(product);
+    }
 }

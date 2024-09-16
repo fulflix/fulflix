@@ -77,6 +77,26 @@ public class ProductService {
         return products.map(ProductDetailResponse::fromEntity);
     }
 
+    // 단일 상품 조회 (마스터 관리자)
+    public ProductDetailResponse getProductForAdmin(Long id, Long currentUser, Role role) {
+        validateMasterAdminAuthority(role);
+
+        Product product = productRepo.findById(id)
+                .orElseThrow(() -> new ProductException(ProductErrorCode.PRODUCT_NOT_FOUND));
+
+        return ProductDetailResponse.fromEntity(product);
+    }
+
+    // 단일 상품 조회 (허브 관리자, 허브 업체, 허브 배송 담당자, 업체 배송 담당자)
+    public ProductResponse getProductForHub(Long id, Long currentUser, Role role) {
+        validateMasterHubAuthority(role);
+
+        Product product = productRepo.findByIdAndIsDeletedFalse(id)
+                .orElseThrow(() -> new ProductException(ProductErrorCode.PRODUCT_NOT_FOUND));
+
+        return ProductResponse.fromEntity(product);
+    }
+
     private void validateMasterAdminAuthority(Role role) {
         if (!role.isMasterAdmin()) {
             throw new ProductException(ProductErrorCode.UNAUTHORIZED_ACCESS);
@@ -88,4 +108,6 @@ public class ProductService {
             throw new ProductException(ProductErrorCode.UNAUTHORIZED_ACCESS);
         }
     }
+
+
 }
