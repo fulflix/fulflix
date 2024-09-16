@@ -1,0 +1,10 @@
+# @name 상품 등록 API
+POST {{gateway}}/product
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+  "companyId": 2,
+  "productName": "합성 섬유",
+  "stockQuantity": 10
+}

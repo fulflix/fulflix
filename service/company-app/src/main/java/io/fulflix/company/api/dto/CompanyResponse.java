@@ -14,6 +14,7 @@ import lombok.experimental.SuperBuilder;
 public class CompanyResponse {
     private Long id;
     private Long hubId;
+    private Long ownerId;
     private String companyName;
     private CompanyType companyType;
     private String companyAddress;
@@ -22,6 +23,7 @@ public class CompanyResponse {
         return CompanyResponse.builder()
                 .id(entity.getId())
                 .hubId(entity.getHubId())
+                .ownerId(entity.getOwnerId())
                 .companyName(entity.getCompanyName())
                 .companyType(entity.getCompanyType())
                 .companyAddress(entity.getCompanyAddress())
