@@ -30,7 +30,7 @@ public class ProductController {
     private final ProductService productService;
     private final ProductFacade productFacade;
 
-    // 상품 등록 (마스터 관리자, 허브 관리자, 허브 업체)
+    // 상품 등록 (마스터 관리자, 허브 업체)
     @PostMapping
     public ResponseEntity<Void> registerProduct(
             @Valid @RequestBody RegisterProductRequest registerProductRequest,

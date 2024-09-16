@@ -1,7 +1,9 @@
 package io.fulflix.product.application.strategy;
 
 import io.fulflix.common.web.principal.Role;
-import io.fulflix.infra.client.company.CompanyDetailResponse;
+import io.fulflix.infra.client.company.CompanyResponse;
+import io.fulflix.infra.client.exception.CompanyErrorCode;
+import io.fulflix.infra.client.exception.CompanyException;
 import io.fulflix.product.api.dto.RegisterProductRequest;
 import io.fulflix.product.application.ProductRegisterStrategy;
 import io.fulflix.product.application.validator.ProductValidator;
@@ -14,18 +16,25 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class MasterAdminRegisterProduct implements ProductRegisterStrategy {
+public class HubCompanyRegisterProduct implements ProductRegisterStrategy {
     private final ProductRepo productRepo;
     private final ProductValidator productValidator;
 
     @Override
     public void registerProduct(RegisterProductRequest registerProductRequest, Long currentUser, Role role) {
-        CompanyDetailResponse companyDetailResponse = productValidator.checkCompanyExistsForAdmin(registerProductRequest.getCompanyId());
+        CompanyResponse companyResponse = productValidator.checkCompanyExistsForHub(registerProductRequest.getCompanyId());
+        Long companyHubId = companyResponse.getHubId();
+        Long companyOwnerId = companyResponse.getOwnerId();
+
+        if (!companyOwnerId.equals(currentUser)) {
+            throw new CompanyException(CompanyErrorCode.COMPANY_NOT_FOUND);
+        }
+
         productValidator.checkProductDuplication(registerProductRequest.getCompanyId(), registerProductRequest.getProductName());
 
         Product product = Product.builder()
                 .companyId(registerProductRequest.getCompanyId())
-                .hubId(companyDetailResponse.getHubId())
+                .hubId(companyHubId)
                 .productName(registerProductRequest.getProductName())
                 .stockQuantity(registerProductRequest.getStockQuantity())
                 .build();
@@ -37,6 +46,6 @@ public class MasterAdminRegisterProduct implements ProductRegisterStrategy {
 
     @Override
     public boolean isMatched(Role role) {
-        return role.isMasterAdmin();
+        return role.isHubCompany();
     }
 }

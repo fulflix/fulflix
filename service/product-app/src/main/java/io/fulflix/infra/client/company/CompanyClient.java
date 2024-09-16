@@ -10,12 +10,20 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @FeignClient(name = COMPANY_APP_CLIENT)
 public interface CompanyClient {
     String COMPANY_APP_CLIENT = "company-app";
-    String COMPANY_BY_ID_URI = "/company/admin/{id}";
+    String COMPANY_BY_ID_FOR_ADMIN_URI = "/company/admin/{id}";
+    String COMPANY_BY_ID_FOR_HUB_URI = "/company/hub/{id}";
 
     @GetMapping(
-            path = COMPANY_BY_ID_URI,
+            path = COMPANY_BY_ID_FOR_ADMIN_URI,
             consumes = APPLICATION_JSON_VALUE,
             produces = APPLICATION_JSON_VALUE
     )
     CompanyDetailResponse getCompanyByIdForAdmin(@PathVariable Long id);
+
+    @GetMapping(
+            path = COMPANY_BY_ID_FOR_HUB_URI,
+            consumes = APPLICATION_JSON_VALUE,
+            produces = APPLICATION_JSON_VALUE
+    )
+    CompanyResponse getCompanyByIdForHub(@PathVariable Long id);
 }

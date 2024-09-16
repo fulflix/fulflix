@@ -21,6 +21,7 @@ public class CompanyDetailResponse extends CompanyResponse {
         return CompanyDetailResponse.builder()
                 .id(entity.getId())
                 .hubId(entity.getHubId())
+                .ownerId(entity.getOwnerId())
                 .companyName(entity.getCompanyName())
                 .companyType(entity.getCompanyType())
                 .companyAddress(entity.getCompanyAddress())
