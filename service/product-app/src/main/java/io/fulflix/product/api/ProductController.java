@@ -3,12 +3,18 @@ package io.fulflix.product.api;
 import io.fulflix.common.app.context.annotation.CurrentUser;
 import io.fulflix.common.app.context.annotation.CurrentUserRole;
 import io.fulflix.common.web.principal.Role;
+import io.fulflix.product.api.dto.ProductDetailResponse;
+import io.fulflix.product.api.dto.ProductResponse;
 import io.fulflix.product.api.dto.RegisterProductRequest;
-import io.fulflix.product.application.ProductDeleteService;
+import io.fulflix.product.application.ProductService;
 import io.fulflix.product.application.ProductFacade;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,7 +31,7 @@ import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 )
 public class ProductController {
     private final ProductFacade productFacade;
-    private final ProductDeleteService productDeleteService;
+    private final ProductService productService;
 
     // 상품 등록 (마스터 관리자, 허브 업체)
     @PostMapping
@@ -45,7 +51,33 @@ public class ProductController {
             @CurrentUser Long currentUser,
             @CurrentUserRole Role role
     ) {
-        productDeleteService.deleteProduct(id, currentUser, role);
+        productService.deleteProduct(id, currentUser, role);
         return ResponseEntity.noContent().build();
+    }
+
+    // 상품 전체 조회 및 검색 (마스터 관리자)
+    @GetMapping("/admin")
+    public ResponseEntity<Page<ProductDetailResponse>> getAllProductsForAdmin(
+            @RequestParam(required = false, defaultValue = "") String product, // 상품명
+            @RequestParam(required = false, defaultValue = "0") Integer stockQuantity, // 재고
+            @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable, // 페이징 및 정렬
+            @CurrentUser Long currentUser,
+            @CurrentUserRole Role role
+    ) {
+        Page<ProductDetailResponse> products = productService.getAllProductsForAdmin(product, stockQuantity, pageable, currentUser, role);
+        return ResponseEntity.ok(products);
+    }
+
+    // 상품 전체 조회 및 검색 (허브 관리자, 허브 업체, 허브 배송 담당자, 업체 배송 담당자)
+    @GetMapping("/hub")
+    public ResponseEntity<Page<ProductResponse>> getAllProductsForHubUsers(
+            @RequestParam(required = false, defaultValue = "") String product, // 상품명
+            @RequestParam(required = false, defaultValue = "0") Integer stockQuantity, // 재고
+            @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable, // 페이징 및 정렬
+            @CurrentUser Long currentUser,
+            @CurrentUserRole Role role
+    ) {
+        Page<ProductResponse> products = productService.getAllProductsForHub(product, stockQuantity, pageable, currentUser, role);
+        return ResponseEntity.ok(products);
     }
 }
