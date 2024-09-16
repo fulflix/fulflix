@@ -6,6 +6,7 @@ import io.fulflix.common.web.principal.Role;
 import io.fulflix.product.api.dto.ProductDetailResponse;
 import io.fulflix.product.api.dto.ProductResponse;
 import io.fulflix.product.api.dto.RegisterProductRequest;
+import io.fulflix.product.api.dto.UpdateProductRequest;
 import io.fulflix.product.application.ProductService;
 import io.fulflix.product.application.ProductFacade;
 import jakarta.validation.Valid;
@@ -101,5 +102,17 @@ public class ProductController {
     ) {
         ProductResponse product = productService.getProductForHub(id, currentUser, role);
         return ResponseEntity.ok(product);
+    }
+
+    // 상품 수정 (마스터 관리자, 허브 업체)
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> updateProduct(
+            @PathVariable Long id,
+            @Valid @RequestBody UpdateProductRequest updateProductRequest,
+            @CurrentUser Long currentUser,
+            @CurrentUserRole Role role
+    ) {
+        productFacade.updateProduct(id, updateProductRequest, currentUser, role);
+        return ResponseEntity.noContent().build();
     }
 }
