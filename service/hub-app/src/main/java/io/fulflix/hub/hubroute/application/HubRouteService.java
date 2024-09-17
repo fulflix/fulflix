@@ -14,6 +14,7 @@ import io.fulflix.hub.hubroute.exception.HubRouteErrorCode;
 import io.fulflix.hub.hubroute.exception.HubRouteException;
 import io.fulflix.hub.infra.naver.application.NaverDirectionsService;
 import io.fulflix.hub.infra.naver.dto.RouteInfo;
+import io.fulflix.infra.client.external.naver.NaverDirectionClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,7 +29,9 @@ public class HubRouteService {
     private final HubRouteRepository hubRouteRepository;
     private final HubRepository hubRepository;
     private final NaverDirectionsService naverDirectionsService;
+    private final NaverDirectionClient naverDirectionClient;
 
+    // TODO 허브 경로 생성시 Naver API를 너무 많이 찌르는 문제
     // 허브 경로 생성
     @Transactional
     public HubRouteResponseDto createHubRoute(HubRouteCreateDto dto) {
@@ -41,6 +44,8 @@ public class HubRouteService {
 
 
         RouteInfo routeInfo = naverDirectionsService.getRouteInfo(departureHub, arrivalHub);
+
+
 
         HubRoute hubRoute = HubRoute.builder()
                 .departureHub(departureHub)

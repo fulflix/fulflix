@@ -33,7 +33,7 @@ public class HubRouteGenerator {
 
                 RouteInfo routeInfo = naverDirectionsService.getRouteInfo(departureHub, arrivalHub);
 
-                if (routeInfo.distance() > MAX_DISTANCE) {
+                if (routeInfo.distance() >= MAX_DISTANCE) {
                     // 거리 조건이 만족되지 않으면 다음 조건으로 넘어감
                     continue;
                 }
