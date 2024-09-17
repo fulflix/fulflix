@@ -23,7 +23,9 @@ public class HubCompanyUpdateProduct implements ProductUpdateStrategy {
         Product product = productRepo.findByIdAndIsDeletedFalse(id)
                 .orElseThrow(() -> new ProductException(ProductErrorCode.PRODUCT_NOT_FOUND));
 
-        if (!product.getCreatedBy().equals(currentUser)) {
+        CompanyResponse companyResponse = productValidator.checkCompanyExistsForHub(product.getCompanyId());
+
+        if (!companyResponse.getOwnerId().equals(currentUser)) {
             throw new ProductException(ProductErrorCode.UNAUTHORIZED_ACCESS);
         }
 
