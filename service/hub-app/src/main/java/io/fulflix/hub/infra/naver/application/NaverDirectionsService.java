@@ -1,7 +1,6 @@
 package io.fulflix.hub.infra.naver.application;
 
 import io.fulflix.hub.hub.domain.Hub;
-import io.fulflix.hub.hubroute.domain.HubRoute;
 import io.fulflix.hub.infra.naver.dto.RouteInfo;
 
 public interface NaverDirectionsService {
