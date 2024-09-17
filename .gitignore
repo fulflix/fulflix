@@ -227,3 +227,6 @@ gradle-app.setting
 
 ### Docker:MySQL volume
 db/**
+
+### Querydsl q-class (from all modules)
+**/src/main/generated/**
