@@ -30,17 +30,17 @@ public class DeliveryRoute {
     private Long arrivalHubId;
 
     @Column(name = "estimated_distance", precision = 9, scale = 6, nullable = false)
-    private BigDecimal estimatedDistance;
+    private Double estimatedDistance;
 
     @Column(name = "estimated_duration", nullable = false)
-    private Integer estimatedDuration;
+    private Long estimatedDuration;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", length = 50, nullable = false)
     private DeliveryRouteStatus status;
 
     private DeliveryRoute(Long deliveryId, Integer sequence, Long departureHubId, Long arrivalHubId,
-                          BigDecimal estimatedDistance, Integer estimatedDuration, DeliveryRouteStatus status) {
+                          Double estimatedDistance, Long estimatedDuration, DeliveryRouteStatus status) {
         this.deliveryId = deliveryId;
         this.sequence = sequence;
         this.departureHubId = departureHubId;
@@ -51,7 +51,7 @@ public class DeliveryRoute {
     }
 
     public static DeliveryRoute create(Long deliveryId, Integer sequence, Long departureHubId, Long arrivalHubId,
-                                       BigDecimal estimatedDistance, Integer estimatedDuration, DeliveryRouteStatus status) {
+                                       Double estimatedDistance, Long estimatedDuration, DeliveryRouteStatus status) {
         return new DeliveryRoute(deliveryId, sequence, departureHubId, arrivalHubId, estimatedDistance, estimatedDuration, status);
     }
 }

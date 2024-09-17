@@ -19,6 +19,8 @@ public class HubRouteGenerator {
     private final HubRouteRepository hubRouteRepository;
     private final NaverDirectionsService naverDirectionsService;
 
+    // 거리 150km 제한
+    private static final double MAX_DISTANCE = 150000.0;
 
     public void generateHubRoutes() {
         List<Hub> hubs = hubRepository.findAll();
@@ -30,9 +32,12 @@ public class HubRouteGenerator {
                 Hub arrivalHub = hubs.get(j);
 
                 RouteInfo routeInfo = naverDirectionsService.getRouteInfo(departureHub, arrivalHub);
-                double distance = routeInfo.distance();
-                long duration = routeInfo.duration();
 
+                if (routeInfo.distance() > MAX_DISTANCE) {
+                    // 거리 조건이 만족되지 않으면 다음 조건으로 넘어감
+                    continue;
+                }
+                
                 // 출발 허브 -> 도착 허브 엣지
                 HubRoute hubRoute = HubRoute.builder()
                         .departureHub(departureHub)
