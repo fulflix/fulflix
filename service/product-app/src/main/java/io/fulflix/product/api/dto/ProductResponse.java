@@ -1,5 +1,6 @@
 package io.fulflix.product.api.dto;
 
+import com.querydsl.core.annotations.QueryProjection;
 import io.fulflix.infra.client.company.CompanyResponse;
 import io.fulflix.product.domain.Product;
 import lombok.AllArgsConstructor;
@@ -9,7 +10,6 @@ import lombok.experimental.SuperBuilder;
 
 @Getter
 @SuperBuilder
-@NoArgsConstructor
 @AllArgsConstructor
 public class ProductResponse {
     private Long id;
@@ -17,6 +17,10 @@ public class ProductResponse {
     private Long companyId;
     private String ProductName;
     private Integer stockQuantity;
+
+    @QueryProjection
+    public ProductResponse() {
+    }
 
     public static ProductResponse fromEntity(Product entity) {
         return ProductResponse.builder()
