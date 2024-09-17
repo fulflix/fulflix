@@ -8,7 +8,8 @@ import io.fulflix.hub.hubroute.domain.HubRouteRepository;
 import lombok.RequiredArgsConstructor;
 import org.jgrapht.Graph;
 import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
-import org.jgrapht.graph.*;
+import org.jgrapht.graph.DefaultDirectedWeightedGraph;
+import org.jgrapht.graph.DefaultWeightedEdge;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -17,7 +18,7 @@ import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
-public class ShortestPathService {
+public class ShortestPathAlgorithm {
 
     private final HubRouteRepository hubRouteRepository;
     private final HubRepository hubRepository;
@@ -26,7 +27,6 @@ public class ShortestPathService {
 
     // 엣지와 HubRoute 를 매핑
     private final Map<DefaultWeightedEdge, HubRoute> edgeToHubRouteMap = new HashMap<>();
-
 
     // 그래프 생성 : 노드에 허브 추가, 엣지에 허브루트 추가
     public void buildGraph() {
@@ -55,6 +55,26 @@ public class ShortestPathService {
         }
     }
 
+//    public void findShortestPath(Hub startHub, Hub endHub) {
+//        DijkstraShortestPath<Hub, DefaultWeightedEdge> dijkstraAlg = new DijkstraShortestPath<>(graph);
+//
+//        // 최단 경로 찾기
+//        var path = dijkstraAlg.getPath(startHub, endHub);
+//
+//        if (path != null) {
+//            System.out.println("Shortest path:");
+//            for (DefaultWeightedEdge edge : path.getEdgeList()) {
+//                Hub source = graph.getEdgeSource(edge);
+//                Hub target = graph.getEdgeTarget(edge);
+//                System.out.println(source + " -> " + target);
+//            }
+//            System.out.println("Total distance: " + path.getWeight());
+//        } else {
+//            System.out.println("No path found between " + startHub.getName() + " and " + endHub.getName());
+//        }
+//    }
+//
+
     // 최단 경로 생성
     public List<DeliveryRouteRequest> findShortestPath(Long start, Long end) {
         DijkstraShortestPath<Hub, DefaultWeightedEdge> dijkstraAlg = new DijkstraShortestPath<>(graph);
@@ -65,6 +85,17 @@ public class ShortestPathService {
         var path = dijkstraAlg.getPath(startHub, endHub);
 
         if (path != null) {
+
+            System.out.println(startHub.getName() + "-" + endHub.getName() +" 최단 경로:");
+
+          for (DefaultWeightedEdge edge : path.getEdgeList()) {
+                Hub source = graph.getEdgeSource(edge);
+                Hub target = graph.getEdgeTarget(edge);
+                System.out.println(source + " -> " + target);
+            }
+          System.out.println("총 이동 거리: " + path.getWeight());
+
+
             return path.getEdgeList().stream()
                     .map(edge -> {
                         // 엣지에 매핑된 HubRoute로 DeliveryRouteRequest 생성

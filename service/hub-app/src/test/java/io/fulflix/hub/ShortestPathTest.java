@@ -2,9 +2,10 @@ package io.fulflix.hub;
 
 import io.fulflix.hub.hub.api.dto.HubRequestDto;
 import io.fulflix.hub.hub.application.HubService;
+import io.fulflix.hub.hub.domain.Hub;
 import io.fulflix.hub.hub.domain.HubRepository;
 import io.fulflix.hub.hubroute.application.HubRouteGenerator;
-import io.fulflix.hub.hubroute.application.ShortestPathService;
+import io.fulflix.hub.hubroute.application.ShortestPathAlgorithm;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,7 +24,7 @@ public class ShortestPathTest {
     private HubRouteGenerator hubRouteGenerator;
 
     @Autowired
-    private ShortestPathService shortestPathService;
+    private ShortestPathAlgorithm shortestPathAlgorithm;
 
     @Test
     void testCreateMultipleHubs() {
@@ -59,6 +60,25 @@ public class ShortestPathTest {
     @Test
     void testHubRouteGenerator() {
         hubRouteGenerator.generateHubRoutes();
+    }
+
+    @Test
+    void setShortestPathAlgorithm() {
+        shortestPathAlgorithm.buildGraph();
+
+        //List<Hub> hubs = hubRepository.findAll();
+
+//        for (int i = 0; i < hubs.size(); i++) {
+//            for (int j = i + 1; j < hubs.size(); j++) { // (i, j) 쌍만 처리하여 중복 제거
+//                Hub startHub = hubs.get(i);
+//                Hub endHub = hubs.get(j);
+//
+//                shortestPathService.findShortestPath(startHub.getId(), endHub.getId());
+//
+//            }
+//        }
+
+        shortestPathAlgorithm.findShortestPath(1L, 4L);
     }
 
 }

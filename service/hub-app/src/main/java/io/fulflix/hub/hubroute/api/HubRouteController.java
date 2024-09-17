@@ -2,7 +2,7 @@ package io.fulflix.hub.hubroute.api;
 import io.fulflix.hub.hubroute.api.dto.*;
 import io.fulflix.hub.hubroute.application.HubRouteGenerator;
 import io.fulflix.hub.hubroute.application.HubRouteService;
-import io.fulflix.hub.hubroute.application.ShortestPathService;
+import io.fulflix.hub.hubroute.application.ShortestPathAlgorithm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,7 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class HubRouteController {
     private final HubRouteService hubRouteService;
-    private final ShortestPathService shortestPathService;
+    private final ShortestPathAlgorithm shortestPathAlgorithm;
     private final HubRouteGenerator hubRouteGenerator;
 
     // 허브 경로 생성
@@ -75,12 +75,11 @@ public class HubRouteController {
         return ResponseEntity.noContent().build();
     }
 
-    // 최단 경로 찾기
+     //최단 경로 찾기
     @PostMapping("/hub-route/shortest-path")
     public ResponseEntity<List<DeliveryRouteRequest>> findShortestPath(@RequestBody ShortestPathRequest request) {
-        shortestPathService.clearGraph();
-        shortestPathService.buildGraph();
-        List<DeliveryRouteRequest> dto = shortestPathService.findShortestPath(request.startHubId(), request.endHubId());
+        shortestPathAlgorithm.buildGraph();
+        List<DeliveryRouteRequest> dto = shortestPathAlgorithm.findShortestPath(request.startHubId(), request.endHubId());
         return ResponseEntity.ok(dto);
     }
 }
