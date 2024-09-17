@@ -11,7 +11,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 
-@DataJpaTest
+@DataJpaTest(showSql = false)
 @Import({JpaConfig.class, TestUserAuditorAwareConfig.class})
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 public abstract class JpaTestBase extends TestBase {
