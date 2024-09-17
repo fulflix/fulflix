@@ -31,3 +31,8 @@ spring:
           uri: lb://product-app
           predicates:
             - Path=/product/**
+
+        - id: order-app-authenticated
+          uri: lb://order-app
+          predicates:
+            - Path=/order/**
