@@ -31,6 +31,6 @@ public class Order extends Auditable {
     private Integer orderQuantity;
 
     @Enumerated(value = EnumType.STRING)
-    @Column(name = "order_type", nullable = false)
-    private OrderType orderType;
+    @Column(name = "order_status", nullable = false)
+    private OrderStatus orderStatus;
 }
