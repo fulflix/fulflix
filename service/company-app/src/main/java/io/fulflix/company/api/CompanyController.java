@@ -3,13 +3,18 @@ package io.fulflix.company.api;
 import io.fulflix.common.app.context.annotation.CurrentUser;
 import io.fulflix.common.app.context.annotation.CurrentUserRole;
 import io.fulflix.common.web.principal.Role;
+import io.fulflix.company.api.dto.CompanyDetailResponse;
 import io.fulflix.company.api.dto.CompanyResponse;
 import io.fulflix.company.api.dto.RegisterCompanyRequest;
 import io.fulflix.company.api.dto.UpdateCompanyRequest;
+import io.fulflix.company.application.CompanyFacade;
 import io.fulflix.company.application.CompanyService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +30,7 @@ import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 )
 public class CompanyController {
     private final CompanyService companyService;
+    private final CompanyFacade companyFacade;
 
     // 업체 등록 (마스터 관리자, 허브 관리자)
     @PostMapping
@@ -37,42 +43,62 @@ public class CompanyController {
         return created("/company");
     }
 
-    // 업체 전체 조회 및 검색 (마스터 관리자, 허브 관리자)
-    @GetMapping
-    public ResponseEntity<Page<CompanyResponse>> getAllCompanies(
+    // 업체 전체 조회 및 검색 (마스터 관리자)
+    @GetMapping("/admin")
+    public ResponseEntity<Page<CompanyDetailResponse>> getAllCompaniesForAdmin(
             @RequestParam(required = false, defaultValue = "") String query, // 검색
-            @RequestParam(defaultValue = "10") int size, // 페이지 크기
-            @RequestParam(defaultValue = "createdAt") String sortBy, // 정렬 기준
-            @RequestParam(defaultValue = "desc") String sortDirection, // 정렬 방향
-            @RequestParam(defaultValue = "0") int page, // 페이지 번호
+            @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable, // 페이징 및 정렬
             @CurrentUser Long currentUser,
             @CurrentUserRole Role role
     ) {
-        Page<CompanyResponse> companies = companyService.getAllCompanies(query, page, size, sortBy, sortDirection, currentUser, role);
+        Page<CompanyDetailResponse> companies = companyService.getAllCompaniesForAdmin(query, pageable, currentUser, role);
         return ResponseEntity.ok(companies);
     }
 
-    // 업체 단일 조회 (마스터 관리자, 허브 관리자, 허브 업체)
-    @GetMapping("/{id}")
-    public ResponseEntity<CompanyResponse> getCompany(
+    // 업체 전체 조회 및 검색 (허브 관리자, 허브 업체)
+    @GetMapping("/hub")
+    public ResponseEntity<Page<CompanyResponse>> getAllCompaniesForHub(
+            @RequestParam(required = false, defaultValue = "") String query, // 검색
+            @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable, // 페이징 및 정렬
+            @CurrentUser Long currentUser,
+            @CurrentUserRole Role role
+    ) {
+        Page<CompanyResponse> companies = companyFacade.getAllCompaniesForHub(query, pageable, currentUser, role);
+        return ResponseEntity.ok(companies);
+    }
+
+    // 업체 단일 조회 (마스터 관리자)
+    @GetMapping("/admin/{id}")
+    public ResponseEntity<CompanyDetailResponse> getCompanyByIdForAdmin(
             @PathVariable Long id,
             @CurrentUser Long currentUser,
             @CurrentUserRole Role role
     ) {
-        CompanyResponse company = companyService.getCompanyById(id, currentUser, role);
+        CompanyDetailResponse company = companyService.getCompanyByIdForAdmin(id, currentUser, role);
+        return ResponseEntity.ok(company);
+    }
+
+    // 업체 단일 조회 (허브 관리자, 허브 업체)
+    @GetMapping("/hub/{id}")
+    public ResponseEntity<CompanyResponse> getCompanyByIdForHub(
+            @PathVariable Long id,
+            @CurrentUser Long currentUser,
+            @CurrentUserRole Role role
+    ) {
+        CompanyResponse company = companyFacade.getCompanyByIdForHub(id, currentUser, role);
         return ResponseEntity.ok(company);
     }
 
     // 업체 수정 (마스터 관리자, 허브 관리자, 허브 업체)
     @PutMapping("/{id}")
-    public ResponseEntity<CompanyResponse> updateCompany(
+    public ResponseEntity<Void> updateCompany(
             @PathVariable Long id,
             @Valid @RequestBody UpdateCompanyRequest updateCompanyRequest,
             @CurrentUser Long currentUser,
             @CurrentUserRole Role role
     ) {
-        CompanyResponse updatedCompany = companyService.updateCompany(id, updateCompanyRequest, currentUser, role);
-        return ResponseEntity.ok(updatedCompany);
+        companyFacade.updateCompany(id, updateCompanyRequest, currentUser, role);
+        return ResponseEntity.noContent().build(); // 204 No Content 응답
     }
 
     // 업체 삭제 (마스터 관리자, 허브 관리자)
@@ -82,7 +108,7 @@ public class CompanyController {
             @CurrentUser Long currentUser,
             @CurrentUserRole Role role
     ) {
-        companyService.deleteCompany(id, currentUser, role);
+        companyFacade.deleteCompany(id, currentUser, role);
         return ResponseEntity.noContent().build(); // 204 No Content 응답
     }
 }

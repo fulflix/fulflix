@@ -1,0 +1,57 @@
+# @name 상품 등록 API (마스터 관리자, 허브 업체)
+POST {{gateway}}/product
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+  "companyId": 2,
+  "productName": "합성 섬유",
+  "stockQuantity": 10
+}
+
+###
+
+# @name 상품 삭제 API (마스터 관리자)
+DELETE {{gateway}}/product/2
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+###
+
+# @name 업체 전체 조회 및 검색 API (마스터 관리자)
+GET {{gateway}}/product/admin?product=&stockQuantity=10&page=&size=30&sort=
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+###
+
+# @name 업체 전체 조회 및 검색 API (허브 관리자, 허브 업체, 허브 배송 담당자, 업체 배송 담당자)
+GET {{gateway}}/product/hub?product=&stockQuantity=10&page=&size=30&sort=
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+###
+
+# @name 업체 단일 조회 API (마스터 관리자)
+GET {{gateway}}/product/admin/1
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+###
+
+# @name 업체 단일 조회 API (허브 관리자, 허브 업체, 허브 배송 담당자, 업체 배송 담당자)
+GET {{gateway}}/product/hub/1
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+###
+
+# @name 업체 수정 API
+PUT {{gateway}}/product/3
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+  "productName" : "합성 섬유33",
+  "stockQuantity": 1
+}
