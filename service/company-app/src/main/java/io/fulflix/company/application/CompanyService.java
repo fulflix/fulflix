@@ -22,6 +22,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -32,20 +33,24 @@ public class CompanyService {
     private final UserClient userClient;
 
     // 업체 등록 (마스터 관리자, 허브 관리자)
+    @Transactional
     public void registerCompany(RegisterCompanyRequest registerCompanyRequest, Long currentUser, Role role) {
-        validateAdminAuthority(role);
+        validateCompanyRegisterProcess(registerCompanyRequest, role);
 
-        checkHubExists(registerCompanyRequest.getHubId());
-        checkUserExists(registerCompanyRequest.getOwnerId());
-
-        checkCompanyDuplication(registerCompanyRequest.getCompanyName());
 
         Company company = RegisterCompanyRequest.toEntity(registerCompanyRequest);
 
         company.assignOwnerId(registerCompanyRequest.getOwnerId());
-        company.applyCompanyCreated(currentUser);
 
         companyRepo.save(company);
+    }
+
+    private void validateCompanyRegisterProcess(RegisterCompanyRequest registerCompanyRequest, Role role) {
+        validateAdminAuthority(role);
+
+        checkHubExists(registerCompanyRequest.getHubId());
+        checkUserExists(registerCompanyRequest.getOwnerId());
+        checkCompanyDuplication(registerCompanyRequest.getCompanyName());
     }
 
     // 업체 전체 조회 및 검색 (마스터 관리자)
