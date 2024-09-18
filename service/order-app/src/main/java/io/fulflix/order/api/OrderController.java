@@ -3,18 +3,16 @@ package io.fulflix.order.api;
 import io.fulflix.common.app.context.annotation.CurrentUser;
 import io.fulflix.common.app.context.annotation.CurrentUserRole;
 import io.fulflix.common.web.principal.Role;
-import io.fulflix.order.api.dto.AdminCreateOrderRequest;
-import io.fulflix.order.api.dto.CreateOrderResponse;
-import io.fulflix.order.api.dto.ReceiverCreateOrderRequest;
-import io.fulflix.order.api.dto.SupplierCreateOrderRequest;
+import io.fulflix.order.api.dto.*;
 import io.fulflix.order.application.OrderFacade;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
@@ -59,5 +57,17 @@ public class OrderController {
     ) {
         CreateOrderResponse createOrderResponse = orderFacade.createReceiverOrder(createOrderRequest, currentUser, role);
         return ResponseEntity.ok(createOrderResponse);
+    }
+
+    // 주문 전체 조회 및 검색 (마스터 관리자, 허브 관리자, 생산 업체, 수령 업체)
+    @GetMapping()
+    public ResponseEntity<Page<OrderDetailResponse>> getAllOrders(
+            @RequestParam(required = false, defaultValue = "0") Integer orderQuantity,
+            @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable,
+            @CurrentUser Long currentUser,
+            @CurrentUserRole Role role
+    ) {
+        Page<OrderDetailResponse> orders = orderFacade.getAllOrders(orderQuantity, pageable, currentUser, role);
+        return ResponseEntity.ok(orders);
     }
 }
