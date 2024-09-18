@@ -92,4 +92,16 @@ public class OrderController {
         orderFacade.cancelOrder(id, currentUser, role);
         return ResponseEntity.noContent().build();
     }
+
+    // 주문 수정 (마스터 관리자, 생산 업체, 수령 업체)
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> updateOrder(
+            @PathVariable Long id,
+            @RequestBody UpdateOrderRequest updateOrderRequest,
+            @CurrentUser Long currentUser,
+            @CurrentUserRole Role role
+    ) {
+        orderFacade.updateOrder(id, updateOrderRequest, currentUser, role);
+        return ResponseEntity.noContent().build();
+    }
 }

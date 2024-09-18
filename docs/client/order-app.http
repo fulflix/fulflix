@@ -52,7 +52,18 @@ Authorization: Bearer {{access_token}}
 
 ###
 
-# @name 주문 삭제 API (마스터 관리자, 생산 업체, 수령 업체)
-DELETE {{gateway}}/order/1
+# @name 주문 취소 API (마스터 관리자, 생산 업체, 수령 업체)
+DELETE {{gateway}}/order/19
 Content-Type: application/json
 Authorization: Bearer {{access_token}}
+
+###
+
+# @name 주문 수량 업데이트 API (마스터 관리자, 생산 업체, 수령 업체)
+PUT {{gateway}}/order/13
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+  "orderQuantity": 1
+}
