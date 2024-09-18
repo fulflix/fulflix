@@ -9,6 +9,8 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 
 
+import java.util.Objects;
+
 import static io.fulflix.common.app.jpa.audit.CommonAuditFields.DEFAULT_CONDITION;
 
 @Entity
@@ -56,6 +58,19 @@ public class Hub extends Auditable {
         this.address = address;
         this.latitude = latitude;
         this.longitude = longitude;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Hub hub = (Hub) o;
+        return Objects.equals(id, hub.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 
 }
