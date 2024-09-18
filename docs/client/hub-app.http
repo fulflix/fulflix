@@ -1,3 +1,30 @@
+# @name 회원가입 API
+POST {{gateway}}/auth/sign-up
+Content-Type: application/json
+
+{
+  "username": "hubAdmin",
+  "password": "password",
+  "name": "허브관리자",
+  "type": "HUB_ADMIN"
+}
+
+###
+
+# @name 로그인 API
+POST {{gateway}}/auth/sign-in
+Content-Type: application/json
+
+{
+  "username": "hubAdmin",
+  "password": "password"
+}
+> {%
+    client.global.set("access_token", response.headers.valueOf("Authorization"))
+%}
+
+###
+
 ## 허브 생성 API
 POST {{gateway}}/hub
 Content-Type: application/json
@@ -23,7 +50,7 @@ Authorization: Bearer {{access_token}}
 ###
 
 ## 허브 삭제 API
-DELETE {{gateway}}/hub/1
+DELETE {{gateway}}/hub/17
 Authorization: Bearer {{access_token}}
 
 ###

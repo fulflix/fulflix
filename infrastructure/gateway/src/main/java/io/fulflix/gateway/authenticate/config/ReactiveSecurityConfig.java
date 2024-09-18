@@ -2,8 +2,7 @@ package io.fulflix.gateway.authenticate.config;
 
 import static io.fulflix.gateway.authenticate.domain.Role.MASTER_ADMIN;
 import static io.fulflix.gateway.authenticate.domain.Role.getAllRoles;
-import static org.springframework.http.HttpMethod.GET;
-import static org.springframework.http.HttpMethod.POST;
+import static org.springframework.http.HttpMethod.*;
 
 import io.fulflix.gateway.authenticate.jwt.JwtProperties;
 import org.springframework.context.annotation.Bean;
@@ -35,10 +34,15 @@ public class ReactiveSecurityConfig {
 
                     .pathMatchers("/company/**").hasAnyAuthority(getAllRoles())
 
-                    .pathMatchers("/hub/**").hasAnyAuthority(getAllRoles())
-                    .pathMatchers("/hubs/**").hasAnyAuthority(getAllRoles())
-                    .pathMatchers("/hub-route/**").hasAnyAuthority(getAllRoles())
-                    .pathMatchers("/hub-routes/**").hasAnyAuthority(getAllRoles())
+                    .pathMatchers(GET,"/hub/**").hasAnyAuthority(getAllRoles())
+                    .pathMatchers(POST,"/hub/**").hasAnyAuthority(MASTER_ADMIN.name())
+                    .pathMatchers(PUT,"/hub/**").hasAnyAuthority(MASTER_ADMIN.name())
+                    .pathMatchers(DELETE,"/hub/**").hasAnyAuthority(MASTER_ADMIN.name())
+
+                    .pathMatchers(GET,"/hub-route/**").hasAnyAuthority(getAllRoles())
+                    .pathMatchers(POST,"/hub-route/**").hasAnyAuthority(MASTER_ADMIN.name())
+                    .pathMatchers(PUT,"/hub-route/**").hasAnyAuthority(MASTER_ADMIN.name())
+                    .pathMatchers(DELETE,"/hub-route/**").hasAnyAuthority(MASTER_ADMIN.name())
 
                     .pathMatchers("/delivery/**").hasAnyAuthority(getAllRoles())
                     .pathMatchers("/delivery-route/**").hasAnyAuthority(getAllRoles())
