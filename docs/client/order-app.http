@@ -1,13 +1,37 @@
-# @name 주문 생성 API (마스터 관리자, 허브(생산/수령) 업체)
-POST {{gateway}}/order
+# @name 주문 생성 API (마스터 관리자)
+POST {{gateway}}/order/admin
 Content-Type: application/json
 Authorization: Bearer {{access_token}}
 
 {
   "supplierId": 1,
   "receiverId": 3,
-  "productId": 1,
+  "productId": 4,
   "orderQuantity": 1
 }
 
 ###
+
+# @name 주문 생성 API (생산 업체)
+POST {{gateway}}/order/supplier-company
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+  "receiverId": 3,
+  "productId": 4,
+  "orderQuantity": 1
+}
+
+###
+
+# @name 주문 생성 API (수령 업체)
+POST {{gateway}}/order/receiver-company
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+  "supplierId": 4,
+  "productId": 4,
+  "orderQuantity": 1
+}

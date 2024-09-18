@@ -2,8 +2,10 @@ package io.fulflix.order.application.strategy;
 
 import io.fulflix.common.web.principal.Role;
 import io.fulflix.infra.client.product.ProductResponse;
-import io.fulflix.order.api.dto.CreateOrderRequest;
+import io.fulflix.order.api.dto.AdminCreateOrderRequest;
 import io.fulflix.order.api.dto.CreateOrderResponse;
+import io.fulflix.order.api.dto.ReceiverCreateOrderRequest;
+import io.fulflix.order.api.dto.SupplierCreateOrderRequest;
 import io.fulflix.order.application.OrderCreateStrategy;
 import io.fulflix.order.application.validator.OrderValidator;
 import io.fulflix.order.domain.Order;
@@ -21,10 +23,10 @@ public class SupplierCompanyCreateOrder implements OrderCreateStrategy {
     private final OrderValidator orderValidator;
 
     @Override
-    public CreateOrderResponse createOrder(CreateOrderRequest createOrderRequest, Long currentUser, Role role) {
+    public CreateOrderResponse SupplierCreateOrder(SupplierCreateOrderRequest createOrderRequest, Long currentUser, Role role) {
         ProductResponse productResponse = orderValidator.checkProductExistForCompany(createOrderRequest.getProductId());
 
-        // TODO 생산 업체 권한 예외 처리
+        // TODO 수령업체 조회 예외처리
 
         OrderStatus orderStatus = orderValidator.validateStockAvailabilityForCompany(productResponse, createOrderRequest.getOrderQuantity());
 
@@ -46,7 +48,12 @@ public class SupplierCompanyCreateOrder implements OrderCreateStrategy {
     }
 
     @Override
-    public boolean isMatched(Role role) {
-        return role.isHubCompany();
+    public CreateOrderResponse AdminCreateOrder(AdminCreateOrderRequest createOrderRequest, Long currentUser, Role role) {
+        return null;
+    }
+
+    @Override
+    public CreateOrderResponse ReceiverCreateOrder(ReceiverCreateOrderRequest createOrderRequest, Long currentUser, Role role) {
+        return null;
     }
 }
