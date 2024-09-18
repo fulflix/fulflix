@@ -1,4 +1,4 @@
-package io.fulflix.company;
+package io.fulflix.delivery;
 
 import static io.fulflix.core.app.feign.FeignClientConfig.FEIGN_CLIENT_BASE_PACKAGE;
 import static io.fulflix.core.web.utils.PropertiesCombineUtils.BASE_PACKAGE;
@@ -11,16 +11,16 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.scheduling.annotation.EnableAsync;
 
 @PropertySource(
-    value = "classpath:application-company.yml",
+    value = "classpath:application-delivery.yml",
     factory = YamlPropertySourceFactory.class
 )
 @EnableAsync
 @EnableFeignClients(basePackages = FEIGN_CLIENT_BASE_PACKAGE)
 @SpringBootApplication(scanBasePackages = BASE_PACKAGE)
-public class CompanyApp {
+public class DeliveryApp {
 
     public static void main(String[] args) {
-        SpringApplication.run(CompanyApp.class, args);
+        SpringApplication.run(DeliveryApp.class, args);
     }
 
 }

@@ -1,13 +1,13 @@
-package io.fulflix.hub;
+package io.fulflix.delivery;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class HubAppApplicationTests {
+class DeliveryAppTests {
 
-	@Test
-	void contextLoads() {
-	}
+    @Test
+    void contextLoads() {
+    }
 
 }

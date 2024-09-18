@@ -8,21 +8,19 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.annotation.PropertySources;
+import org.springframework.scheduling.annotation.EnableAsync;
 
-@PropertySources({
-    @PropertySource(
-        name = "hub-app-properties",
-        value = "classpath:application-hub.yml",
-        factory = YamlPropertySourceFactory.class
-    )
-})
+@PropertySource(
+    value = "classpath:application-hub.yml",
+    factory = YamlPropertySourceFactory.class
+)
+@EnableAsync
 @EnableFeignClients(basePackages = FEIGN_CLIENT_BASE_PACKAGE)
 @SpringBootApplication(scanBasePackages = BASE_PACKAGE)
-public class HubAppApplication {
+public class HubApp {
 
     public static void main(String[] args) {
-        SpringApplication.run(HubAppApplication.class, args);
+        SpringApplication.run(HubApp.class, args);
     }
 
 }
