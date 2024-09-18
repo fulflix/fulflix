@@ -16,14 +16,13 @@ import java.util.Map;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.io.IOUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.util.StreamUtils;
 
 @Slf4j
 @RequiredArgsConstructor
-public class FeignClientErrorDecoderConfig {
+public class FeignClientErrorDecoder {
 
     private final ObjectMapper objectMapper;
 

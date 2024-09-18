@@ -3,7 +3,7 @@ package io.fulflix.infra.client.external.naver;
 import static io.fulflix.infra.client.external.naver.NaverDirectionClient.NAVER_DIRECTION_API;
 import static io.fulflix.infra.client.external.naver.NaverDirectionClient.NAVER_MAP_DIRECTION_API_URL;
 
-import io.fulflix.core.app.feign.FeignClientErrorDecoderConfig;
+import io.fulflix.core.app.feign.FeignClientErrorDecoder;
 import io.fulflix.infra.client.external.naver.dto.RouteResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
     url = NAVER_MAP_DIRECTION_API_URL,
     configuration = {
         NaverDirectionClientHeaderConfig.class,
-        FeignClientErrorDecoderConfig.class
+        FeignClientErrorDecoder.class
     }
 )
 public interface NaverDirectionClient {
