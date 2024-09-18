@@ -61,8 +61,7 @@ public class NaverDirectionsServiceImpl implements NaverDirectionsService {
             return new RouteInfo(totalDistance, totalDuration);
         } catch (Exception e) {
             e.printStackTrace();
-            // 예외 처리에 맞는 적절한 값을 반환하거나 필요 시 null을 반환할 수 있습니다.
-            return new RouteInfo(0, 0); // 혹은 throw new RuntimeException("Error parsing response");
+            return new RouteInfo(0, 0);
         }
     }
 
