@@ -77,4 +77,8 @@ public class DeliveryRoute extends Auditable {
         deliveryRoute.setDelivery(delivery); // Delivery와의 연관관계 설정
         return deliveryRoute;
     }
+
+    public void updateStatus(DeliveryRouteStatus status) {
+        this.status = status;
+    }
 }

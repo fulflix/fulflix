@@ -6,6 +6,7 @@ import io.fulflix.delivery.delivery.domain.DeliveryRepository;
 import io.fulflix.delivery.delivery.exception.DeliveryErrorCode;
 import io.fulflix.delivery.delivery.exception.DeliveryException;
 import io.fulflix.delivery.deliveryroute.api.dto.DeliveryRouteResponse;
+import io.fulflix.delivery.deliveryroute.api.dto.DeliveryRouteUpdate;
 import io.fulflix.delivery.deliveryroute.domain.DeliveryRoute;
 import io.fulflix.delivery.deliveryroute.domain.DeliveryRouteRepo;
 import io.fulflix.delivery.deliveryroute.exception.DeliveryRouteErrorCode;
@@ -76,8 +77,25 @@ public class DeliveryRouteService {
         return deliveryRoutes.map(DeliveryRouteResponse::fromEntity);
     }
 
+    // 배송 경로 상태 변경
+    @Transactional
+    public DeliveryRouteResponse updateDeliveryRouteStatus(DeliveryRouteUpdate deliveryRouteUpdate) {
+        DeliveryRoute deliveryRoute = findDeliveryRouteById(deliveryRouteUpdate.id());
+        deliveryRoute.updateStatus(deliveryRouteUpdate.status());
+        return DeliveryRouteResponse.fromEntity(deliveryRoute);
+    }
 
-    // 아이디로 배송 조회
+    // 배송 경로 삭제
+    @Transactional
+    public void deleteDeliveryRoute(Long id) {
+        DeliveryRoute deliveryRoute = findDeliveryRouteById(id);
+        deliveryRoute.delete();
+    }
+
+
+
+
+
     private Delivery findDeliveryById(Long id) {
         return deliveryRepository.findById(id)
                 .orElseThrow(() -> new DeliveryException(DeliveryErrorCode.DELIVERY_NOT_FOUND));
@@ -87,4 +105,5 @@ public class DeliveryRouteService {
         return deliveryRouteRepo.findById(id)
                 .orElseThrow(() -> new DeliveryRouteException(DeliveryRouteErrorCode.DELIVERY_ROUTE_NOT_FOUND));
     }
+
 }

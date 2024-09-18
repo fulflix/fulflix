@@ -1,6 +1,7 @@
 package io.fulflix.delivery.deliveryroute.api;
 
 import io.fulflix.delivery.deliveryroute.api.dto.DeliveryRouteResponse;
+import io.fulflix.delivery.deliveryroute.api.dto.DeliveryRouteUpdate;
 import io.fulflix.delivery.deliveryroute.application.DeliveryRouteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -43,6 +44,21 @@ public class DeliveryRouteController {
         Page<DeliveryRouteResponse> dto = deliveryRouteService.getAllDeliveryRoute(pageable);
         return ResponseEntity.ok(dto);
     }
+
+    // 배송 경로 상태 변경 (마스터 관리자, 해당 허브 관리자)
+    @PutMapping
+    public ResponseEntity<DeliveryRouteResponse> updateDeliveryRouteStatus(@RequestBody DeliveryRouteUpdate deliveryRouteUpdate) {
+        DeliveryRouteResponse dto = deliveryRouteService.updateDeliveryRouteStatus(deliveryRouteUpdate);
+        return ResponseEntity.ok(dto);
+    }
+
+    // 배송 경로 상태 변경 (마스터 관리자, 해당 허브 관리자)
+    @DeleteMapping("/{deliveryRouteId}")
+    public ResponseEntity<Void> deleteDeliveryRoute(@PathVariable Long deliveryRouteId) {
+        deliveryRouteService.deleteDeliveryRoute(deliveryRouteId);
+        return ResponseEntity.noContent().build();
+    }
+
 
 
 }
