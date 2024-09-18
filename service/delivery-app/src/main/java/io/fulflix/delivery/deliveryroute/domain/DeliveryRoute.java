@@ -6,11 +6,15 @@ import io.fulflix.infra.client.dto.ShortestPathResponse;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLRestriction;
+
+import static io.fulflix.common.app.jpa.audit.CommonAuditFields.DEFAULT_CONDITION;
 
 @Entity
 @Table(name = "p_delivery_route_record")
 @Getter
 @NoArgsConstructor
+@SQLRestriction(DEFAULT_CONDITION)
 public class DeliveryRoute extends Auditable {
 
     @Id
