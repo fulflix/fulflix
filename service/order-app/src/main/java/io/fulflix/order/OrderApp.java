@@ -8,7 +8,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
 import org.springframework.scheduling.annotation.EnableAsync;
 
-import static io.fulflix.common.app.feign.FeignClientConfig.FEIGN_CLIENT_BASE_PACKAGE;
+import static io.fulflix.core.app.feign.FeignClientConfig.FEIGN_CLIENT_BASE_PACKAGE;
 import static io.fulflix.common.web.utils.PropertiesCombineUtils.BASE_PACKAGE;
 
 @PropertySources({

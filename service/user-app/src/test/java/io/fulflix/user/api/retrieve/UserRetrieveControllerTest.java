@@ -1,7 +1,7 @@
 package io.fulflix.user.api.retrieve;
 
-import static io.fulflix.common.app.base.persistence.TestBaseFixtures.MOCK_HEADERS;
-import static io.fulflix.common.app.base.persistence.TestBaseFixtures.PAGE_REQUEST_MAP;
+import static io.fulflix.core.app.base.persistence.TestBaseFixtures.MOCK_HEADERS;
+import static io.fulflix.core.app.base.persistence.TestBaseFixtures.PAGE_REQUEST_MAP;
 import static io.fulflix.fixture.UserFixtures.PAGE_USER_RESPONSE;
 import static io.fulflix.fixture.UserFixtures.USER_RESPONSE;
 import static io.fulflix.user.api.retrieve.UserMyPageController.USER_BASE_PATH;

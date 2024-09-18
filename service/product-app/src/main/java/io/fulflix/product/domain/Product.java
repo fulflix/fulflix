@@ -1,6 +1,6 @@
 package io.fulflix.product.domain;
 
-import io.fulflix.common.app.jpa.audit.Auditable;
+import io.fulflix.core.app.jpa.audit.Auditable;
 import io.fulflix.product.api.dto.UpdateProductRequest;
 import io.fulflix.product.exception.ProductErrorCode;
 import io.fulflix.product.exception.ProductException;

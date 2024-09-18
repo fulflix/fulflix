@@ -1,6 +1,6 @@
 package io.fulflix.delivery.delivery.domain;
 
-import io.fulflix.common.app.jpa.audit.Auditable;
+import io.fulflix.core.app.jpa.audit.Auditable;
 import io.fulflix.delivery.delivery.api.dto.DeliveryUpdateDto;
 import io.fulflix.delivery.deliveryroute.domain.DeliveryRoute;
 import jakarta.persistence.*;
@@ -11,7 +11,7 @@ import org.hibernate.annotations.SQLRestriction;
 import java.util.ArrayList;
 import java.util.List;
 
-import static io.fulflix.common.app.jpa.audit.CommonAuditFields.DEFAULT_CONDITION;
+import static io.fulflix.core.app.jpa.audit.CommonAuditFields.DEFAULT_CONDITION;
 
 @Getter
 @NoArgsConstructor

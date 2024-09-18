@@ -3,7 +3,7 @@ package io.fulflix.user.repo;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-import io.fulflix.common.app.base.persistence.JpaTestBase;
+import io.fulflix.core.app.base.persistence.JpaTestBase;
 import io.fulflix.common.web.principal.Role;
 import io.fulflix.user.repo.model.User;
 import java.util.NoSuchElementException;

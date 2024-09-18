@@ -1,6 +1,6 @@
 package io.fulflix.infra.client.product;
 
-import io.fulflix.common.app.feign.FulflixPrincipalRequestHeaderInterceptor;
+import io.fulflix.core.app.feign.FulflixPrincipalRequestHeaderInterceptor;
 import io.fulflix.order.api.dto.ReduceStockRequest;
 import io.fulflix.order.api.dto.RestoreStockRequest;
 import org.springframework.cloud.openfeign.FeignClient;

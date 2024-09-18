@@ -1,6 +1,6 @@
 package io.fulflix.delivery.deliveryroute.domain;
 
-import io.fulflix.common.app.jpa.audit.Auditable;
+import io.fulflix.core.app.jpa.audit.Auditable;
 import io.fulflix.delivery.delivery.domain.Delivery;
 import io.fulflix.infra.client.dto.ShortestPathResponse;
 import jakarta.persistence.*;
@@ -8,7 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLRestriction;
 
-import static io.fulflix.common.app.jpa.audit.CommonAuditFields.DEFAULT_CONDITION;
+import static io.fulflix.core.app.jpa.audit.CommonAuditFields.DEFAULT_CONDITION;
 
 @Entity
 @Table(name = "p_delivery_route_record")

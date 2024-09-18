@@ -1,6 +1,6 @@
 package io.fulflix.infra.client.company;
 
-import io.fulflix.common.app.feign.FulflixPrincipalRequestHeaderInterceptor;
+import io.fulflix.core.app.feign.FulflixPrincipalRequestHeaderInterceptor;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

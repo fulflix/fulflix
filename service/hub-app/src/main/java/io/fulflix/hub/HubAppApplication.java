@@ -1,6 +1,6 @@
 package io.fulflix.hub;
 
-import static io.fulflix.common.app.feign.FeignClientConfig.FEIGN_CLIENT_BASE_PACKAGE;
+import static io.fulflix.core.app.feign.FeignClientConfig.FEIGN_CLIENT_BASE_PACKAGE;
 import static io.fulflix.common.web.utils.PropertiesCombineUtils.BASE_PACKAGE;
 
 import io.fulflix.common.web.config.YamlPropertySourceFactory;

@@ -1,6 +1,6 @@
 package io.fulflix.user.config;
 
-import io.fulflix.common.app.jpa.audit.CommonAuditFields;
+import io.fulflix.core.app.jpa.audit.CommonAuditFields;
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
 import java.time.LocalDateTime;

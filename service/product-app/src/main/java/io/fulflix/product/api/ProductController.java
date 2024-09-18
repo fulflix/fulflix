@@ -1,7 +1,7 @@
 package io.fulflix.product.api;
 
-import io.fulflix.common.app.context.annotation.CurrentUser;
-import io.fulflix.common.app.context.annotation.CurrentUserRole;
+import io.fulflix.core.app.context.annotation.CurrentUser;
+import io.fulflix.core.app.context.annotation.CurrentUserRole;
 import io.fulflix.common.web.principal.Role;
 import io.fulflix.product.api.dto.*;
 import io.fulflix.product.application.ProductService;

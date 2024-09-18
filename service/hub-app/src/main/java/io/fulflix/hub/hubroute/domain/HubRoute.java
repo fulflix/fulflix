@@ -1,15 +1,14 @@
 package io.fulflix.hub.hubroute.domain;
 
-import io.fulflix.common.app.jpa.audit.Auditable;
+import io.fulflix.core.app.jpa.audit.Auditable;
 import io.fulflix.hub.hub.domain.Hub;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 
 import java.util.Objects;
 
-import static io.fulflix.common.app.jpa.audit.CommonAuditFields.DEFAULT_CONDITION;
+import static io.fulflix.core.app.jpa.audit.CommonAuditFields.DEFAULT_CONDITION;
 
 @Entity
 @Table(name = "p_hub_routes")

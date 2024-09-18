@@ -1,6 +1,6 @@
 package io.fulflix.infra.client;
 
-import io.fulflix.common.app.feign.FeignClientConfig;
+import io.fulflix.core.app.feign.FeignClientConfig;
 import io.fulflix.infra.client.dto.ShortestPathRequest;
 import io.fulflix.infra.client.dto.ShortestPathResponse;
 import org.springframework.cloud.openfeign.FeignClient;
