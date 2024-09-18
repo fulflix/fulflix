@@ -51,3 +51,10 @@ DELETE {{gateway}}/delivery/1
 Authorization: Bearer {{access_token}}
 
 ###
+
+## 배송 경로 생성 API
+POST {{gateway}}/delivery-route/1
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+###
