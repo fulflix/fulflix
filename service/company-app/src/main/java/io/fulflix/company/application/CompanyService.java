@@ -59,16 +59,16 @@ public class CompanyService {
             pageable = PageRequest.of(pageable.getPageNumber(), 10, pageable.getSort());
         }
 
-        // 마스터 관리자 : 삭제된 업체까지 모두 조회
-        Page<Company> companies;
-
-        if (query != null && !query.isEmpty()) {
-            companies = companyRepo.findByCompanyNameContaining(query, pageable); // 검색어 있으면
-        } else {
-            companies = companyRepo.findAll(pageable); // 검색어 없으면
+        if (hasSearchQuery(query)) {
+            return companyRepo.findByCompanyNameContaining(query, pageable)
+                .map(CompanyDetailResponse::fromEntity);
         }
+        return companyRepo.findAll(pageable)
+            .map(CompanyDetailResponse::fromEntity);
+    }
 
-        return companies.map(CompanyDetailResponse::fromEntity);
+    private static boolean hasSearchQuery(String query) {
+        return query != null && !query.isEmpty();
     }
 
     // 업체 단일 조회 (마스터 관리자)
@@ -123,7 +123,7 @@ public class CompanyService {
 
     // 업체명 중복 확인
     private void checkCompanyDuplication(String companyName) {
-        if (companyRepo.findByCompanyName(companyName).isPresent()) {
+        if (companyRepo.existsByCompanyName(companyName)) {
             throw new CompanyException(CompanyErrorCode.DUPLICATE_COMPANY_NAME);
         }
     }
