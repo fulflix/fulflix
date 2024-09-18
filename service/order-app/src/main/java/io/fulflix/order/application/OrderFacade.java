@@ -23,6 +23,7 @@ public class OrderFacade {
     private final SupplierCompanyCreateOrder supplierCompanyCreateOrder;
     private final ReceiverCompanyCreateOrder receiverCompanyCreateOrder;
     private final List<OrderRetrieveStrategy> orderRetrieveStrategies;
+    private final List<OrderRetrieveByIdStrategy> orderRetrieveByIdStrategies;
 
     @Transactional
     public CreateOrderResponse createAdminOrder(AdminCreateOrderRequest createOrderRequest, Long currentUser, Role role) {
@@ -67,5 +68,14 @@ public class OrderFacade {
                 .findAny()
                 .orElseThrow()
                 .retrieveOrders(orderQuantity, pageable, currentUser, role);
+    }
+
+    // 주문 단일 조회
+    public OrderDetailResponse getOrder(Long id, Long currentUser, Role role) {
+        return orderRetrieveByIdStrategies.stream()
+                .filter(it -> it.isMatched(role))
+                .findAny()
+                .orElseThrow()
+                .retrieveOrder(id, currentUser, role);
     }
 }
