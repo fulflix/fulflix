@@ -70,4 +70,15 @@ public class OrderController {
         Page<OrderDetailResponse> orders = orderFacade.getAllOrders(orderQuantity, pageable, currentUser, role);
         return ResponseEntity.ok(orders);
     }
+
+    // 주문 단일 조회 (마스터 관리자, 허브 관리자, 생산 업체, 수령 업체)
+    @GetMapping("/{id}")
+    public ResponseEntity<OrderDetailResponse> getOrder(
+            @PathVariable Long id,
+            @CurrentUser Long currentUser,
+            @CurrentUserRole Role role
+    ) {
+        OrderDetailResponse order = orderFacade.getOrder(id, currentUser, role);
+        return ResponseEntity.ok(order);
+    }
 }
