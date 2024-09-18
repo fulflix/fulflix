@@ -49,3 +49,10 @@ Authorization: Bearer {{access_token}}
 GET {{gateway}}/order/7
 Content-Type: application/json
 Authorization: Bearer {{access_token}}
+
+###
+
+# @name 주문 삭제 API (마스터 관리자, 생산 업체, 수령 업체)
+DELETE {{gateway}}/order/1
+Content-Type: application/json
+Authorization: Bearer {{access_token}}

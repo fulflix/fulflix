@@ -4,6 +4,7 @@ import io.fulflix.common.web.principal.Role;
 import io.fulflix.product.api.dto.ProductDetailResponse;
 import io.fulflix.product.api.dto.ProductResponse;
 import io.fulflix.product.api.dto.ReduceStockRequest;
+import io.fulflix.product.api.dto.RestoreStockRequest;
 import io.fulflix.product.domain.Product;
 import io.fulflix.product.exception.ProductErrorCode;
 import io.fulflix.product.exception.ProductException;
@@ -106,6 +107,15 @@ public class ProductService {
                 .orElseThrow(() -> new ProductException(ProductErrorCode.PRODUCT_NOT_FOUND));
 
         product.reduceStock(reduceStockRequest.getOrderQuantity());
+    }
+
+    // 주문 취소 시, 재고 복원
+    @Transactional
+    public void restoreStock(Long id, RestoreStockRequest restoreStockRequest, Long currentUser, Role role) {
+        Product product = productRepo.findById(id)
+                .orElseThrow(() -> new ProductException(ProductErrorCode.PRODUCT_NOT_FOUND));
+
+        product.restoreStock(restoreStockRequest.getOrderQuantity());
     }
 
     private void validateMasterAdminAuthority(Role role) {

@@ -50,4 +50,9 @@ public class Product extends Auditable {
         }
         this.stockQuantity -= orderQuantity;
     }
+
+    // 주문 취소 시, 재고 복원
+    public void restoreStock(int restoreQuantity) {
+        this.stockQuantity += restoreQuantity;
+    }
 }

@@ -124,4 +124,16 @@ public class ProductController {
         productService.reduceStock(id, currentUser, reduceStockRequest, role);
         return ResponseEntity.noContent().build();
     }
+
+    // 주문 취소 시, 재고 복원
+    @PutMapping("/{id}/restore-stock")
+    public ResponseEntity<Void> restoreStock(
+            @PathVariable Long id,
+            @RequestBody RestoreStockRequest restoreStockRequest,
+            @CurrentUser Long currentUser,
+            @CurrentUserRole Role role
+    ) {
+        productService.restoreStock(id, restoreStockRequest, currentUser, role);
+        return ResponseEntity.noContent().build();
+    }
 }
