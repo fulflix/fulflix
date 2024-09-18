@@ -1,6 +1,6 @@
-package io.fulflix.hub.hubroute.api.dto;
+package io.fulflix.infra.client.dto;
 
-public record DeliveryRouteRequest(
+public record ShortestPathResponse(
         Integer sequence,
         Long departureHubId,
         Long arrivalHubId,
