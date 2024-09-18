@@ -7,11 +7,14 @@ import java.time.LocalDateTime;
 
 @Getter
 @RequiredArgsConstructor
-public class CompanyResponse {
+public class CompanyDetailResponse {
     private Long id;
     private Long hubId;
     private Long ownerId;
     private String companyName;
     private String companyType;
     private String companyAddress;
+    private boolean isDeleted;
+    private Long updatedBy;
+    private LocalDateTime updatedAt;
 }

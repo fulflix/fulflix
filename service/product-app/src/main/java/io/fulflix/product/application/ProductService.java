@@ -102,8 +102,6 @@ public class ProductService {
     // 주문 생성 시, 재고 감소
     @Transactional
     public void reduceStock(Long id, Long currentUser, ReduceStockRequest reduceStockRequest, Role role) {
-        validateMasterAdminAuthority(role);
-
         Product product = productRepo.findById(id)
                 .orElseThrow(() -> new ProductException(ProductErrorCode.PRODUCT_NOT_FOUND));
 

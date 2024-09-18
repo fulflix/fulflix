@@ -1,7 +1,7 @@
 package io.fulflix.order.application.strategy;
 
 import io.fulflix.common.web.principal.Role;
-import io.fulflix.infra.client.product.ProductDetailResponse;
+import io.fulflix.infra.client.product.ProductResponse;
 import io.fulflix.order.api.dto.CreateOrderRequest;
 import io.fulflix.order.api.dto.CreateOrderResponse;
 import io.fulflix.order.application.OrderCreateStrategy;
@@ -16,19 +16,17 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class MasterAdminCreateOrder implements OrderCreateStrategy {
+public class SupplierCompanyCreateOrder implements OrderCreateStrategy {
     private final OrderRepo orderRepo;
     private final OrderValidator orderValidator;
 
     @Override
     public CreateOrderResponse createOrder(CreateOrderRequest createOrderRequest, Long currentUser, Role role) {
-        ProductDetailResponse productResponse = orderValidator.checkProductExistForAdmin(createOrderRequest.getProductId());
-        orderValidator.checkCompanyExistForAdmin(createOrderRequest.getSupplierId(), "SUPPLIER");
-        orderValidator.checkCompanyExistForAdmin(createOrderRequest.getReceiverId(), "RECEIVER");
-        OrderStatus orderStatus = orderValidator.validateStockAvailabilityForAdmin(productResponse, createOrderRequest.getOrderQuantity());
+        ProductResponse productResponse = orderValidator.checkProductExistForCompany(createOrderRequest.getProductId());
+        OrderStatus orderStatus = orderValidator.validateStockAvailabilityForCompany(productResponse, createOrderRequest.getOrderQuantity());
 
         Order order = Order.builder()
-                .supplierId(productResponse.getCompanyId())
+                .supplierId(currentUser)
                 .receiverId(createOrderRequest.getReceiverId())
                 .productId(createOrderRequest.getProductId())
                 .orderQuantity(createOrderRequest.getOrderQuantity())
@@ -46,6 +44,6 @@ public class MasterAdminCreateOrder implements OrderCreateStrategy {
 
     @Override
     public boolean isMatched(Role role) {
-        return role.isMasterAdmin();
+        return role.isHubCompany();
     }
 }

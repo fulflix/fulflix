@@ -1,5 +1,6 @@
 package io.fulflix.infra.client.company;
 
 public interface CompanyService {
-    CompanyResponse getCompanyById(Long id);
+    CompanyDetailResponse getCompanyForAdminById(Long id);
+    CompanyResponse getCompanyForCompanyById(Long id);
 }

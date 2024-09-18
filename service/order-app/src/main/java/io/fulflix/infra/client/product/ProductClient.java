@@ -13,15 +13,25 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @FeignClient(name = ProductClient.PRODUCT_APP_CLIENT, configuration = FulflixPrincipalRequestHeaderInterceptor.class)
 public interface ProductClient extends ProductService {
     String PRODUCT_APP_CLIENT = "product-app";
-    String PRODUCT_BY_ID_URI = "/product/admin/{id}";
+    String PRODUCT_FOR_ADMIN_BY_ID_URI = "/product/admin/{id}";
+    String PRODUCT_FOR_COMPANY_BY_ID_URI = "/product/hub/{id}";
     String REDUCE_STOCK_URI = "/product/{id}/reduce-stock";
 
+    // 상품 조회 API 호출 (마스터 관리자)
     @GetMapping(
-            path = PRODUCT_BY_ID_URI,
+            path = PRODUCT_FOR_ADMIN_BY_ID_URI,
             consumes = APPLICATION_JSON_VALUE,
             produces = APPLICATION_JSON_VALUE
     )
-    ProductResponse getProductById(@PathVariable Long id);
+    ProductDetailResponse getProductForAdminById(@PathVariable Long id);
+
+    // 상품 조회 API 호출 (생산/수령 업체)
+    @GetMapping(
+            path = PRODUCT_FOR_COMPANY_BY_ID_URI,
+            consumes = APPLICATION_JSON_VALUE,
+            produces = APPLICATION_JSON_VALUE
+    )
+    ProductResponse getProductForCompanyById(@PathVariable Long id);
 
     // 재고 감소 API 호출
     @PutMapping(
