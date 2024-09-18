@@ -77,9 +77,8 @@ public class HubRouteController {
 
      //최단 경로 찾기
     @PostMapping("/hub-route/shortest-path")
-    public ResponseEntity<List<DeliveryRouteRequest>> findShortestPath(@RequestBody ShortestPathRequest request) {
+    public List<ShortestPathResponse> findShortestPath(@RequestBody ShortestPathRequest request) {
         shortestPathAlgorithm.buildGraph();
-        List<DeliveryRouteRequest> dto = shortestPathAlgorithm.findShortestPath(request.startHubId(), request.endHubId());
-        return ResponseEntity.ok(dto);
+        return shortestPathAlgorithm.findShortestPath(request.startHubId(), request.endHubId());
     }
 }

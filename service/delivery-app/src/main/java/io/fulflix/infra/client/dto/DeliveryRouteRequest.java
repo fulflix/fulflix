@@ -1,4 +1,4 @@
-package io.fulflix.hub.hubroute.api.dto;
+package io.fulflix.infra.client.dto;
 
 public record DeliveryRouteRequest(
         Integer sequence,

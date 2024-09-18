@@ -2,7 +2,7 @@ package io.fulflix.hub.hubroute.application;
 
 import io.fulflix.hub.hub.domain.Hub;
 import io.fulflix.hub.hub.domain.HubRepository;
-import io.fulflix.hub.hubroute.api.dto.DeliveryRouteRequest;
+import io.fulflix.hub.hubroute.api.dto.ShortestPathResponse;
 import io.fulflix.hub.hubroute.domain.HubRoute;
 import io.fulflix.hub.hubroute.domain.HubRouteRepository;
 import lombok.RequiredArgsConstructor;
@@ -76,7 +76,7 @@ public class ShortestPathAlgorithm {
 //
 
     // 최단 경로 생성
-    public List<DeliveryRouteRequest> findShortestPath(Long start, Long end) {
+    public List<ShortestPathResponse> findShortestPath(Long start, Long end) {
         DijkstraShortestPath<Hub, DefaultWeightedEdge> dijkstraAlg = new DijkstraShortestPath<>(graph);
 
         Hub startHub = findHubById(start);
@@ -101,7 +101,7 @@ public class ShortestPathAlgorithm {
                         // 엣지에 매핑된 HubRoute로 DeliveryRouteRequest 생성
                         HubRoute hubRoute = edgeToHubRouteMap.get(edge);
 
-                        return new DeliveryRouteRequest(
+                        return new ShortestPathResponse(
                                 path.getEdgeList().indexOf(edge) + 1,       // 각 경로의 순서(sequence)
                                 hubRoute.getDepartureHub().getId(),         // 출발 허브 ID
                                 hubRoute.getArrivalHub().getId(),           // 도착 허브 ID

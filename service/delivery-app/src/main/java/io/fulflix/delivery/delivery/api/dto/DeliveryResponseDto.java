@@ -2,10 +2,11 @@ package io.fulflix.delivery.delivery.api.dto;
 
 import io.fulflix.delivery.delivery.domain.Delivery;
 import io.fulflix.delivery.delivery.domain.DeliveryStatus;
-import lombok.AllArgsConstructor;
+import io.fulflix.delivery.deliveryroute.api.dto.DeliveryRouteResponse;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Getter
 @Builder
@@ -19,6 +20,7 @@ public class DeliveryResponseDto {
     private String deliveryAddress;
     private String recipient;
     private String recipientSlackId;
+    private List<DeliveryRouteResponse> deliveryRoutes;
 
     public static DeliveryResponseDto of(Delivery delivery) {
         return DeliveryResponseDto.builder()
@@ -30,6 +32,9 @@ public class DeliveryResponseDto {
                 .deliveryAddress(delivery.getDeliveryAddress())
                 .recipient(delivery.getRecipient())
                 .recipientSlackId(delivery.getRecipientSlackId())
+                .deliveryRoutes(delivery.getDeliveryRouteList().stream()
+                        .map(DeliveryRouteResponse::fromEntity)
+                        .toList())
                 .build();
     }
 }
