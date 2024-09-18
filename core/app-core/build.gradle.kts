@@ -23,6 +23,7 @@ dependencies {
     api(project(webCore))
     api("org.springframework.boot:spring-boot-starter-data-jpa")
     api("org.springframework.cloud:spring-cloud-starter-openfeign")
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0")
 
     implementation("com.querydsl:querydsl-jpa:$queryDslVersion:jakarta")
     annotationProcessor("com.querydsl:querydsl-apt:$queryDslVersion:jakarta")
