@@ -3,10 +3,7 @@ package io.fulflix.product.api;
 import io.fulflix.common.app.context.annotation.CurrentUser;
 import io.fulflix.common.app.context.annotation.CurrentUserRole;
 import io.fulflix.common.web.principal.Role;
-import io.fulflix.product.api.dto.ProductDetailResponse;
-import io.fulflix.product.api.dto.ProductResponse;
-import io.fulflix.product.api.dto.RegisterProductRequest;
-import io.fulflix.product.api.dto.UpdateProductRequest;
+import io.fulflix.product.api.dto.*;
 import io.fulflix.product.application.ProductService;
 import io.fulflix.product.application.ProductFacade;
 import jakarta.validation.Valid;
@@ -113,6 +110,18 @@ public class ProductController {
             @CurrentUserRole Role role
     ) {
         productFacade.updateProduct(id, updateProductRequest, currentUser, role);
+        return ResponseEntity.noContent().build();
+    }
+
+    // 주문 생성 시, 재고 감소
+    @PutMapping("/{id}/reduce-stock")
+    public ResponseEntity<Void> reduceStock(
+            @PathVariable Long id,
+            @RequestBody ReduceStockRequest reduceStockRequest,
+            @CurrentUser Long currentUser,
+            @CurrentUserRole Role role
+    ) {
+        productService.reduceStock(id, currentUser, reduceStockRequest, role);
         return ResponseEntity.noContent().build();
     }
 }

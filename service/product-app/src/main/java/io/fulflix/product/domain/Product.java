@@ -2,6 +2,8 @@ package io.fulflix.product.domain;
 
 import io.fulflix.product.api.dto.UpdateProductRequest;
 import io.fulflix.product.config.ProductAuditable;
+import io.fulflix.product.exception.ProductErrorCode;
+import io.fulflix.product.exception.ProductException;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -39,5 +41,13 @@ public class Product extends ProductAuditable {
     // stockQuantity 업데이트
     public void updateStockQuantity(UpdateProductRequest updateProductRequest) {
         this.stockQuantity = updateProductRequest.getStockQuantity();
+    }
+
+    // 주문 생성 시, 재고 감소
+    public void reduceStock(int orderQuantity) {
+        if (this.stockQuantity < orderQuantity) {
+            throw new ProductException(ProductErrorCode.INSUFFICIENT_STOCK);
+        }
+        this.stockQuantity -= orderQuantity;
     }
 }
