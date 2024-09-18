@@ -2,6 +2,7 @@ package io.fulflix.infra.client.product;
 
 import io.fulflix.common.app.feign.FulflixPrincipalRequestHeaderInterceptor;
 import io.fulflix.order.api.dto.ReduceStockRequest;
+import io.fulflix.order.api.dto.RestoreStockRequest;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +17,7 @@ public interface ProductClient extends ProductService {
     String PRODUCT_FOR_ADMIN_BY_ID_URI = "/product/admin/{id}";
     String PRODUCT_FOR_COMPANY_BY_ID_URI = "/product/hub/{id}";
     String REDUCE_STOCK_URI = "/product/{id}/reduce-stock";
+    String RESTORE_STOCK_URI = "/product/{id}/restore-stock";
 
     // 상품 조회 API 호출 (마스터 관리자)
     @GetMapping(
@@ -40,4 +42,12 @@ public interface ProductClient extends ProductService {
             produces = APPLICATION_JSON_VALUE
     )
     void reduceStock(@PathVariable Long id, @RequestBody ReduceStockRequest reduceStockRequest);
+
+    // 재고 복원 API 호출
+    @PutMapping(
+            path = RESTORE_STOCK_URI,
+            consumes = APPLICATION_JSON_VALUE,
+            produces = APPLICATION_JSON_VALUE
+    )
+    void restoreStock(@PathVariable Long id, @RequestBody RestoreStockRequest restoreStockRequest);
 }
