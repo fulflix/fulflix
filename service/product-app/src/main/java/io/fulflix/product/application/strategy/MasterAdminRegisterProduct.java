@@ -10,27 +10,33 @@ import io.fulflix.product.repo.ProductRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Component
 @RequiredArgsConstructor
 public class MasterAdminRegisterProduct implements ProductRegisterStrategy {
+
     private final ProductRepo productRepo;
     private final ProductValidator productValidator;
 
     @Override
+    @Transactional
     public void registerProduct(RegisterProductRequest registerProductRequest, Long currentUser, Role role) {
-        CompanyDetailResponse companyDetailResponse = productValidator.checkCompanyExistsForAdmin(registerProductRequest.getCompanyId());
-        productValidator.checkProductDuplication(registerProductRequest.getCompanyId(), registerProductRequest.getProductName());
+        CompanyDetailResponse companyDetailResponse = productValidator.checkCompanyExistsForAdmin(
+            registerProductRequest.getCompanyId()
+        );
+        productValidator.checkProductDuplication(
+            registerProductRequest.getCompanyId(),
+            registerProductRequest.getProductName()
+        );
 
         Product product = Product.builder()
-                .companyId(registerProductRequest.getCompanyId())
-                .hubId(companyDetailResponse.getHubId())
-                .productName(registerProductRequest.getProductName())
-                .stockQuantity(registerProductRequest.getStockQuantity())
-                .build();
-
-        product.applyProductCreated(currentUser);
+            .companyId(registerProductRequest.getCompanyId())
+            .hubId(companyDetailResponse.getHubId())
+            .productName(registerProductRequest.getProductName())
+            .stockQuantity(registerProductRequest.getStockQuantity())
+            .build();
 
         productRepo.save(product);
     }
@@ -39,4 +45,5 @@ public class MasterAdminRegisterProduct implements ProductRegisterStrategy {
     public boolean isMatched(Role role) {
         return role.isMasterAdmin();
     }
+
 }

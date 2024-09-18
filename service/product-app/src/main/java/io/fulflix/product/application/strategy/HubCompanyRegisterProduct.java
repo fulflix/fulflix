@@ -12,17 +12,22 @@ import io.fulflix.product.repo.ProductRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Component
 @RequiredArgsConstructor
 public class HubCompanyRegisterProduct implements ProductRegisterStrategy {
+
     private final ProductRepo productRepo;
     private final ProductValidator productValidator;
 
     @Override
+    @Transactional
     public void registerProduct(RegisterProductRequest registerProductRequest, Long currentUser, Role role) {
-        CompanyResponse companyResponse = productValidator.checkCompanyExistsForHub(registerProductRequest.getCompanyId());
+        CompanyResponse companyResponse = productValidator.checkCompanyExistsForHub(
+            registerProductRequest.getCompanyId()
+        );
         Long companyHubId = companyResponse.getHubId();
         Long companyOwnerId = companyResponse.getOwnerId();
 
@@ -30,16 +35,17 @@ public class HubCompanyRegisterProduct implements ProductRegisterStrategy {
             throw new CompanyException(CompanyErrorCode.COMPANY_NOT_FOUND);
         }
 
-        productValidator.checkProductDuplication(registerProductRequest.getCompanyId(), registerProductRequest.getProductName());
+        productValidator.checkProductDuplication(
+            registerProductRequest.getCompanyId(),
+            registerProductRequest.getProductName()
+        );
 
         Product product = Product.builder()
-                .companyId(registerProductRequest.getCompanyId())
-                .hubId(companyHubId)
-                .productName(registerProductRequest.getProductName())
-                .stockQuantity(registerProductRequest.getStockQuantity())
-                .build();
-
-        product.applyProductCreated(currentUser);
+            .companyId(registerProductRequest.getCompanyId())
+            .hubId(companyHubId)
+            .productName(registerProductRequest.getProductName())
+            .stockQuantity(registerProductRequest.getStockQuantity())
+            .build();
 
         productRepo.save(product);
     }
@@ -48,4 +54,5 @@ public class HubCompanyRegisterProduct implements ProductRegisterStrategy {
     public boolean isMatched(Role role) {
         return role.isHubCompany();
     }
+
 }
