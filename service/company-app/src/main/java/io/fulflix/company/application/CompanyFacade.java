@@ -1,6 +1,6 @@
 package io.fulflix.company.application;
 
-import io.fulflix.common.web.principal.Role;
+import io.fulflix.core.web.principal.Role;
 import io.fulflix.company.api.dto.CompanyResponse;
 import io.fulflix.company.api.dto.UpdateCompanyRequest;
 import io.fulflix.company.exception.CompanyErrorCode;

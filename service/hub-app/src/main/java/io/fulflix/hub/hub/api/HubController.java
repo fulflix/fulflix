@@ -2,7 +2,7 @@ package io.fulflix.hub.hub.api;
 
 import io.fulflix.core.app.context.annotation.CurrentUser;
 import io.fulflix.core.app.context.annotation.CurrentUserRole;
-import io.fulflix.common.web.principal.Role;
+import io.fulflix.core.web.principal.Role;
 import io.fulflix.hub.hub.api.dto.HubRequestDto;
 import io.fulflix.hub.hub.api.dto.HubResponseDto;
 import io.fulflix.hub.hub.application.HubService;

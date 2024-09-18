@@ -1,7 +1,7 @@
 package io.fulflix.auth.api;
 
 import static io.fulflix.auth.api.AuthController.BASE_AUTH_PATH;
-import static io.fulflix.common.web.utils.ResponseEntityUtils.created;
+import static io.fulflix.core.web.utils.ResponseEntityUtils.created;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 

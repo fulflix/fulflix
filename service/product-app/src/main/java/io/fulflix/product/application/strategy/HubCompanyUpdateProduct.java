@@ -1,6 +1,6 @@
 package io.fulflix.product.application.strategy;
 
-import io.fulflix.common.web.principal.Role;
+import io.fulflix.core.web.principal.Role;
 import io.fulflix.infra.client.company.CompanyResponse;
 import io.fulflix.product.api.dto.UpdateProductRequest;
 import io.fulflix.product.application.ProductUpdateStrategy;

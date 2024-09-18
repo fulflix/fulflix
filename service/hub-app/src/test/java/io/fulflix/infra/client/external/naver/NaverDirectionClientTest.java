@@ -2,7 +2,7 @@ package io.fulflix.infra.client.external.naver;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import io.fulflix.common.web.base.TestBase;
+import io.fulflix.core.web.base.TestBase;
 import io.fulflix.hub.HubAppApplication;
 import io.fulflix.infra.client.external.naver.dto.RouteResponse;
 import org.junit.jupiter.api.Disabled;

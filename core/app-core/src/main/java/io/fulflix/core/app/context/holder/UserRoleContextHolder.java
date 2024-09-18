@@ -1,6 +1,6 @@
 package io.fulflix.core.app.context.holder;
 
-import io.fulflix.common.web.principal.Role;
+import io.fulflix.core.web.principal.Role;
 
 public class UserRoleContextHolder {
 

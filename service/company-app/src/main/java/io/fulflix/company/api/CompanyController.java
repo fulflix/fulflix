@@ -2,7 +2,7 @@ package io.fulflix.company.api;
 
 import io.fulflix.core.app.context.annotation.CurrentUser;
 import io.fulflix.core.app.context.annotation.CurrentUserRole;
-import io.fulflix.common.web.principal.Role;
+import io.fulflix.core.web.principal.Role;
 import io.fulflix.company.api.dto.CompanyDetailResponse;
 import io.fulflix.company.api.dto.CompanyResponse;
 import io.fulflix.company.api.dto.RegisterCompanyRequest;
@@ -18,7 +18,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import static io.fulflix.common.web.utils.ResponseEntityUtils.created;
+import static io.fulflix.core.web.utils.ResponseEntityUtils.created;
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
 @RequiredArgsConstructor

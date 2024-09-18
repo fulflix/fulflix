@@ -1,10 +1,9 @@
 package io.fulflix.order.application.strategy;
 
-import io.fulflix.common.web.principal.Role;
+import io.fulflix.core.web.principal.Role;
 import io.fulflix.infra.client.product.ProductClient;
 import io.fulflix.order.api.dto.RestoreStockRequest;
 import io.fulflix.order.application.OrderCancelStrategy;
-import io.fulflix.order.application.validator.OrderValidator;
 import io.fulflix.order.domain.Order;
 import io.fulflix.order.domain.OrderStatus;
 import io.fulflix.order.exception.OrderErrorCode;

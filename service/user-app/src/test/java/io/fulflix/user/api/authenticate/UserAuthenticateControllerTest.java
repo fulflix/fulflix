@@ -1,6 +1,6 @@
 package io.fulflix.user.api.authenticate;
 
-import static io.fulflix.common.web.utils.UriComponentUtils.toResourceUri;
+import static io.fulflix.core.web.utils.UriComponentUtils.toResourceUri;
 import static io.fulflix.fixture.UserFixtures.CREATE_PRINCIPAL_REQUEST;
 import static io.fulflix.fixture.UserFixtures.USERNAME;
 import static io.fulflix.fixture.UserFixtures.USER_CREDENTIAL_RESPONSE;

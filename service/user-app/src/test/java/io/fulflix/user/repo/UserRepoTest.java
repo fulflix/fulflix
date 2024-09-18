@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 import io.fulflix.core.app.base.persistence.JpaTestBase;
-import io.fulflix.common.web.principal.Role;
+import io.fulflix.core.web.principal.Role;
 import io.fulflix.user.repo.model.User;
 import java.util.NoSuchElementException;
 import org.junit.jupiter.api.DisplayName;

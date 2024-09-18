@@ -1,6 +1,6 @@
 package io.fulflix.core.app.feign;
 
-import static io.fulflix.common.web.utils.PropertiesCombineUtils.BASE_PACKAGE;
+import static io.fulflix.core.web.utils.PropertiesCombineUtils.BASE_PACKAGE;
 
 import org.springframework.context.annotation.Bean;
 

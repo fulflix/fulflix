@@ -2,7 +2,7 @@ package io.fulflix.order.api;
 
 import io.fulflix.core.app.context.annotation.CurrentUser;
 import io.fulflix.core.app.context.annotation.CurrentUserRole;
-import io.fulflix.common.web.principal.Role;
+import io.fulflix.core.web.principal.Role;
 import io.fulflix.order.api.dto.*;
 import io.fulflix.order.application.OrderFacade;
 import jakarta.validation.Valid;

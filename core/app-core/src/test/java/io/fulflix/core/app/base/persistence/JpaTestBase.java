@@ -2,7 +2,7 @@ package io.fulflix.core.app.base.persistence;
 
 import io.fulflix.core.app.config.TestUserAuditorAwareConfig;
 import io.fulflix.core.app.jpa.JpaConfig;
-import io.fulflix.common.web.base.TestBase;
+import io.fulflix.core.web.base.TestBase;
 import jakarta.annotation.Resource;
 import jakarta.persistence.EntityManager;
 import java.util.function.Supplier;

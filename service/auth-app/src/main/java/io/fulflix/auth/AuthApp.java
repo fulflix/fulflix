@@ -1,6 +1,6 @@
 package io.fulflix.auth;
 
-import static io.fulflix.common.web.utils.PropertiesCombineUtils.BASE_PACKAGE;
+import static io.fulflix.core.web.utils.PropertiesCombineUtils.BASE_PACKAGE;
 
 import io.fulflix.auth.utils.jwt.JwtProperties;
 import org.springframework.boot.SpringApplication;

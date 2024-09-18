@@ -1,9 +1,9 @@
 package io.fulflix.hub;
 
 import static io.fulflix.core.app.feign.FeignClientConfig.FEIGN_CLIENT_BASE_PACKAGE;
-import static io.fulflix.common.web.utils.PropertiesCombineUtils.BASE_PACKAGE;
+import static io.fulflix.core.web.utils.PropertiesCombineUtils.BASE_PACKAGE;
 
-import io.fulflix.common.web.config.YamlPropertySourceFactory;
+import io.fulflix.core.web.config.YamlPropertySourceFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
