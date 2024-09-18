@@ -3,6 +3,7 @@ package io.fulflix.product.application;
 import io.fulflix.common.web.principal.Role;
 import io.fulflix.product.api.dto.ProductDetailResponse;
 import io.fulflix.product.api.dto.ProductResponse;
+import io.fulflix.product.api.dto.ReduceStockRequest;
 import io.fulflix.product.domain.Product;
 import io.fulflix.product.exception.ProductErrorCode;
 import io.fulflix.product.exception.ProductException;
@@ -16,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
+@Transactional(readOnly = true)
 public class ProductService {
     private final ProductRepo productRepo;
 
@@ -97,6 +99,15 @@ public class ProductService {
         return ProductResponse.fromEntity(product);
     }
 
+    // 주문 생성 시, 재고 감소
+    @Transactional
+    public void reduceStock(Long id, Long currentUser, ReduceStockRequest reduceStockRequest, Role role) {
+        Product product = productRepo.findById(id)
+                .orElseThrow(() -> new ProductException(ProductErrorCode.PRODUCT_NOT_FOUND));
+
+        product.reduceStock(reduceStockRequest.getOrderQuantity());
+    }
+
     private void validateMasterAdminAuthority(Role role) {
         if (!role.isMasterAdmin()) {
             throw new ProductException(ProductErrorCode.UNAUTHORIZED_ACCESS);
@@ -108,6 +119,4 @@ public class ProductService {
             throw new ProductException(ProductErrorCode.UNAUTHORIZED_ACCESS);
         }
     }
-
-
 }

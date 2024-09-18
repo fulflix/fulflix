@@ -34,8 +34,8 @@ Content-Type: application/json
 Authorization: Bearer {{access_token}}
 
 {
-  "departureHubId": 18,
-  "arrivalHubId": 19
+  "departureHubId": 1,
+  "arrivalHubId": 2
 }
 
 ###
@@ -70,3 +70,12 @@ DELETE {{gateway}}/hub-route/1
 Authorization: Bearer {{access_token}}
 
 ###
+
+###
+
+## 허브 경로 전체 생성 API
+POST {{gateway}}/hub-route/generate
+Authorization: Bearer {{access_token}}
+
+###
+

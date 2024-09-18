@@ -7,6 +7,8 @@ import lombok.*;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 
+import java.util.Objects;
+
 import static io.fulflix.common.app.jpa.audit.CommonAuditFields.DEFAULT_CONDITION;
 
 @Entity
@@ -75,5 +77,18 @@ public class HubRoute extends Auditable {
         this.duration = duration;
         this.distance = distance;
         this.route = route;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        HubRoute hubRoute = (HubRoute) o;
+        return Objects.equals(id, hubRoute.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

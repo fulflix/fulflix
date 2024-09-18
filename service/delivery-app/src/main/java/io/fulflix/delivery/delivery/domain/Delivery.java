@@ -2,10 +2,14 @@ package io.fulflix.delivery.delivery.domain;
 
 import io.fulflix.common.app.jpa.audit.Auditable;
 import io.fulflix.delivery.delivery.api.dto.DeliveryUpdateDto;
+import io.fulflix.delivery.deliveryroute.domain.DeliveryRoute;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLRestriction;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static io.fulflix.common.app.jpa.audit.CommonAuditFields.DEFAULT_CONDITION;
 
@@ -41,6 +45,11 @@ public class Delivery extends Auditable {
 
     @Column(name = "recipient_slack_id")
     private String recipientSlackId;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "delivery_id")
+    private List<DeliveryRoute> deliveryRouteList = new ArrayList<>();
+
 
     private Delivery(Long orderId, DeliveryStatus status, Long departureHubId, Long arrivalHubId,
                      String deliveryAddress, String recipient, String recipientSlackId) {
@@ -78,6 +87,11 @@ public class Delivery extends Auditable {
         if (dto.recipientSlackId() != null) {
             this.recipientSlackId = dto.recipientSlackId();
         }
+    }
+
+    public void addDeliveryRoute(DeliveryRoute deliveryRoute) {
+        this.deliveryRouteList.add(deliveryRoute);
+        deliveryRoute.setDelivery(this);
     }
 
 
