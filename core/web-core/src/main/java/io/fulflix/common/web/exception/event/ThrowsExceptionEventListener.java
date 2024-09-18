@@ -18,12 +18,13 @@ public class ThrowsExceptionEventListener {
 
         log.error("""
                              \s
-                             REQUEST :[{}, {}]
+                             REQUEST :[{}, {} {}]
                              RESPONSE :[{}, {}]
                              EXCEPTION :[{}, {}]
                              TRACE :[{}]
                 \s""",
             response.getMessage(),
+            response.getMethod(),
             response.getPath(),
             response.getCode(),
             response.getMessage(),

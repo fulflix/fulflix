@@ -7,6 +7,7 @@ spring:
       - classpath:properties/eureka.yml
       - classpath:properties/actuator.yml
       - classpath:properties/zipkin.yml
+      - classpath:properties/swagger.yml
   profiles:
     active: local
 
