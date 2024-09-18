@@ -1,6 +1,7 @@
 #!/bin/bash
 
 modules=("auth-app" "company-app" "delivery-app" "hub-app" "order-app" "product-app" "user-app")
+total_designed_apis=74
 
 total_get_count=0
 total_post_count=0
@@ -20,10 +21,10 @@ for module in "${modules[@]}"; do
 
   if [ $module_total -gt 0 ]; then
     echo "Module: [$module] - Total APIs: $module_total"
-    echo "  ├── GET: $get_count"
-    echo "  ├── POST: $post_count"
-    echo "  ├── PUT: $put_count"
-    echo "  └── DELETE: $delete_count"
+    [ $get_count -gt 0 ] && echo "  ├── GET: $get_count"
+    [ $post_count -gt 0 ] && echo "  ├── POST: $post_count"
+    [ $put_count -gt 0 ] && echo "  ├── PUT: $put_count"
+    [ $delete_count -gt 0 ] && echo "  └── DELETE: $delete_count"
   fi
 
   total_get_count=$((total_get_count + get_count))
@@ -33,6 +34,7 @@ for module in "${modules[@]}"; do
 done
 
 total_api_count=$((total_get_count + total_post_count + total_put_count + total_delete_count))
+implementation_rate=$(awk "BEGIN {printf \"%.2f\", ($total_api_count / $total_designed_apis) * 100}")
 
 echo "=========================="
 echo "Overall API Count"
@@ -42,3 +44,5 @@ echo "  ├── GET: $total_get_count"
 echo "  ├── POST: $total_post_count"
 echo "  ├── PUT: $total_put_count"
 echo "  └── DELETE: $total_delete_count"
+echo "=========================="
+echo "Implementation Rate: $implementation_rate% of $total_designed_apis designed APIs"
