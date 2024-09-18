@@ -4,6 +4,7 @@ import io.fulflix.delivery.deliveryroute.domain.DeliveryRoute;
 
 public record DeliveryRouteResponse(
         Long id,
+        Long deliveryId,
         Integer sequence,
         Long departureHubId,
         Long arrivalHubId,
@@ -13,6 +14,7 @@ public record DeliveryRouteResponse(
     public static DeliveryRouteResponse fromEntity(DeliveryRoute deliveryRoute) {
         return new DeliveryRouteResponse(
                 deliveryRoute.getId(),
+                deliveryRoute.getDelivery().getId(),
                 deliveryRoute.getSequence(),
                 deliveryRoute.getDepartureHubId(),
                 deliveryRoute.getArrivalHubId(),
