@@ -1,6 +1,7 @@
 package io.fulflix.delivery.deliveryroute.api.dto;
 
 import io.fulflix.delivery.deliveryroute.domain.DeliveryRoute;
+import io.fulflix.delivery.deliveryroute.domain.DeliveryRouteStatus;
 
 public record DeliveryRouteResponse(
         Long id,
@@ -9,7 +10,8 @@ public record DeliveryRouteResponse(
         Long departureHubId,
         Long arrivalHubId,
         Double estimatedDistance,
-        Long estimatedDuration
+        Long estimatedDuration,
+        DeliveryRouteStatus status
 ) {
     public static DeliveryRouteResponse fromEntity(DeliveryRoute deliveryRoute) {
         return new DeliveryRouteResponse(
@@ -19,7 +21,8 @@ public record DeliveryRouteResponse(
                 deliveryRoute.getDepartureHubId(),
                 deliveryRoute.getArrivalHubId(),
                 deliveryRoute.getEstimatedDistance(),
-                deliveryRoute.getEstimatedDuration()
+                deliveryRoute.getEstimatedDuration(),
+                deliveryRoute.getStatus()
         );
     }
 }

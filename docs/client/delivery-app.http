@@ -58,3 +58,37 @@ Content-Type: application/json
 Authorization: Bearer {{access_token}}
 
 ###
+
+## 배송 경로 단건 조회 API
+GET {{gateway}}/delivery-route/1
+Authorization: Bearer {{access_token}}
+
+###
+
+
+## 배송 경로 전체 조회 API
+GET {{gateway}}/delivery-route
+Authorization: Bearer {{access_token}}
+
+###
+
+
+## 배송 경로 수정 API
+PUT {{gateway}}/delivery-route
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+  "id": 1,
+  "status": "ARRIVED"
+}
+
+###
+
+
+
+## 배송 경로 삭제 API
+DELETE {{gateway}}/delivery-route/1
+Authorization: Bearer {{access_token}}
+
+###
