@@ -1,7 +1,7 @@
 package io.fulflix.company.domain;
 
+import io.fulflix.common.app.jpa.audit.Auditable;
 import io.fulflix.company.api.dto.UpdateCompanyRequest;
-import io.fulflix.company.config.CompanyAuditable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name = "p_company")
-public class Company extends CompanyAuditable {
+public class Company extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
