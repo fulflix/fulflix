@@ -39,7 +39,7 @@ public class CompanyController {
             @CurrentUser Long currentUser,
             @CurrentUserRole Role role
     ) {
-        companyService.registerCompany(registerCompanyRequest, currentUser, role);
+        companyService.registerCompany(registerCompanyRequest, role);
         return created("/company");
     }
 
@@ -51,7 +51,7 @@ public class CompanyController {
             @CurrentUser Long currentUser,
             @CurrentUserRole Role role
     ) {
-        Page<CompanyDetailResponse> companies = companyService.getAllCompaniesForAdmin(query, pageable, currentUser, role);
+        Page<CompanyDetailResponse> companies = companyService.getAllCompaniesForAdmin(query, pageable, role);
         return ResponseEntity.ok(companies);
     }
 
@@ -74,7 +74,7 @@ public class CompanyController {
             @CurrentUser Long currentUser,
             @CurrentUserRole Role role
     ) {
-        CompanyDetailResponse company = companyService.getCompanyByIdForAdmin(id, currentUser, role);
+        CompanyDetailResponse company = companyService.getCompanyByIdForAdmin(id, role);
         return ResponseEntity.ok(company);
     }
 

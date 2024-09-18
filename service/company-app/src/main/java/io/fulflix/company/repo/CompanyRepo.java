@@ -29,4 +29,7 @@ public interface CompanyRepo extends JpaRepository<Company, Long> {
 
     // 허브 업체용 단일 조회
     Optional<Company> findByIdAndOwnerIdAndIsDeletedFalse(Long id, Long currentUser);
+
+    boolean existsByCompanyName(String companyName);
+
 }

@@ -22,54 +22,58 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @RequiredArgsConstructor
 @Service
 public class CompanyService {
+
     private final CompanyRepo companyRepo;
     private final HubClient hubClient;
     private final UserClient userClient;
 
     // 업체 등록 (마스터 관리자, 허브 관리자)
-    public void registerCompany(RegisterCompanyRequest registerCompanyRequest, Long currentUser, Role role) {
+    @Transactional
+    public void registerCompany(RegisterCompanyRequest registerCompanyRequest, Role role) {
+        validateCompanyRegisterProcess(registerCompanyRequest, role);
+
+        Company company = RegisterCompanyRequest.toEntity(registerCompanyRequest);
+        company.assignOwnerId(registerCompanyRequest.getOwnerId());
+        companyRepo.save(company);
+    }
+
+    private void validateCompanyRegisterProcess(RegisterCompanyRequest registerCompanyRequest, Role role) {
         validateAdminAuthority(role);
 
         checkHubExists(registerCompanyRequest.getHubId());
         checkUserExists(registerCompanyRequest.getOwnerId());
-
         checkCompanyDuplication(registerCompanyRequest.getCompanyName());
-
-        Company company = RegisterCompanyRequest.toEntity(registerCompanyRequest);
-
-        company.assignOwnerId(registerCompanyRequest.getOwnerId());
-        company.applyCompanyCreated(currentUser);
-
-        companyRepo.save(company);
     }
 
     // 업체 전체 조회 및 검색 (마스터 관리자)
-    public Page<CompanyDetailResponse> getAllCompaniesForAdmin(String query, Pageable pageable, Long currentUser, Role role) {
+    public Page<CompanyDetailResponse> getAllCompaniesForAdmin(String query, Pageable pageable, Role role) {
         validateMasterAdminAuthority(role);
 
+        // TODO CustomPageableHandlerMethodArgumentResolver를 이용한 기본 페이지 사이즈 요청 값 고정 처리
         if (pageable.getPageSize() != 10 && pageable.getPageSize() != 30 && pageable.getPageSize() != 50) {
             pageable = PageRequest.of(pageable.getPageNumber(), 10, pageable.getSort());
         }
 
-        // 마스터 관리자 : 삭제된 업체까지 모두 조회
-        Page<Company> companies;
-
-        if (query != null && !query.isEmpty()) {
-            companies = companyRepo.findByCompanyNameContaining(query, pageable); // 검색어 있으면
-        } else {
-            companies = companyRepo.findAll(pageable); // 검색어 없으면
+        if (hasSearchQuery(query)) {
+            return companyRepo.findByCompanyNameContaining(query, pageable)
+                .map(CompanyDetailResponse::fromEntity);
         }
+        return companyRepo.findAll(pageable)
+            .map(CompanyDetailResponse::fromEntity);
+    }
 
-        return companies.map(CompanyDetailResponse::fromEntity);
+    private static boolean hasSearchQuery(String query) {
+        return query != null && !query.isEmpty();
     }
 
     // 업체 단일 조회 (마스터 관리자)
-    public CompanyDetailResponse getCompanyByIdForAdmin(Long id, Long currentUser, Role role) {
+    public CompanyDetailResponse getCompanyByIdForAdmin(Long id, Role role) {
         validateMasterAdminAuthority(role);
 
         Company company = findCompanyById(id);
@@ -101,20 +105,6 @@ public class CompanyService {
         }
     }
 
-    // 허브 관리자 권한 확인 예외처리
-    private void validateHubAdminAuthority(Role role) {
-        if (!isHubAdmin(role)) {
-            throw new CompanyException(CompanyErrorCode.UNAUTHORIZED_ACCESS);
-        }
-    }
-
-    // 허브 업체 권한 확인 예외처리
-    private void validateHubCompanyAuthority(Role role) {
-        if (!isHubCompany(role)) {
-            throw new CompanyException(CompanyErrorCode.UNAUTHORIZED_ACCESS);
-        }
-    }
-
     // 마스터 관리자 & 허브 관리자 확인 예외처리
     private void validateAdminAuthority(Role role) {
         if (!isAdmin(role)) {
@@ -127,24 +117,14 @@ public class CompanyService {
         return role.isMasterAdmin();
     }
 
-    // 허브 관리자 권한 확인
-    private boolean isHubAdmin(Role role) {
-        return role.isHubAdmin();
-    }
-
     // 마스터 관리자 & 허브 관리자 권한 확인
     private boolean isAdmin(Role role) {
         return role.isMasterAdmin() || role.isHubAdmin();
     }
 
-    // 허브 업체 권한 확인
-    private boolean isHubCompany(Role role) {
-        return role.isHubCompany();
-    }
-
     // 업체명 중복 확인
     private void checkCompanyDuplication(String companyName) {
-        if (companyRepo.findByCompanyName(companyName).isPresent()) {
+        if (companyRepo.existsByCompanyName(companyName)) {
             throw new CompanyException(CompanyErrorCode.DUPLICATE_COMPANY_NAME);
         }
     }
@@ -152,6 +132,7 @@ public class CompanyService {
     // 삭제 여부와 상관없이 모든 업체 존재 확인 (관리자용)
     private Company findCompanyById(Long id) {
         return companyRepo.findById(id)
-                .orElseThrow(() -> new CompanyException(CompanyErrorCode.COMPANY_NOT_FOUND));
+            .orElseThrow(() -> new CompanyException(CompanyErrorCode.COMPANY_NOT_FOUND));
     }
+
 }
