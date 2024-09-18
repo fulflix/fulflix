@@ -1,7 +1,6 @@
 package io.fulflix.gateway.authenticate.config;
 
-import static io.fulflix.gateway.authenticate.domain.Role.MASTER_ADMIN;
-import static io.fulflix.gateway.authenticate.domain.Role.getAllRoles;
+import static io.fulflix.gateway.authenticate.domain.Role.*;
 import static org.springframework.http.HttpMethod.*;
 
 import io.fulflix.gateway.authenticate.jwt.JwtProperties;
@@ -44,8 +43,15 @@ public class ReactiveSecurityConfig {
                     .pathMatchers(PUT,"/hub-route/**").hasAnyAuthority(MASTER_ADMIN.name())
                     .pathMatchers(DELETE,"/hub-route/**").hasAnyAuthority(MASTER_ADMIN.name())
 
-                    .pathMatchers("/delivery/**").hasAnyAuthority(getAllRoles())
-                    .pathMatchers("/delivery-route/**").hasAnyAuthority(getAllRoles())
+                    .pathMatchers(GET,"/delivery/**").hasAnyAuthority(getAllRoles())
+                    .pathMatchers(POST,"/delivery/**").hasAnyAuthority(getAllRoles())
+                    .pathMatchers(PUT,"/delivery/**").hasAnyAuthority(MASTER_ADMIN.name(), HUB_ADMIN.name(), HUB_DELIVERY_MANAGER.name())
+                    .pathMatchers(DELETE,"/delivery/**").hasAnyAuthority(getAllRoles())
+
+                    .pathMatchers(GET,"/delivery-route/**").hasAnyAuthority(getAllRoles())
+                    .pathMatchers(POST,"/delivery-route/**").hasAnyAuthority(getAllRoles())
+                    .pathMatchers(PUT,"/delivery-route/**").hasAnyAuthority(MASTER_ADMIN.name(), HUB_ADMIN.name(), HUB_DELIVERY_MANAGER.name())
+                    .pathMatchers(DELETE,"/delivery-route/**").hasAnyAuthority(getAllRoles())
 
                     .anyExchange().authenticated()
             )
