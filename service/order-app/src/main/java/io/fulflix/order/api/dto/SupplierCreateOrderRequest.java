@@ -9,10 +9,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateOrderRequest {
-    @NotNull(message = "Supplier Id를 입력해 주세요.")
-    private Long supplierId;
-
+public class SupplierCreateOrderRequest {
     @NotNull(message = "Receiver Id를 입력해 주세요.")
     private Long receiverId;
 
