@@ -25,11 +25,8 @@ public class HubCompanyCancelOrder implements OrderCancelStrategy {
         Order order = orderRepo.findById(id)
                 .orElseThrow(() -> new OrderException(OrderErrorCode.ORDER_NOT_FOUND));
 
-        if (!order.getReceiverId().equals(currentUser)) {
-            throw new OrderException(OrderErrorCode.UNAUTHORIZED_ACCESS);
-        }
-
-        if (order.getOrderStatus() == OrderStatus.SUCCESS && !order.isDeleted()) {
+        if (order.getCreatedBy().equals(currentUser) &&
+                order.getOrderStatus() == OrderStatus.SUCCESS && !order.isDeleted()) {
             RestoreStockRequest request = new RestoreStockRequest(order.getOrderQuantity());
             productClient.restoreStock(order.getProductId(), request);
         }

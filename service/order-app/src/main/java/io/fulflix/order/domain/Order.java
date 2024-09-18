@@ -33,4 +33,9 @@ public class Order extends Auditable {
     @Enumerated(value = EnumType.STRING)
     @Column(name = "order_status", nullable = false)
     private OrderStatus orderStatus;
+
+    // 주문 수량 업데이트
+    public void updateOrderQuantity(int newQuantity) {
+        this.orderQuantity = newQuantity;
+    }
 }

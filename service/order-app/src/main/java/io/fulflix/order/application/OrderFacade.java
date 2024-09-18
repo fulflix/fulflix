@@ -24,7 +24,8 @@ public class OrderFacade {
     private final ReceiverCompanyCreateOrder receiverCompanyCreateOrder;
     private final List<OrderRetrieveStrategy> orderRetrieveStrategies;
     private final List<OrderRetrieveByIdStrategy> orderRetrieveByIdStrategies;
-    private final List<OrderCancelStrategy> companyCancelStrategies;
+    private final List<OrderCancelStrategy> orderCancelStrategies;
+    private final List<OrderUpdateStrategy> orderUpdateStrategies;
 
     @Transactional
     public CreateOrderResponse createAdminOrder(AdminCreateOrderRequest createOrderRequest, Long currentUser, Role role) {
@@ -82,10 +83,19 @@ public class OrderFacade {
 
     // 주문 취소
     public void cancelOrder(Long id, Long currentUser, Role role) {
-        companyCancelStrategies.stream()
+        orderCancelStrategies.stream()
                 .filter(strategy -> strategy.isMatched(role))
                 .findAny()
                 .orElseThrow(() -> new OrderException(OrderErrorCode.UNAUTHORIZED_ACCESS))
                 .cancelOrder(id, currentUser, role);
+    }
+
+    // 주문 수정
+    public void updateOrder(Long id, UpdateOrderRequest updateOrderRequest, Long currentUser, Role role) {
+        orderUpdateStrategies.stream()
+                .filter(strategy -> strategy.isMatched(role))
+                .findAny()
+                .orElseThrow(() -> new OrderException(OrderErrorCode.UNAUTHORIZED_ACCESS))
+                .updateOrder(id, updateOrderRequest, currentUser, role);
     }
 }
