@@ -2,7 +2,7 @@ package io.fulflix.common.app.context.config;
 
 import io.fulflix.common.app.context.annotation.resolver.CurrentUserArgumentResolver;
 import io.fulflix.common.app.context.annotation.resolver.CurrentUserRoleArgumentResolver;
-import io.fulflix.common.app.jpa.pageable.FixedPageSizeHandlerMethodArgumentResolver;
+import io.fulflix.common.app.jpa.pageable.FixedPageableHandlerMethodArgumentResolver;
 import java.util.List;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.web.SortHandlerMethodArgumentResolver;
@@ -17,7 +17,7 @@ public class WebConfig implements WebMvcConfigurer {
         resolvers.add(new CurrentUserArgumentResolver());
         resolvers.add(new CurrentUserRoleArgumentResolver());
         SortHandlerMethodArgumentResolver sortResolver = new SortHandlerMethodArgumentResolver();
-        resolvers.add(new FixedPageSizeHandlerMethodArgumentResolver(sortResolver));
+        resolvers.add(new FixedPageableHandlerMethodArgumentResolver(sortResolver));
     }
 
 }
