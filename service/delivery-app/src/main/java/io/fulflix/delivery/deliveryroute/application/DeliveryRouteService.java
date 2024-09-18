@@ -1,6 +1,5 @@
 package io.fulflix.delivery.deliveryroute.application;
 
-import io.fulflix.delivery.delivery.api.dto.DeliveryResponseDto;
 import io.fulflix.delivery.delivery.domain.Delivery;
 import io.fulflix.delivery.delivery.domain.DeliveryRepository;
 import io.fulflix.delivery.delivery.exception.DeliveryErrorCode;
@@ -11,7 +10,6 @@ import io.fulflix.delivery.deliveryroute.domain.DeliveryRoute;
 import io.fulflix.delivery.deliveryroute.domain.DeliveryRouteRepo;
 import io.fulflix.delivery.deliveryroute.exception.DeliveryRouteErrorCode;
 import io.fulflix.delivery.deliveryroute.exception.DeliveryRouteException;
-import io.fulflix.infra.client.HubClient;
 import io.fulflix.infra.client.HubRouteClient;
 import io.fulflix.infra.client.dto.ShortestPathRequest;
 import io.fulflix.infra.client.dto.ShortestPathResponse;

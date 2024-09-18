@@ -1,8 +1,6 @@
 package io.fulflix.delivery.deliveryroute.exception;
 
 import io.fulflix.common.web.exception.BusinessException;
-import io.fulflix.delivery.delivery.exception.DeliveryErrorCode;
-import io.fulflix.delivery.deliveryroute.domain.DeliveryRoute;
 import lombok.Getter;
 
 @Getter
