@@ -28,20 +28,18 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Service
 public class CompanyService {
+
     private final CompanyRepo companyRepo;
     private final HubClient hubClient;
     private final UserClient userClient;
 
     // 업체 등록 (마스터 관리자, 허브 관리자)
     @Transactional
-    public void registerCompany(RegisterCompanyRequest registerCompanyRequest, Long currentUser, Role role) {
+    public void registerCompany(RegisterCompanyRequest registerCompanyRequest, Role role) {
         validateCompanyRegisterProcess(registerCompanyRequest, role);
 
-
         Company company = RegisterCompanyRequest.toEntity(registerCompanyRequest);
-
         company.assignOwnerId(registerCompanyRequest.getOwnerId());
-
         companyRepo.save(company);
     }
 
@@ -54,7 +52,7 @@ public class CompanyService {
     }
 
     // 업체 전체 조회 및 검색 (마스터 관리자)
-    public Page<CompanyDetailResponse> getAllCompaniesForAdmin(String query, Pageable pageable, Long currentUser, Role role) {
+    public Page<CompanyDetailResponse> getAllCompaniesForAdmin(String query, Pageable pageable, Role role) {
         validateMasterAdminAuthority(role);
 
         if (pageable.getPageSize() != 10 && pageable.getPageSize() != 30 && pageable.getPageSize() != 50) {
@@ -74,7 +72,7 @@ public class CompanyService {
     }
 
     // 업체 단일 조회 (마스터 관리자)
-    public CompanyDetailResponse getCompanyByIdForAdmin(Long id, Long currentUser, Role role) {
+    public CompanyDetailResponse getCompanyByIdForAdmin(Long id, Role role) {
         validateMasterAdminAuthority(role);
 
         Company company = findCompanyById(id);
@@ -106,20 +104,6 @@ public class CompanyService {
         }
     }
 
-    // 허브 관리자 권한 확인 예외처리
-    private void validateHubAdminAuthority(Role role) {
-        if (!isHubAdmin(role)) {
-            throw new CompanyException(CompanyErrorCode.UNAUTHORIZED_ACCESS);
-        }
-    }
-
-    // 허브 업체 권한 확인 예외처리
-    private void validateHubCompanyAuthority(Role role) {
-        if (!isHubCompany(role)) {
-            throw new CompanyException(CompanyErrorCode.UNAUTHORIZED_ACCESS);
-        }
-    }
-
     // 마스터 관리자 & 허브 관리자 확인 예외처리
     private void validateAdminAuthority(Role role) {
         if (!isAdmin(role)) {
@@ -132,19 +116,9 @@ public class CompanyService {
         return role.isMasterAdmin();
     }
 
-    // 허브 관리자 권한 확인
-    private boolean isHubAdmin(Role role) {
-        return role.isHubAdmin();
-    }
-
     // 마스터 관리자 & 허브 관리자 권한 확인
     private boolean isAdmin(Role role) {
         return role.isMasterAdmin() || role.isHubAdmin();
-    }
-
-    // 허브 업체 권한 확인
-    private boolean isHubCompany(Role role) {
-        return role.isHubCompany();
     }
 
     // 업체명 중복 확인
@@ -157,6 +131,7 @@ public class CompanyService {
     // 삭제 여부와 상관없이 모든 업체 존재 확인 (관리자용)
     private Company findCompanyById(Long id) {
         return companyRepo.findById(id)
-                .orElseThrow(() -> new CompanyException(CompanyErrorCode.COMPANY_NOT_FOUND));
+            .orElseThrow(() -> new CompanyException(CompanyErrorCode.COMPANY_NOT_FOUND));
     }
+
 }
