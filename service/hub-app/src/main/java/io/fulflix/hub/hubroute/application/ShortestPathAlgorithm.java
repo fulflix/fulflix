@@ -55,26 +55,6 @@ public class ShortestPathAlgorithm {
         }
     }
 
-//    public void findShortestPath(Hub startHub, Hub endHub) {
-//        DijkstraShortestPath<Hub, DefaultWeightedEdge> dijkstraAlg = new DijkstraShortestPath<>(graph);
-//
-//        // 최단 경로 찾기
-//        var path = dijkstraAlg.getPath(startHub, endHub);
-//
-//        if (path != null) {
-//            System.out.println("Shortest path:");
-//            for (DefaultWeightedEdge edge : path.getEdgeList()) {
-//                Hub source = graph.getEdgeSource(edge);
-//                Hub target = graph.getEdgeTarget(edge);
-//                System.out.println(source + " -> " + target);
-//            }
-//            System.out.println("Total distance: " + path.getWeight());
-//        } else {
-//            System.out.println("No path found between " + startHub.getName() + " and " + endHub.getName());
-//        }
-//    }
-//
-
     // 최단 경로 생성
     public List<ShortestPathResponse> findShortestPath(Long start, Long end) {
         DijkstraShortestPath<Hub, DefaultWeightedEdge> dijkstraAlg = new DijkstraShortestPath<>(graph);
@@ -98,7 +78,7 @@ public class ShortestPathAlgorithm {
 
             return path.getEdgeList().stream()
                     .map(edge -> {
-                        // 엣지에 매핑된 HubRoute로 DeliveryRouteRequest 생성
+                        // 엣지에 매핑된 HubRoute로 ShortestPathResponse 생성
                         HubRoute hubRoute = edgeToHubRouteMap.get(edge);
 
                         return new ShortestPathResponse(

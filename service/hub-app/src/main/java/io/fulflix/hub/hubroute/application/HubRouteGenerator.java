@@ -8,6 +8,7 @@ import io.fulflix.hub.infra.naver.application.NaverDirectionsService;
 import io.fulflix.hub.infra.naver.dto.RouteInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +23,7 @@ public class HubRouteGenerator {
     // 거리 150km 제한
     private static final double MAX_DISTANCE = 150000.0;
 
+    @Transactional
     public void generateHubRoutes() {
         List<Hub> hubs = hubRepository.findAll();
         List<HubRoute> hubRoutes = new ArrayList<>();
