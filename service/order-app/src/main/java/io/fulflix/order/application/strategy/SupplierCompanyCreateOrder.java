@@ -1,6 +1,6 @@
 package io.fulflix.order.application.strategy;
 
-import io.fulflix.common.web.principal.Role;
+import io.fulflix.core.web.principal.Role;
 import io.fulflix.infra.client.product.ProductResponse;
 import io.fulflix.order.api.dto.AdminCreateOrderRequest;
 import io.fulflix.order.api.dto.CreateOrderResponse;

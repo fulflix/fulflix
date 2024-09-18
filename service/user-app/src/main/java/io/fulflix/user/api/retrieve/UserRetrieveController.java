@@ -3,9 +3,9 @@ package io.fulflix.user.api.retrieve;
 import static io.fulflix.user.api.retrieve.UserMyPageController.USER_BASE_PATH;
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
-import io.fulflix.common.app.context.annotation.CurrentUser;
-import io.fulflix.common.app.context.annotation.CurrentUserRole;
-import io.fulflix.common.web.principal.Role;
+import io.fulflix.core.app.context.annotation.CurrentUser;
+import io.fulflix.core.app.context.annotation.CurrentUserRole;
+import io.fulflix.core.web.principal.Role;
 import io.fulflix.user.api.retrieve.dto.UserResponse;
 import io.fulflix.user.application.UserRetrieveService;
 import lombok.RequiredArgsConstructor;

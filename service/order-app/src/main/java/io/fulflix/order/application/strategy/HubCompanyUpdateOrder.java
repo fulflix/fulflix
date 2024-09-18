@@ -1,6 +1,6 @@
 package io.fulflix.order.application.strategy;
 
-import io.fulflix.common.web.principal.Role;
+import io.fulflix.core.web.principal.Role;
 import io.fulflix.infra.client.product.ProductClient;
 import io.fulflix.order.api.dto.ReduceStockRequest;
 import io.fulflix.order.api.dto.RestoreStockRequest;

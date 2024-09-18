@@ -1,6 +1,6 @@
 package io.fulflix.product.repo;
 
-import io.fulflix.common.app.base.persistence.JpaTestBase;
+import io.fulflix.core.app.base.persistence.JpaTestBase;
 import io.fulflix.product.api.dto.ProductResponse;
 import io.fulflix.product.config.TestQueryDslConfig;
 import java.util.Optional;

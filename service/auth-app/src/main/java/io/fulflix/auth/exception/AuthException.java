@@ -1,6 +1,6 @@
 package io.fulflix.auth.exception;
 
-import io.fulflix.common.web.exception.BusinessException;
+import io.fulflix.core.web.exception.BusinessException;
 import lombok.Getter;
 
 @Getter

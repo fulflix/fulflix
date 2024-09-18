@@ -1,5 +1,6 @@
 package io.fulflix.infra.client.company;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -7,6 +8,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @RequiredArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class CompanyDetailResponse {
     private Long id;
     private Long hubId;

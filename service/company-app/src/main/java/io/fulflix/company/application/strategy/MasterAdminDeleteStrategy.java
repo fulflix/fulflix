@@ -1,6 +1,6 @@
 package io.fulflix.company.application.strategy;
 
-import io.fulflix.common.web.principal.Role;
+import io.fulflix.core.web.principal.Role;
 import io.fulflix.company.application.CompanyDeleteStrategy;
 import io.fulflix.company.domain.Company;
 import io.fulflix.company.exception.CompanyErrorCode;

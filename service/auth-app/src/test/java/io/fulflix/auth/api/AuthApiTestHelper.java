@@ -2,7 +2,7 @@ package io.fulflix.auth.api;
 
 import io.fulflix.auth.application.AuthenticationService;
 import io.fulflix.auth.application.AuthorizationService;
-import io.fulflix.common.web.base.presentation.WebMvcTestBase;
+import io.fulflix.core.web.base.presentation.WebMvcTestBase;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 

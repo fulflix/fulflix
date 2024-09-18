@@ -1,8 +1,8 @@
 package io.fulflix.fixture;
 
-import static io.fulflix.common.app.base.persistence.TestBaseFixtures.PAGE_REQUEST;
+import static io.fulflix.core.app.base.persistence.TestBaseFixtures.PAGE_REQUEST;
 
-import io.fulflix.common.web.principal.Role;
+import io.fulflix.core.web.principal.Role;
 import io.fulflix.user.api.authenticate.dto.CreatePrincipalRequest;
 import io.fulflix.user.api.authenticate.dto.UserCredentialResponse;
 import io.fulflix.user.api.retrieve.dto.UserResponse;

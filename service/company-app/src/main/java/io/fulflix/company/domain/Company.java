@@ -1,6 +1,6 @@
 package io.fulflix.company.domain;
 
-import io.fulflix.common.app.jpa.audit.Auditable;
+import io.fulflix.core.app.jpa.audit.Auditable;
 import io.fulflix.company.api.dto.UpdateCompanyRequest;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

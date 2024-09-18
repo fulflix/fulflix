@@ -1,11 +1,11 @@
 package io.fulflix.user.repo.model;
 
-import static io.fulflix.common.app.jpa.audit.CommonAuditFields.DEFAULT_CONDITION;
+import static io.fulflix.core.app.jpa.audit.CommonAuditFields.DEFAULT_CONDITION;
 import static jakarta.persistence.EnumType.STRING;
 import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
 
-import io.fulflix.common.web.principal.Role;
+import io.fulflix.core.web.principal.Role;
 import io.fulflix.user.config.UserAuditable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

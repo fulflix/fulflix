@@ -1,6 +1,6 @@
 package io.fulflix.user.api;
 
-import io.fulflix.common.web.base.presentation.WebMvcTestBase;
+import io.fulflix.core.web.base.presentation.WebMvcTestBase;
 import io.fulflix.user.api.authenticate.UserAuthenticateController;
 import io.fulflix.user.api.retrieve.UserMyPageController;
 import io.fulflix.user.api.retrieve.UserRetrieveController;

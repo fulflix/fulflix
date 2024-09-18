@@ -1,7 +1,7 @@
 package io.fulflix.company.application;
 
 import feign.FeignException;
-import io.fulflix.common.web.principal.Role;
+import io.fulflix.core.web.principal.Role;
 import io.fulflix.company.api.dto.CompanyDetailResponse;
 import io.fulflix.company.api.dto.RegisterCompanyRequest;
 import io.fulflix.company.domain.Company;

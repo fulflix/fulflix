@@ -1,6 +1,6 @@
 package io.fulflix.user.api.authenticate;
 
-import static io.fulflix.common.web.utils.ResponseEntityUtils.created;
+import static io.fulflix.core.web.utils.ResponseEntityUtils.created;
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
 import io.fulflix.user.api.authenticate.dto.CreatePrincipalRequest;

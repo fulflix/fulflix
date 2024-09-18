@@ -1,6 +1,6 @@
 package io.fulflix.hub.hub.exception;
 
-import io.fulflix.common.web.exception.BusinessException;
+import io.fulflix.core.web.exception.BusinessException;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 

@@ -1,6 +1,6 @@
 package io.fulflix.product.application;
 
-import io.fulflix.common.web.principal.Role;
+import io.fulflix.core.web.principal.Role;
 import io.fulflix.product.api.dto.ProductDetailResponse;
 import io.fulflix.product.api.dto.ProductResponse;
 import io.fulflix.product.api.dto.ReduceStockRequest;
