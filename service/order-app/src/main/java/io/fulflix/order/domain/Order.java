@@ -25,7 +25,7 @@ public class Order extends Auditable {
     private Long receiverId;
 
     @Column(name = "product_id", nullable = false)
-    private String productId;
+    private Long productId;
 
     @Column(name = "order_quantity", nullable = false)
     private Integer orderQuantity;
