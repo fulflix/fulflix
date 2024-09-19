@@ -4,9 +4,33 @@ Content-Type: application/json
 Authorization: Bearer {{access_token}}
 
 {
-  "companyId": 2,
-  "productName": "합성 섬유",
-  "stockQuantity": 10
+  "companyId": 1,
+  "productName": "플라스틱 바구니 외각",
+  "stockQuantity": 100
+}
+
+###
+
+POST {{gateway}}/product
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+  "companyId": 1,
+  "productName": "플라스틱 손잡이",
+  "stockQuantity": 100
+}
+
+###
+
+POST {{gateway}}/product
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+  "companyId": 1,
+  "productName": "플라스틱 바퀴",
+  "stockQuantity": 100
 }
 
 ###
