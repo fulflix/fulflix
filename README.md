@@ -18,12 +18,11 @@ Project fulflix
 
 ## 시스템 아키텍쳐
 
-![369191067-a7946f56-c878-4808-884a-9d986b4bba90.png](..%2F..%2F..%2FAppData%2FLocal%2FTemp%2F369191067-a7946f56-c878-4808-884a-9d986b4bba90.png)
+![img.png](docs/image/img7.png)
 
 ## 논리적 스키마 분리
 
-![369191095-546d3e71-27ef-4dbb-b450-c88dacf1f7c5.png](..%2F..%2F..%2FAppData%2FLocal%2FTemp%2F369191095-546d3e71-27ef-4dbb-b450-c88dacf1f7c5.png)
-
+![img.png](docs/image/img8.png)
 ---
 
 # 사용 기술
