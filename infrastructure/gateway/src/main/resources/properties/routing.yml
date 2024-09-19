@@ -20,7 +20,7 @@ spring:
         - id: hub-app-authenticated
           uri: lb://hub-app
           predicates:
-            - Path=/hub/**, /hubs/**, /hub-route/**, /hub-routes/**
+            - Path=/hub/**, /hub-route/**, /shortest-path/**
 
         - id: delivery-app-authenticated
           uri: lb://delivery-app
