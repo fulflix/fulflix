@@ -1,0 +1,108 @@
+# @name HUB_COMPANY(생산 업체) 로그인 API
+POST {{gateway}}/auth/sign-in
+Content-Type: application/json
+
+{
+  "username": "soo",
+  "password": "password"
+}
+> {%
+    client.global.set("access_token", response.headers.valueOf("Authorization"))
+%}
+
+###
+
+# @name 상품 등록 API (마스터 관리자, 허브 업체)
+POST {{gateway}}/product
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+  "companyId": 1,
+  "productName": "플라스틱 바구니 외각",
+  "stockQuantity": 100
+}
+
+###
+
+POST {{gateway}}/product
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+  "companyId": 1,
+  "productName": "플라스틱 손잡이",
+  "stockQuantity": 100
+}
+
+###
+
+POST {{gateway}}/product
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+  "companyId": 1,
+  "productName": "플라스틱 바퀴",
+  "stockQuantity": 100
+}
+
+###
+
+# @name MASTER_AMDIN 로그인 API
+POST {{gateway}}/auth/sign-in
+Content-Type: application/json
+
+{
+  "username": "hong-gd",
+  "password": "password"
+}
+> {%
+    client.global.set("access_token", response.headers.valueOf("Authorization"))
+%}
+
+###
+
+# @name 상품 삭제 API (마스터 관리자)
+DELETE {{gateway}}/product/3
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+###
+
+# @name 업체 전체 조회 및 검색 API (마스터 관리자)
+GET {{gateway}}/product/admin?product=&stockQuantity=10&page=&size=30&sort=
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+###
+
+# @name HUB_COMPANY(생산 업체) 로그인 API
+POST {{gateway}}/auth/sign-in
+Content-Type: application/json
+
+{
+  "username": "soo",
+  "password": "password"
+}
+> {%
+    client.global.set("access_token", response.headers.valueOf("Authorization"))
+%}
+
+###
+
+# @name 업체 전체 조회 및 검색 API (허브 관리자, 허브 업체, 허브 배송 담당자, 업체 배송 담당자)
+GET {{gateway}}/product/hub?product=&stockQuantity=10&page=&size=30&sort=
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+###
+
+# @name 업체 수정 API
+PUT {{gateway}}/product/2
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+  "stockQuantity": 1000
+}
