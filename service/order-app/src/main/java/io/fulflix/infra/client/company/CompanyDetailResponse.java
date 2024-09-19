@@ -1,9 +1,9 @@
 package io.fulflix.infra.client.company;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-
-import java.time.LocalDateTime;
 
 @Getter
 @RequiredArgsConstructor
@@ -15,7 +15,8 @@ public class CompanyDetailResponse {
     private String companyName;
     private String companyType;
     private String companyAddress;
-    private Boolean isDeleted;
+    @JsonProperty("isDeleted")
+    private boolean isDeleted;
     private Long updatedBy;
     private LocalDateTime updatedAt;
 
