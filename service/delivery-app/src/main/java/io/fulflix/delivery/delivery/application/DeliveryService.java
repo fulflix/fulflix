@@ -8,12 +8,16 @@ import io.fulflix.delivery.delivery.domain.DeliveryRepository;
 import io.fulflix.delivery.delivery.domain.DeliveryStatus;
 import io.fulflix.delivery.delivery.exception.DeliveryErrorCode;
 import io.fulflix.delivery.delivery.exception.DeliveryException;
+import io.fulflix.delivery.deliveryroute.api.dto.DeliveryRouteResponse;
+import io.fulflix.delivery.deliveryroute.application.DeliveryRouteService;
 import io.fulflix.infra.client.HubClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -22,8 +26,10 @@ public class DeliveryService {
 
     private final DeliveryRepository deliveryRepository;
     private final HubClient hubClient;
+    private final DeliveryRouteService deliveryRouteService;
 
 
+    // TODO 배송 생성 시 배송 경로도 같이 생성
     // 배송 생성
     @Transactional
     public DeliveryResponseDto createDelivery(DeliveryCreateDto dto) {
@@ -43,7 +49,8 @@ public class DeliveryService {
                 dto.recipient(),
                 dto.recipientSlackId()
         );
-        deliveryRepository.save(delivery);
+        Delivery savedDelivery = deliveryRepository.save(delivery);
+        deliveryRouteService.createDeliveryRoute(savedDelivery.getId());
         return DeliveryResponseDto.of(delivery);
     }
 

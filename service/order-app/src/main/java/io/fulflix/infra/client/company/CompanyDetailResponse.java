@@ -14,7 +14,7 @@ public class CompanyDetailResponse {
     private String companyName;
     private String companyType;
     private String companyAddress;
-    private boolean isDeleted;
+    private boolean deleted;
     private Long updatedBy;
     private LocalDateTime updatedAt;
 }

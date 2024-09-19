@@ -6,7 +6,9 @@ import lombok.*;
 
 @Getter
 @Builder
-@JsonDeserialize(builder = DeliveryRequest.DeliveryRequestBuilder.class)
+@NoArgsConstructor
+@AllArgsConstructor
+//@JsonDeserialize(builder = DeliveryRequest.DeliveryRequestBuilder.class)
 public class DeliveryRequest {
     private Long orderId;
     private Long departureHubId;
@@ -15,9 +17,9 @@ public class DeliveryRequest {
     private String recipient;
     private String recipientSlackId;
 
-    @JsonPOJOBuilder(withPrefix = "")
-    public static class DeliveryRequestBuilder {
-    }
+//    @JsonPOJOBuilder(withPrefix = "")
+//    public static class DeliveryRequestBuilder {
+//    }
 
     @Override
     public String toString() {

@@ -262,7 +262,7 @@ Authorization: Bearer {{access_token}}
 
 {
   "hubId" : 2,
-  "ownerId" : 4,
+  "ownerId" : 1,
   "companyName" : "플라스틱 가공품 생산 업체",
   "companyType" : "SUPPLIER",
   "companyAddress" : "경기도 고양시"
@@ -277,7 +277,7 @@ Authorization: Bearer {{access_token}}
 
 {
   "hubId" : 4,
-  "ownerId" : 5,
+  "ownerId" : 1,
   "companyName" : "바구니 제작 업체",
   "companyType" : "RECEIVER",
   "companyAddress" : "부산 수영구"
