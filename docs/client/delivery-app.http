@@ -42,7 +42,7 @@ Authorization: Bearer {{access_token}}
 
 ###
 ## 배송 단건 조회 API
-GET {{gateway}}/delivery/1
+GET {{gateway}}/delivery/9
 Authorization: Bearer {{access_token}}
 
 ###

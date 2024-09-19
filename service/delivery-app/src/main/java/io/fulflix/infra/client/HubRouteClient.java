@@ -22,7 +22,7 @@ public interface HubRouteClient {
     String GET_HUB_DETAIL_URI = "/hub-route/{hubrouteId}";
 
     // 최단 경로 생성
-    @PostMapping("/hub-route/shortest-path")
+    @PostMapping("/shortest-path")
     List<ShortestPathResponse> findShortestPath(@RequestBody ShortestPathRequest request);
 
 }

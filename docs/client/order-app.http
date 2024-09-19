@@ -6,8 +6,8 @@ Authorization: Bearer {{access_token}}
 {
   "supplierId": 1,
   "receiverId": 2,
-  "productId": 2,
-  "orderQuantity": 1,
+  "productId": 1,
+  "orderQuantity": 10,
   "deliveryRequest": {
     "departureHubId": 2,
     "arrivalHubId": 4,
@@ -24,7 +24,7 @@ Content-Type: application/json
 Authorization: Bearer {{access_token}}
 
 {
-  "receiverId": 4,
+  "receiverId": 3,
   "productId": 1,
   "orderQuantity": 30
 }
@@ -39,7 +39,7 @@ Authorization: Bearer {{access_token}}
 {
   "supplierId": 1,
   "productId": 1,
-  "orderQuantity": 30
+  "orderQuantity": 100
 }
 
 ###

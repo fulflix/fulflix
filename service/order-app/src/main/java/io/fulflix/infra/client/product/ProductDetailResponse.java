@@ -13,7 +13,7 @@ public class ProductDetailResponse {
     private Long companyId;
     private String productName;
     private Integer stockQuantity;
-    private boolean isDeleted;
+    private boolean deleted;
     private Long updatedBy;
     private LocalDateTime updatedAt;
 }

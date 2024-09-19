@@ -52,6 +52,7 @@ public class DeliveryController {
             ) Pageable pageable, @RequestParam String keyword
     ) {
         Page<DeliveryResponseDto> page = deliveryService.searchDelivery(keyword,pageable);
+
         return ResponseEntity.ok(page);
     }
 
