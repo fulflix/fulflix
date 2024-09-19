@@ -21,6 +21,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class OrderValidator {
+
     private final ProductClient productClient;
     private final CompanyClient companyClient;
 
@@ -28,7 +29,7 @@ public class OrderValidator {
         log.info("상품 존재 확인 - productId: {}", productId);
         try {
             ProductDetailResponse productResponse = productClient.getProductForAdminById(productId);
-            if (productResponse == null || productResponse.isDeleted()) {
+            if (productResponse == null || productResponse.getIsDeleted()) {
                 throw new ProductException(ProductErrorCode.PRODUCT_NOT_FOUND);
             }
             return productResponse;
@@ -107,4 +108,5 @@ public class OrderValidator {
             throw new ProductException(ProductErrorCode.STOCK_UPDATE_FAILED);
         }
     }
+
 }
