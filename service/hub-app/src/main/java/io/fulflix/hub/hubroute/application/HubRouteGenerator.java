@@ -23,6 +23,7 @@ public class HubRouteGenerator {
     // 거리 150km 제한
     private static final double MAX_DISTANCE = 150000.0;
 
+    // TODO 허브 경로 생성시 Naver API를 너무 많이 찌르는 문제
     @Transactional
     public void generateHubRoutes() {
         List<Hub> hubs = hubRepository.findAll();
