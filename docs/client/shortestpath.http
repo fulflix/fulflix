@@ -5,7 +5,7 @@ Authorization: Bearer {{access_token}}
 ###
 
 ## 최단 경로 생성 API
-POST {{gateway}}/hub-route/shortest-path
+POST {{gateway}}/shortest-path
 Content-Type: application/json
 Authorization: Bearer {{access_token}}
 

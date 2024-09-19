@@ -43,6 +43,8 @@ public class ReactiveSecurityConfig {
                     .pathMatchers(PUT,"/hub-route/**").hasAnyAuthority(MASTER_ADMIN.name())
                     .pathMatchers(DELETE,"/hub-route/**").hasAnyAuthority(MASTER_ADMIN.name())
 
+                    .pathMatchers("/shortest-path/**").hasAnyAuthority(getAllRoles())
+
                     .pathMatchers(GET,"/delivery/**").hasAnyAuthority(getAllRoles())
                     .pathMatchers(POST,"/delivery/**").hasAnyAuthority(getAllRoles())
                     .pathMatchers(PUT,"/delivery/**").hasAnyAuthority(MASTER_ADMIN.name(), HUB_ADMIN.name(), HUB_DELIVERY_MANAGER.name())
