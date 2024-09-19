@@ -8,13 +8,15 @@ import java.time.LocalDateTime;
 @Getter
 @RequiredArgsConstructor
 public class CompanyDetailResponse {
+
     private Long id;
     private Long hubId;
     private Long ownerId;
     private String companyName;
     private String companyType;
     private String companyAddress;
-    private boolean deleted;
+    private Boolean isDeleted;
     private Long updatedBy;
     private LocalDateTime updatedAt;
+
 }

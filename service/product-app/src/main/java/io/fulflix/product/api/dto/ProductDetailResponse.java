@@ -13,7 +13,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 public class ProductDetailResponse extends ProductResponse {
 
-    private boolean isDeleted;
+    private Boolean isDeleted;
     private LocalDateTime updatedAt;
     private Long updatedBy;
 
