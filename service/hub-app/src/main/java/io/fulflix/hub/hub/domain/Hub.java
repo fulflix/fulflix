@@ -71,4 +71,12 @@ public class Hub extends Auditable {
         return Objects.hash(id);
     }
 
+    @Override
+    public String toString() {
+        return "Hub{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
+
 }
