@@ -1,5 +1,6 @@
 package io.fulflix.infra.client.delivery;
 
 public interface DeliveryService {
-    void createDelivery(DeliveryRequest deliveryRequest);
+    DeliveryResponse createDelivery(DeliveryRequest deliveryRequest);
+    void createDeliveryRoute(Long deliveryId);
 }

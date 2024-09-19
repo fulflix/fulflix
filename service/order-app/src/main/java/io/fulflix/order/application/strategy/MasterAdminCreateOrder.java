@@ -3,6 +3,7 @@ package io.fulflix.order.application.strategy;
 import io.fulflix.core.web.principal.Role;
 import io.fulflix.infra.client.delivery.DeliveryClient;
 import io.fulflix.infra.client.delivery.DeliveryRequest;
+import io.fulflix.infra.client.delivery.DeliveryResponse;
 import io.fulflix.infra.client.exception.HubErrorCode;
 import io.fulflix.infra.client.exception.HubException;
 import io.fulflix.infra.client.hub.HubClient;
@@ -77,7 +78,11 @@ public class MasterAdminCreateOrder implements OrderCreateStrategy {
                     .build();
 
             log.info("배송 요청 데이터: {}", deliveryRequest);
-            deliveryClient.createDelivery(deliveryRequest);  // 배송 생성 API 호출
+            DeliveryResponse deliveryResponse = deliveryClient.createDelivery(deliveryRequest);  // 배송 생성 API 호출
+            Long deliveryId = deliveryResponse.getId(); // 배송 Id
+
+            deliveryClient.createDeliveryRoute(deliveryId);  // 배송 경로 생성 API 호출
+            log.info("배송 경로 생성 요청 완료 - 배송 ID: {}", deliveryId);
         }
 
         // 주문 상태 반환 (재고O - SUCCESS / 재고X - FAIL)
