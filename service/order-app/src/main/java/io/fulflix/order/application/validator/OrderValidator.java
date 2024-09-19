@@ -25,6 +25,7 @@ public class OrderValidator {
     private final CompanyClient companyClient;
 
     public ProductDetailResponse checkProductExistForAdmin(Long productId) {
+        log.info("상품 존재 확인 - productId: {}", productId);
         try {
             ProductDetailResponse productResponse = productClient.getProductForAdminById(productId);
             if (productResponse == null || productResponse.isDeleted()) {
@@ -32,6 +33,7 @@ public class OrderValidator {
             }
             return productResponse;
         } catch (FeignException e) {
+            log.error("FeignClient 호출 실패 - productId: {}", productId, e);
             throw new ProductException(ProductErrorCode.PRODUCT_NOT_FOUND);
         }
     }
@@ -49,6 +51,7 @@ public class OrderValidator {
     }
 
     public void checkCompanyExistForAdmin(Long companyId, String companyType) {
+        log.info("업체 존재 확인 - productId: {} {}", companyId, companyType);
         try {
             CompanyDetailResponse companyResponse = companyClient.getCompanyForAdminById(companyId);
             if (companyResponse == null) {
@@ -58,6 +61,7 @@ public class OrderValidator {
                 throw new CompanyException(CompanyErrorCode.COMPANY_NOT_FOUND);
             }
         } catch (FeignException e) {
+            log.error("FeignClient 호출 실패 - companyId: {}", companyId, e);
             throw new CompanyException(CompanyErrorCode.COMPANY_NOT_FOUND);
         }
     }
@@ -77,6 +81,7 @@ public class OrderValidator {
     }
 
     public OrderStatus validateStockAvailabilityForAdmin(ProductDetailResponse productResponse, int orderQuantity) {
+        log.info("상품 재고: {}, 주문 수량: {}", productResponse.getStockQuantity(), orderQuantity);
         if (productResponse.getStockQuantity() >= orderQuantity) {
             return OrderStatus.SUCCESS;
         } else {
@@ -93,10 +98,12 @@ public class OrderValidator {
     }
 
     public void reduceStock(Long productId, int orderQuantity) {
+        log.info("재고 감소 요청 - 상품 ID: {}, 감소량: {}", productId, orderQuantity);
         try {
             ReduceStockRequest reduceStockRequest = new ReduceStockRequest(orderQuantity);
             productClient.reduceStock(productId, reduceStockRequest);
         } catch (FeignException e) {
+            log.error("재고 감소 실패 - 상품 ID: {}", productId, e);
             throw new ProductException(ProductErrorCode.STOCK_UPDATE_FAILED);
         }
     }

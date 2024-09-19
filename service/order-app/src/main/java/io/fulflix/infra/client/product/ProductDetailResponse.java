@@ -11,7 +11,7 @@ public class ProductDetailResponse {
     private Long id;
     private Long hubId;
     private Long companyId;
-    private String ProductName;
+    private String productName;
     private Integer stockQuantity;
     private boolean isDeleted;
     private Long updatedBy;

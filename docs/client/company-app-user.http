@@ -1,4 +1,4 @@
-## MASTER_AMDIN 회원가입 API
+# @name MASTER_AMDIN 회원가입 API
 POST {{gateway}}/auth/sign-up
 Content-Type: application/json
 
@@ -11,7 +11,7 @@ Content-Type: application/json
 
 ###
 
-## MASTER_AMDIN 로그인 API
+# @name MASTER_AMDIN 로그인 API
 POST {{gateway}}/auth/sign-in
 Content-Type: application/json
 
@@ -25,7 +25,7 @@ Content-Type: application/json
 
 ###
 
-## HUB_AMDIN(경기 북부 센터) 회원가입 API
+# @name HUB_AMDIN(경기 북부 센터) 회원가입 API
 POST {{gateway}}/auth/sign-up
 Content-Type: application/json
 
@@ -38,7 +38,7 @@ Content-Type: application/json
 
 ###
 
-## HUB_AMDIN(경기 북부 센터) 로그인 API
+# @name HUB_AMDIN(경기 북부 센터) 로그인 API
 POST {{gateway}}/auth/sign-in
 Content-Type: application/json
 
@@ -52,7 +52,7 @@ Content-Type: application/json
 
 ###
 
-## HUB_AMDIN(부산광역시 센터) 회원가입 API
+# @name HUB_AMDIN(부산광역시 센터) 회원가입 API
 POST {{gateway}}/auth/sign-up
 Content-Type: application/json
 
@@ -65,7 +65,7 @@ Content-Type: application/json
 
 ###
 
-## HUB_AMDIN(부산광역시 센터) 로그인 API
+# @name HUB_AMDIN(부산광역시 센터) 로그인 API
 POST {{gateway}}/auth/sign-in
 Content-Type: application/json
 
@@ -79,7 +79,7 @@ Content-Type: application/json
 
 ###
 
-## HUB_COMPANY(생산 업체) 회원가입 API
+# @name HUB_COMPANY(생산 업체) 회원가입 API
 POST {{gateway}}/auth/sign-up
 Content-Type: application/json
 
@@ -92,7 +92,7 @@ Content-Type: application/json
 
 ###
 
-## HUB_COMPANY(생산 업체) 로그인 API
+# @name HUB_COMPANY(생산 업체) 로그인 API
 POST {{gateway}}/auth/sign-in
 Content-Type: application/json
 
@@ -106,7 +106,7 @@ Content-Type: application/json
 
 ###
 
-## HUB_COMPANY(수령 업체) 회원가입 API
+# @name HUB_COMPANY(수령 업체) 회원가입 API
 POST {{gateway}}/auth/sign-up
 Content-Type: application/json
 
@@ -119,7 +119,7 @@ Content-Type: application/json
 
 ###
 
-## HUB_COMPANY(수령 업체) 로그인 API
+# @name HUB_COMPANY(수령 업체) 로그인 API
 POST {{gateway}}/auth/sign-in
 Content-Type: application/json
 
