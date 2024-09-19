@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Component
 @RequiredArgsConstructor
 public class HubCompanyCancelOrder implements OrderCancelStrategy {
+
     private final OrderRepo orderRepo;
     private final ProductClient productClient;
 
@@ -23,10 +24,10 @@ public class HubCompanyCancelOrder implements OrderCancelStrategy {
     @Transactional
     public void cancelOrder(Long id, Long currentUser, Role role) {
         Order order = orderRepo.findById(id)
-                .orElseThrow(() -> new OrderException(OrderErrorCode.ORDER_NOT_FOUND));
+            .orElseThrow(() -> new OrderException(OrderErrorCode.ORDER_NOT_FOUND));
 
         if (order.getCreatedBy().equals(currentUser) &&
-                order.getOrderStatus() == OrderStatus.SUCCESS && !order.isDeleted()) {
+            order.getOrderStatus() == OrderStatus.SUCCESS && !order.isDeleted()) {
             RestoreStockRequest request = new RestoreStockRequest(order.getOrderQuantity());
             productClient.restoreStock(order.getProductId(), request);
         }
@@ -38,4 +39,5 @@ public class HubCompanyCancelOrder implements OrderCancelStrategy {
     public boolean isMatched(Role role) {
         return role.isHubCompany();
     }
+
 }

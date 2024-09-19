@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional(readOnly = true)
 public class ProductService {
+
     private final ProductRepo productRepo;
 
     // 상품 삭제 (마스터 관리자)
@@ -28,13 +29,14 @@ public class ProductService {
         validateMasterAdminAuthority(role);
 
         Product product = productRepo.findById(id)
-                .orElseThrow(() -> new ProductException(ProductErrorCode.PRODUCT_NOT_FOUND));
+            .orElseThrow(() -> new ProductException(ProductErrorCode.PRODUCT_NOT_FOUND));
 
         product.delete();
     }
 
     // 상품 전체 조회 및 검색 (마스터 관리자)
-    public Page<ProductDetailResponse> getAllProductsForAdmin(String product, Integer stockQuantity, Pageable pageable, Long currentUser, Role role) {
+    public Page<ProductDetailResponse> getAllProductsForAdmin(String product, Integer stockQuantity, Pageable pageable,
+        Long currentUser, Role role) {
         validateMasterAdminAuthority(role);
 
         if (pageable.getPageSize() != 10 && pageable.getPageSize() != 30 && pageable.getPageSize() != 50) {
@@ -46,7 +48,8 @@ public class ProductService {
 
         // 상품명, 재고
         if (product != null && !product.isEmpty() && stockQuantity != null && stockQuantity > 0) {
-            products = productRepo.findByProductNameContainingAndStockQuantityGreaterThanEqual(product, stockQuantity, pageable);
+            products = productRepo.findByProductNameContainingAndStockQuantityGreaterThanEqual(product, stockQuantity,
+                pageable);
         } else if (product != null && !product.isEmpty()) { // 상품명
             products = productRepo.findByProductNameContaining(product, pageable);
         } else if (stockQuantity != null && stockQuantity > 0) { // 재고
@@ -58,7 +61,8 @@ public class ProductService {
         return products.map(ProductDetailResponse::fromEntity);
     }
 
-    public Page<ProductResponse> getAllProductsForHub(String product, Integer stockQuantity, Pageable pageable, Long currentUser, Role role) {
+    public Page<ProductResponse> getAllProductsForHub(String product, Integer stockQuantity, Pageable pageable,
+        Long currentUser, Role role) {
         validateMasterHubAuthority(role);
 
         if (pageable.getPageSize() != 10 && pageable.getPageSize() != 30 && pageable.getPageSize() != 50) {
@@ -68,7 +72,8 @@ public class ProductService {
         Page<Product> products;
 
         if (product != null && !product.isEmpty() && stockQuantity != null && stockQuantity > 0) {
-            products = productRepo.findByProductNameContainingAndStockQuantityGreaterThanEqualAndIsDeletedFalse(product, stockQuantity, pageable);
+            products = productRepo.findByProductNameContainingAndStockQuantityGreaterThanEqualAndIsDeletedFalse(product,
+                stockQuantity, pageable);
         } else if (product != null && !product.isEmpty()) {
             products = productRepo.findByProductNameContainingAndIsDeletedFalse(product, pageable);
         } else if (stockQuantity != null && stockQuantity > 0) {
@@ -85,7 +90,7 @@ public class ProductService {
         validateMasterAdminAuthority(role);
 
         Product product = productRepo.findById(id)
-                .orElseThrow(() -> new ProductException(ProductErrorCode.PRODUCT_NOT_FOUND));
+            .orElseThrow(() -> new ProductException(ProductErrorCode.PRODUCT_NOT_FOUND));
 
         return ProductDetailResponse.fromEntity(product);
     }
@@ -95,7 +100,7 @@ public class ProductService {
         validateMasterHubAuthority(role);
 
         Product product = productRepo.findByIdAndIsDeletedFalse(id)
-                .orElseThrow(() -> new ProductException(ProductErrorCode.PRODUCT_NOT_FOUND));
+            .orElseThrow(() -> new ProductException(ProductErrorCode.PRODUCT_NOT_FOUND));
 
         return ProductResponse.fromEntity(product);
     }
@@ -104,7 +109,7 @@ public class ProductService {
     @Transactional
     public void reduceStock(Long id, Long currentUser, ReduceStockRequest reduceStockRequest, Role role) {
         Product product = productRepo.findById(id)
-                .orElseThrow(() -> new ProductException(ProductErrorCode.PRODUCT_NOT_FOUND));
+            .orElseThrow(() -> new ProductException(ProductErrorCode.PRODUCT_NOT_FOUND));
 
         product.reduceStock(reduceStockRequest.getOrderQuantity());
     }
@@ -113,7 +118,7 @@ public class ProductService {
     @Transactional
     public void restoreStock(Long id, RestoreStockRequest restoreStockRequest, Long currentUser, Role role) {
         Product product = productRepo.findById(id)
-                .orElseThrow(() -> new ProductException(ProductErrorCode.PRODUCT_NOT_FOUND));
+            .orElseThrow(() -> new ProductException(ProductErrorCode.PRODUCT_NOT_FOUND));
 
         product.restoreStock(restoreStockRequest.getOrderQuantity());
     }
@@ -129,4 +134,5 @@ public class ProductService {
             throw new ProductException(ProductErrorCode.UNAUTHORIZED_ACCESS);
         }
     }
+
 }

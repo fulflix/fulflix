@@ -1,14 +1,14 @@
 package io.fulflix.hub.hubroute.application;
 
 import io.fulflix.hub.hub.api.dto.HubResponseDto;
+import io.fulflix.hub.hub.domain.Hub;
+import io.fulflix.hub.hub.domain.HubRepository;
 import io.fulflix.hub.hub.exception.HubErrorCode;
 import io.fulflix.hub.hub.exception.HubException;
 import io.fulflix.hub.hubroute.api.dto.HubRouteCreateDto;
 import io.fulflix.hub.hubroute.api.dto.HubRouteResponseDto;
-import io.fulflix.hub.hub.domain.Hub;
 import io.fulflix.hub.hubroute.api.dto.HubRouteUpdateDto;
 import io.fulflix.hub.hubroute.domain.HubRoute;
-import io.fulflix.hub.hub.domain.HubRepository;
 import io.fulflix.hub.hubroute.domain.HubRouteRepository;
 import io.fulflix.hub.hubroute.exception.HubRouteErrorCode;
 import io.fulflix.hub.hubroute.exception.HubRouteException;
@@ -44,16 +44,16 @@ public class HubRouteService {
 
         RouteInfo routeInfo = naverDirectionsService.getRouteInfo(departureHub, arrivalHub);
 
-        if(routeInfo.distance() >= MAX_DISTANCE) {
+        if (routeInfo.distance() >= MAX_DISTANCE) {
             throw new HubRouteException(HubRouteErrorCode.HUB_ROUTE_DISTANCE_EXCEEDED);
         }
 
         HubRoute hubRoute = HubRoute.builder()
-                .departureHub(departureHub)
-                .arrivalHub(arrivalHub)
-                .duration(routeInfo.duration())
-                .distance(routeInfo.distance())
-                .build();
+            .departureHub(departureHub)
+            .arrivalHub(arrivalHub)
+            .duration(routeInfo.duration())
+            .distance(routeInfo.distance())
+            .build();
 
         hubRouteRepository.save(hubRoute);
 
@@ -129,13 +129,13 @@ public class HubRouteService {
     // 허브 경로 조회 메서드
     private HubRoute findHubRouteById(Long hubRouteId) {
         return hubRouteRepository.findById(hubRouteId)
-                .orElseThrow(() -> new HubRouteException(HubRouteErrorCode.HUB_ROUTE_NOT_FOUND));
+            .orElseThrow(() -> new HubRouteException(HubRouteErrorCode.HUB_ROUTE_NOT_FOUND));
     }
 
     // 허브 조회 메서드
     private Hub getHubById(Long hubId) {
         return hubRepository.findById(hubId)
-                .orElseThrow(() -> new HubException(HubErrorCode.HUB_NOT_FOUND));
+            .orElseThrow(() -> new HubException(HubErrorCode.HUB_NOT_FOUND));
     }
 
     // 출발 허브 도칙 허브 ID 비교 메서드
