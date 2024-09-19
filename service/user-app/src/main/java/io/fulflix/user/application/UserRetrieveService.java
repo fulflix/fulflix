@@ -4,6 +4,7 @@ import io.fulflix.user.api.retrieve.dto.UserResponse;
 import io.fulflix.user.exception.UserErrorCode;
 import io.fulflix.user.exception.UserException;
 import io.fulflix.user.repo.UserRepo;
+import io.fulflix.user.repo.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,6 +25,11 @@ public class UserRetrieveService {
 
     public Page<UserResponse> loadAllUsersByPageable(Pageable pageable) {
         return userRepo.findAll(pageable).map(UserResponse::from);
+    }
+
+    public User findById(Long id) {
+        return userRepo.findById(id)
+            .orElseThrow(() -> new UserException(UserErrorCode.NOT_EXIST, id));
     }
 
 }
