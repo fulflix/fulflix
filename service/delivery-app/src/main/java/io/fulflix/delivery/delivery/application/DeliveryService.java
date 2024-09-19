@@ -41,13 +41,13 @@ public class DeliveryService {
         validateHubExistence(dto.arrivalHubId(), DeliveryErrorCode.INVALID_ARRIVAL_HUB);
 
         Delivery delivery = Delivery.create(
-                dto.orderId(),
-                DeliveryStatus.PENDING_HUB,
-                dto.departureHubId(),
-                dto.arrivalHubId(),
-                dto.deliveryAddress(),
-                dto.recipient(),
-                dto.recipientSlackId()
+            dto.orderId(),
+            DeliveryStatus.PENDING_HUB,
+            dto.departureHubId(),
+            dto.arrivalHubId(),
+            dto.deliveryAddress(),
+            dto.recipient(),
+            dto.recipientSlackId()
         );
         Delivery savedDelivery = deliveryRepository.save(delivery);
         deliveryRouteService.createDeliveryRoute(savedDelivery.getId());
@@ -98,13 +98,10 @@ public class DeliveryService {
     }
 
 
-
-
-
     // 아이디로 배송 조회
     private Delivery findDeliveryById(Long id) {
         return deliveryRepository.findById(id)
-                .orElseThrow(() -> new DeliveryException(DeliveryErrorCode.DELIVERY_NOT_FOUND));
+            .orElseThrow(() -> new DeliveryException(DeliveryErrorCode.DELIVERY_NOT_FOUND));
     }
 
 
@@ -116,4 +113,5 @@ public class DeliveryService {
             throw new DeliveryException(errorCode);  // 주어진 에러 코드로 예외 처리
         }
     }
+
 }

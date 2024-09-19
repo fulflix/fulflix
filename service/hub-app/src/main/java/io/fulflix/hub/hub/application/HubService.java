@@ -51,16 +51,16 @@ public class HubService {
     public HubResponseDto updateHub(Long hubId, HubRequestDto hubRequestDto) {
         Hub hub = findHubById(hubId);
 
-        if(hubRequestDto.getName() != null) {
+        if (hubRequestDto.getName() != null) {
             hub.setName(hubRequestDto.getName());
         }
-        if(hubRequestDto.getAddress() != null) {
+        if (hubRequestDto.getAddress() != null) {
             hub.setAddress(hubRequestDto.getAddress());
         }
-        if(hubRequestDto.getLatitude() != null) {
+        if (hubRequestDto.getLatitude() != null) {
             hub.setLatitude(hubRequestDto.getLatitude());
         }
-        if(hubRequestDto.getName() != null) {
+        if (hubRequestDto.getName() != null) {
             hub.setLongitude(hubRequestDto.getLongitude());
         }
         return HubResponseDto.of(hub);
@@ -74,11 +74,9 @@ public class HubService {
     }
 
 
-
-
     public Hub findHubById(Long id) {
         return hubRepository.findById(id).orElseThrow(
-                () -> new HubException(HubErrorCode.HUB_NOT_FOUND)
+            () -> new HubException(HubErrorCode.HUB_NOT_FOUND)
         );
     }
 
