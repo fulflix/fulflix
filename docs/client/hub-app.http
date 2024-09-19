@@ -106,3 +106,14 @@ Authorization: Bearer {{access_token}}
 
 ###
 
+## 최단 경로 생성 API
+POST {{gateway}}/shortest-path
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+  "startHubId": 1,
+  "endHubId": 15
+}
+
+###
