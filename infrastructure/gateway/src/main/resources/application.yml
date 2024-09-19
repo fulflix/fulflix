@@ -12,3 +12,4 @@ spring:
       - classpath:properties/routing.yml
       - classpath:properties/jwt.yml
       - classpath:properties/zipkin.yml
+      - classpath:properties/actuator.yml
