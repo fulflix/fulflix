@@ -1,6 +1,5 @@
 package io.fulflix.hub.hubroute.api.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import io.fulflix.hub.hub.api.dto.HubResponseDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,7 +20,6 @@ public class HubRouteResponseDto {
     private Long duration;
     private Double distance;
     private String route;
-    @JsonProperty("isDeleted")
-    private boolean isDeleted;
+    private Boolean isDeleted;
 
 }
