@@ -1,0 +1,11 @@
+
+## 최단 경로 생성
+POST {{gateway}}/hub-route/shortest-path
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+  "startHubId": 1,
+  "endHubId": 4
+}
+###
