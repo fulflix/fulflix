@@ -19,8 +19,7 @@ public class UserRetrieveService {
     private final UserRepo userRepo;
 
     public UserResponse loadUserById(Long id) {
-        return userRepo.findById(id).map(UserResponse::from)
-            .orElseThrow(() -> new UserException(UserErrorCode.NOT_EXIST, id));
+        return UserResponse.from(findById(id));
     }
 
     public Page<UserResponse> loadAllUsersByPageable(Pageable pageable) {
