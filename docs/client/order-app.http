@@ -25,8 +25,14 @@ Authorization: Bearer {{access_token}}
 
 {
   "receiverId": 3,
-  "productId": 1,
-  "orderQuantity": 30
+  "productId": 2,
+  "orderQuantity": 5,
+  "deliveryRequest": {
+    "departureHubId": 2,
+    "arrivalHubId": 4,
+    "recipient": "이유리",
+    "recipientSlackId": "yuri.slack"
+  }
 }
 
 ###
@@ -38,8 +44,14 @@ Authorization: Bearer {{access_token}}
 
 {
   "supplierId": 1,
-  "productId": 1,
-  "orderQuantity": 100
+  "productId": 3,
+  "orderQuantity": 10,
+  "deliveryRequest": {
+    "departureHubId": 2,
+    "arrivalHubId": 4,
+    "recipient": "이유리",
+    "recipientSlackId": "yuri.slack"
+  }
 }
 
 ###

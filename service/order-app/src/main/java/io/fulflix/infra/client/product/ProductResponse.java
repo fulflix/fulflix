@@ -9,6 +9,6 @@ public class ProductResponse {
     private Long id;
     private Long hubId;
     private Long companyId;
-    private String ProductName;
+    private String productName;
     private Integer stockQuantity;
 }

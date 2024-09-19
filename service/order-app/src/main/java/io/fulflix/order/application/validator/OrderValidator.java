@@ -40,13 +40,17 @@ public class OrderValidator {
     }
 
     public ProductResponse checkProductExistForCompany(Long productId) {
+        log.info("상품 존재 확인 요청 - productId: {}", productId);
         try {
             ProductResponse productResponse = productClient.getProductForCompanyById(productId);
+            log.info("상품 응답 결과: {}", productResponse);
             if (productResponse == null) {
+                log.error("상품이 존재하지 않음 - productId: {}", productId);
                 throw new ProductException(ProductErrorCode.PRODUCT_NOT_FOUND);
             }
             return productResponse;
         } catch (FeignException e) {
+            log.error("FeignClient 호출 실패 - productId: {}", productId, e);
             throw new ProductException(ProductErrorCode.PRODUCT_NOT_FOUND);
         }
     }
