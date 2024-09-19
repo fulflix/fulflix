@@ -24,6 +24,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
 import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
 
 @ExtendWith(MockitoExtension.class)
@@ -31,7 +32,7 @@ import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
 public class AuthorizationServiceTest extends AuthServiceTestHelper {
 
     public static final String GET_USER_CREDENTIAL_URI = "/credential/1";
-    
+
     @InjectMocks
     private AuthorizationService authorizationService;
 
@@ -79,6 +80,7 @@ public class AuthorizationServiceTest extends AuthServiceTestHelper {
         );
 
         return Response.builder()
+            .status(HttpStatus.OK.value())
             .request(request)
             .headers(mockHeaders)
             .build();
