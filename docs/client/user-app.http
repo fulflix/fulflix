@@ -1,11 +1,19 @@
-## 마이 페이지 API
+# @name 마이 페이지 API
 GET {{gateway}}/user/me
 Content-Type: application/json
 Authorization: Bearer {{access_token}}
 
 ###
 
-## 회원 상세 조회 API
+# @name 회원 탈퇴 API
+DELETE {{gateway}}/user/withdraw
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+###
+
+
+# @name 회원 상세 조회 API
 GET {{gateway}}/user/1
 Content-Type: application/json
 Authorization: Bearer {{access_token}}
