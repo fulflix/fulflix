@@ -1,0 +1,99 @@
+# @name HUB_COMPANY(수령 업체) 로그인 API
+POST {{gateway}}/auth/sign-in
+Content-Type: application/json
+
+{
+  "username": "yuri",
+  "password": "password"
+}
+> {%
+    client.global.set("access_token", response.headers.valueOf("Authorization"))
+%}
+
+###
+
+# @name 업체 단일 조회 API (허브 관리자, 허브 업체, 허브 배송 담당자, 업체 배송 담당자)
+GET {{gateway}}/product/hub/2
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+
+###
+
+# @name 주문 생성 API (수령 업체)
+POST {{gateway}}/order/receiver-company
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+  "supplierId": 1,
+  "productId": 2,
+  "orderQuantity": 100,
+  "deliveryRequest": {
+    "departureHubId": 2,
+    "arrivalHubId": 4,
+    "recipient": "이유리",
+    "recipientSlackId": "yuri.slack"
+  }
+}
+
+###
+
+# @name 업체 단일 조회 API (허브 관리자, 허브 업체, 허브 배송 담당자, 업체 배송 담당자)
+GET {{gateway}}/product/hub/2
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+###
+
+# @name MASTER_AMDIN 로그인 API
+POST {{gateway}}/auth/sign-in
+Content-Type: application/json
+
+{
+  "username": "hong-gd",
+  "password": "password"
+}
+> {%
+    client.global.set("access_token", response.headers.valueOf("Authorization"))
+%}
+
+###
+
+# @name 업체 단일 조회 API (마스터 관리자)
+GET {{gateway}}/product/admin/1
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+###
+
+# @name 주문 생성 API (마스터 관리자)
+POST {{gateway}}/order/admin
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+  "supplierId": 1,
+  "receiverId": 2,
+  "productId": 1,
+  "orderQuantity": 101,
+  "deliveryRequest": {
+    "departureHubId": 2,
+    "arrivalHubId": 4,
+    "recipient": "이유리",
+    "recipientSlackId": "yuri.slack"
+  }
+}
+
+###
+
+# @name 주문 전체 조회 및 검색 API (마스터 관리자, 허브 관리자, 생산 업체, 수령 업체)
+GET {{gateway}}/order?orderQuantity=&page=&size=&sort=createdAt,desc
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+###
+
+# @name 배송 전체 조회 API
+GET {{gateway}}/delivery
+Authorization: Bearer {{access_token}}

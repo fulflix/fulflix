@@ -1,0 +1,72 @@
+# @name HUB_AMDIN(경기 북부 센터) 로그인 API
+POST {{gateway}}/auth/sign-in
+Content-Type: application/json
+
+{
+  "username": "hub_gyeonggi_north",
+  "password": "password"
+}
+> {%
+    client.global.set("access_token", response.headers.valueOf("Authorization"))
+%}
+
+###
+
+# @name 생산 업체 등록 API
+POST {{gateway}}/company
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+  "hubId" : 2,
+  "ownerId" : 4,
+  "companyName" : "플라스틱 가공품 생산 업체",
+  "companyType" : "SUPPLIER",
+  "companyAddress" : "경기도 고양시"
+}
+
+###
+
+# @name HUB_AMDIN(부산광역시 센터) 로그인 API
+POST {{gateway}}/auth/sign-in
+Content-Type: application/json
+
+{
+  "username": "hub_busan",
+  "password": "password"
+}
+> {%
+    client.global.set("access_token", response.headers.valueOf("Authorization"))
+%}
+
+###
+
+# @name 수령 업체 등록 API
+POST {{gateway}}/company
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+  "hubId" : 4,
+  "ownerId" : 5,
+  "companyName" : "바구니 제작 업체",
+  "companyType" : "RECEIVER",
+  "companyAddress" : "부산 수영구"
+}
+
+###
+
+# @name 수령 업체 등록 API
+POST {{gateway}}/company
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+  "hubId" : 4,
+  "ownerId" : 5,
+  "companyName" : "골프 용품 제작 업체",
+  "companyType" : "RECEIVER",
+  "companyAddress" : "부산 수영구"
+}
+
+###

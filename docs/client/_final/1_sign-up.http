@@ -1,0 +1,62 @@
+# @name MASTER_AMDIN 회원가입 API
+POST {{gateway}}/auth/sign-up
+Content-Type: application/json
+
+{
+  "username": "hong-gd",
+  "password": "password",
+  "name": "홍길동",
+  "type": "MASTER_ADMIN"
+}
+
+###
+
+# @name HUB_AMDIN(경기 북부 센터) 회원가입 API
+POST {{gateway}}/auth/sign-up
+Content-Type: application/json
+
+{
+  "username": "hub_gyeonggi_north",
+  "password": "password",
+  "name": "경기 북부 센터",
+  "type": "HUB_ADMIN"
+}
+
+###
+
+# @name HUB_AMDIN(부산광역시 센터) 회원가입 API
+POST {{gateway}}/auth/sign-up
+Content-Type: application/json
+
+{
+  "username": "hub_busan",
+  "password": "password",
+  "name": "부산광역시 센터",
+  "type": "HUB_ADMIN"
+}
+
+###
+
+# @name HUB_COMPANY(생산 업체) 회원가입 API
+POST {{gateway}}/auth/sign-up
+Content-Type: application/json
+
+{
+  "username": "soo",
+  "password": "password",
+  "name": "김철수",
+  "type": "HUB_COMPANY"
+}
+
+###
+
+# @name HUB_COMPANY(수령 업체) 회원가입 API
+POST {{gateway}}/auth/sign-up
+Content-Type: application/json
+
+{
+  "username": "yuri",
+  "password": "password",
+  "name": "이유리",
+  "type": "HUB_COMPANY"
+}
