@@ -1,0 +1,65 @@
+@username="user1"
+@password="password"
+
+# 1. 주문할 계정으로 회원가입
+POST {{gateway}}/auth/sign-up
+Content-Type: application/json
+
+{
+  "username": {{username}},
+  "password": {{password}},
+  "name": "김주문",
+  "type": "HUB_COMPANY"
+}
+
+###
+
+# 2. 주문할 계정으로 로그인
+POST {{gateway}}/auth/sign-in
+Content-Type: application/json
+
+{
+  "username": {{username}},
+  "password": {{password}}
+}
+> {%
+    client.global.set("access_token", response.headers.valueOf("Authorization"))
+%}
+
+###
+
+# 3. 주문 생성
+POST {{gateway}}/order/receiver-company
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+  "supplierId": 1,
+  "productId": 1,
+  "orderQuantity": 100
+}
+
+###
+
+## 4. 배송 생성
+POST {{gateway}}/delivery
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+  "orderId": 1,
+  "departureHubId": 2,
+  "arrivalHubId": 4,
+  "deliveryAddress": "부산광역시 수영구 수영로510번길 40 1 층",
+  "recipient": "김주문",
+  "recipientSlackId": "orderKim"
+}
+
+###
+
+## 5. 배송 경로 생성
+POST {{gateway}}/delivery-route/1
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+###
