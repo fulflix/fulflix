@@ -1,5 +1,6 @@
 package io.fulflix.order.api.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.fulflix.order.domain.Order;
 import io.fulflix.order.domain.OrderStatus;
 import java.time.LocalDateTime;
@@ -20,7 +21,8 @@ public class OrderDetailResponse {
     private Long productId;
     private Integer orderQuantity;
     private OrderStatus orderStatus;
-    private Boolean isDeleted;
+    @JsonProperty("isDeleted")
+    private boolean isDeleted;
     private LocalDateTime updatedAt;
     private Long updatedBy;
 
