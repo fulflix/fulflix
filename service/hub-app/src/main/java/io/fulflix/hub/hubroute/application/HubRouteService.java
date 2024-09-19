@@ -14,7 +14,6 @@ import io.fulflix.hub.hubroute.exception.HubRouteErrorCode;
 import io.fulflix.hub.hubroute.exception.HubRouteException;
 import io.fulflix.hub.infra.naver.application.NaverDirectionsService;
 import io.fulflix.hub.infra.naver.dto.RouteInfo;
-import io.fulflix.infra.client.external.naver.NaverDirectionClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,9 +28,10 @@ public class HubRouteService {
     private final HubRouteRepository hubRouteRepository;
     private final HubRepository hubRepository;
     private final NaverDirectionsService naverDirectionsService;
-    private final NaverDirectionClient naverDirectionClient;
 
-    // TODO 허브 경로 생성시 Naver API를 너무 많이 찌르는 문제
+    // 거리 150km 제한
+    private static final double MAX_DISTANCE = 150000.0;
+
     // 허브 경로 생성
     @Transactional
     public HubRouteResponseDto createHubRoute(HubRouteCreateDto dto) {
@@ -42,10 +42,11 @@ public class HubRouteService {
         Hub departureHub = getHubById(dto.getDepartureHubId());
         Hub arrivalHub = getHubById(dto.getArrivalHubId());
 
-
         RouteInfo routeInfo = naverDirectionsService.getRouteInfo(departureHub, arrivalHub);
 
-
+        if(routeInfo.distance() >= MAX_DISTANCE) {
+            throw new HubRouteException(HubRouteErrorCode.HUB_ROUTE_DISTANCE_EXCEEDED);
+        }
 
         HubRoute hubRoute = HubRoute.builder()
                 .departureHub(departureHub)
