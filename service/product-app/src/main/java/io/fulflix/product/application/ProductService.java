@@ -39,10 +39,6 @@ public class ProductService {
         Long currentUser, Role role) {
         validateMasterAdminAuthority(role);
 
-        if (pageable.getPageSize() != 10 && pageable.getPageSize() != 30 && pageable.getPageSize() != 50) {
-            pageable = PageRequest.of(pageable.getPageNumber(), 10, pageable.getSort());
-        }
-
         // 삭제된 업체까지 모두 조회
         Page<Product> products;
 
@@ -61,13 +57,10 @@ public class ProductService {
         return products.map(ProductDetailResponse::fromEntity);
     }
 
+    // 상품 전체 조회 및 검색 (허브 관리자, 허브 업체, 허브 배송 담당자, 업체 배송 담당자)
     public Page<ProductResponse> getAllProductsForHub(String product, Integer stockQuantity, Pageable pageable,
         Long currentUser, Role role) {
         validateMasterHubAuthority(role);
-
-        if (pageable.getPageSize() != 10 && pageable.getPageSize() != 30 && pageable.getPageSize() != 50) {
-            pageable = PageRequest.of(pageable.getPageNumber(), 10, pageable.getSort());
-        }
 
         Page<Product> products;
 
