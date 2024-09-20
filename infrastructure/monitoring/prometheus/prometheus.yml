@@ -62,40 +62,40 @@ scrape_configs:
     scrape_interval: 15s
     metrics_path: '/auth-app/actuator/prometheus'
     static_configs:
-      - targets: [ 'host.docker.internal:' ]
+      - targets: [ 'host.docker.internal:8080' ]
 
   - job_name: 'user-app'
     scrape_interval: 15s
     metrics_path: '/user-app/actuator/prometheus'
     static_configs:
-      - targets: [ 'host.docker.internal:' ]
+      - targets: [ 'host.docker.internal:8081' ]
 
   - job_name: 'product-app'
     scrape_interval: 15s
     metrics_path: '/product-app/actuator/prometheus'
     static_configs:
-      - targets: [ 'host.docker.internal:' ]
+      - targets: [ 'host.docker.internal:8281' ]
 
   - job_name: 'order-app'
     scrape_interval: 15s
     metrics_path: '/order-app/actuator/prometheus'
     static_configs:
-      - targets: [ 'host.docker.internal:' ]
+      - targets: [ 'host.docker.internal:8282' ]
 
   - job_name: 'delivery-app'
     scrape_interval: 15s
     metrics_path: '/delivery-app/actuator/prometheus'
     static_configs:
-      - targets: [ 'host.docker.internal:' ]
+      - targets: [ 'host.docker.internal:8181' ]
 
   - job_name: 'hub-app'
     scrape_interval: 15s
     metrics_path: '/hub-app/actuator/prometheus'
     static_configs:
-      - targets: [ 'host.docker.internal:' ]
+      - targets: [ 'host.docker.internal:8180' ]
 
   - job_name: 'company-app'
     scrape_interval: 15s
     metrics_path: '/company-app/actuator/prometheus'
     static_configs:
-      - targets: [ 'host.docker.internal:' ]
+      - targets: [ 'host.docker.internal:8280' ]

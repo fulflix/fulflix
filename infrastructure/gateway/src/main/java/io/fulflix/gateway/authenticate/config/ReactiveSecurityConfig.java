@@ -1,7 +1,13 @@
 package io.fulflix.gateway.authenticate.config;
 
-import static io.fulflix.gateway.authenticate.domain.Role.*;
-import static org.springframework.http.HttpMethod.*;
+import static io.fulflix.gateway.authenticate.domain.Role.HUB_ADMIN;
+import static io.fulflix.gateway.authenticate.domain.Role.HUB_DELIVERY_MANAGER;
+import static io.fulflix.gateway.authenticate.domain.Role.MASTER_ADMIN;
+import static io.fulflix.gateway.authenticate.domain.Role.getAllRoles;
+import static org.springframework.http.HttpMethod.DELETE;
+import static org.springframework.http.HttpMethod.GET;
+import static org.springframework.http.HttpMethod.POST;
+import static org.springframework.http.HttpMethod.PUT;
 
 import io.fulflix.gateway.authenticate.jwt.JwtProperties;
 import org.springframework.context.annotation.Bean;
@@ -33,28 +39,31 @@ public class ReactiveSecurityConfig {
 
                     .pathMatchers("/company/**").hasAnyAuthority(getAllRoles())
 
-                    .pathMatchers(GET,"/hub/**").hasAnyAuthority(getAllRoles())
-                    .pathMatchers(POST,"/hub/**").hasAnyAuthority(MASTER_ADMIN.name())
-                    .pathMatchers(PUT,"/hub/**").hasAnyAuthority(MASTER_ADMIN.name())
-                    .pathMatchers(DELETE,"/hub/**").hasAnyAuthority(MASTER_ADMIN.name())
+                    .pathMatchers(GET, "/hub/**").hasAnyAuthority(getAllRoles())
+                    .pathMatchers(POST, "/hub/**").hasAnyAuthority(MASTER_ADMIN.name())
+                    .pathMatchers(PUT, "/hub/**").hasAnyAuthority(MASTER_ADMIN.name())
+                    .pathMatchers(DELETE, "/hub/**").hasAnyAuthority(MASTER_ADMIN.name())
 
-                    .pathMatchers(GET,"/hub-route/**").hasAnyAuthority(getAllRoles())
-                    .pathMatchers(POST,"/hub-route/**").hasAnyAuthority(MASTER_ADMIN.name())
-                    .pathMatchers(PUT,"/hub-route/**").hasAnyAuthority(MASTER_ADMIN.name())
-                    .pathMatchers(DELETE,"/hub-route/**").hasAnyAuthority(MASTER_ADMIN.name())
+                    .pathMatchers(GET, "/hub-route/**").hasAnyAuthority(getAllRoles())
+                    .pathMatchers(POST, "/hub-route/**").hasAnyAuthority(MASTER_ADMIN.name())
+                    .pathMatchers(PUT, "/hub-route/**").hasAnyAuthority(MASTER_ADMIN.name())
+                    .pathMatchers(DELETE, "/hub-route/**").hasAnyAuthority(MASTER_ADMIN.name())
 
                     .pathMatchers("/shortest-path/**").hasAnyAuthority(getAllRoles())
 
-                    .pathMatchers(GET,"/delivery/**").hasAnyAuthority(getAllRoles())
-                    .pathMatchers(POST,"/delivery/**").hasAnyAuthority(getAllRoles())
-                    .pathMatchers(PUT,"/delivery/**").hasAnyAuthority(MASTER_ADMIN.name(), HUB_ADMIN.name(), HUB_DELIVERY_MANAGER.name())
-                    .pathMatchers(DELETE,"/delivery/**").hasAnyAuthority(getAllRoles())
+                    .pathMatchers(GET, "/delivery/**").hasAnyAuthority(getAllRoles())
+                    .pathMatchers(POST, "/delivery/**").hasAnyAuthority(getAllRoles())
+                    .pathMatchers(PUT, "/delivery/**")
+                    .hasAnyAuthority(MASTER_ADMIN.name(), HUB_ADMIN.name(), HUB_DELIVERY_MANAGER.name())
+                    .pathMatchers(DELETE, "/delivery/**").hasAnyAuthority(getAllRoles())
 
-                    .pathMatchers(GET,"/delivery-route/**").hasAnyAuthority(getAllRoles())
-                    .pathMatchers(POST,"/delivery-route/**").hasAnyAuthority(getAllRoles())
-                    .pathMatchers(PUT,"/delivery-route/**").hasAnyAuthority(MASTER_ADMIN.name(), HUB_ADMIN.name(), HUB_DELIVERY_MANAGER.name())
-                    .pathMatchers(DELETE,"/delivery-route/**").hasAnyAuthority(getAllRoles())
+                    .pathMatchers(GET, "/delivery-route/**").hasAnyAuthority(getAllRoles())
+                    .pathMatchers(POST, "/delivery-route/**").hasAnyAuthority(getAllRoles())
+                    .pathMatchers(PUT, "/delivery-route/**")
+                    .hasAnyAuthority(MASTER_ADMIN.name(), HUB_ADMIN.name(), HUB_DELIVERY_MANAGER.name())
+                    .pathMatchers(DELETE, "/delivery-route/**").hasAnyAuthority(getAllRoles())
 
+                    .pathMatchers("/actuator/**").permitAll()
                     .anyExchange().authenticated()
             )
             .securityContextRepository(securityContextRepository(jwtProperties))
