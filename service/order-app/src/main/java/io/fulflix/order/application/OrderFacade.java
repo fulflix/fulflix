@@ -55,15 +55,7 @@ public class OrderFacade {
     }
 
     // 주문 전체 조회 및 검색
-    public Page<OrderDetailResponse> getAllOrders(
-            Integer orderQuantity,
-            Pageable pageable,
-            Long currentUser,
-            Role role
-    ) {
-        if (pageable.getPageSize() != 10 && pageable.getPageSize() != 30 && pageable.getPageSize() != 50) {
-            pageable = PageRequest.of(pageable.getPageNumber(), 10, pageable.getSort());
-        }
+    public Page<OrderDetailResponse> getAllOrders(Integer orderQuantity, Pageable pageable, Long currentUser, Role role) {
 
         return orderRetrieveStrategies.stream()
                 .filter(it -> it.isMatched(role))

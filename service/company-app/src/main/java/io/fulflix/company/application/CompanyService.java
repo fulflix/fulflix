@@ -55,11 +55,6 @@ public class CompanyService {
     public Page<CompanyDetailResponse> getAllCompaniesForAdmin(String query, Pageable pageable, Role role) {
         validateMasterAdminAuthority(role);
 
-        // TODO CustomPageableHandlerMethodArgumentResolver를 이용한 기본 페이지 사이즈 요청 값 고정 처리
-        if (pageable.getPageSize() != 10 && pageable.getPageSize() != 30 && pageable.getPageSize() != 50) {
-            pageable = PageRequest.of(pageable.getPageNumber(), 10, pageable.getSort());
-        }
-
         if (hasSearchQuery(query)) {
             return companyRepo.findByCompanyNameContaining(query, pageable)
                 .map(CompanyDetailResponse::fromEntity);
