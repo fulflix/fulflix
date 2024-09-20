@@ -39,7 +39,7 @@ public class AuthorizationService {
     }
 
     private void handleError(Response response) {
-        if (response.status() != HttpStatus.OK.value()) {
+        if (response.status() != HttpStatus.CREATED.value()) {
             GlobalErrorResponse errorResponse = extractError(response);
 
             throw new BusinessException(
