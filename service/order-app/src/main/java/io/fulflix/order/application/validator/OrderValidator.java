@@ -88,7 +88,7 @@ public class OrderValidator {
     public OrderStatus validateStockAvailabilityForAdmin(ProductDetailResponse productResponse, int orderQuantity) {
         log.info("상품 재고: {}, 주문 수량: {}", productResponse.getStockQuantity(), orderQuantity);
         if (productResponse.getStockQuantity() >= orderQuantity) {
-            return OrderStatus.SUCCESS;
+            return OrderStatus.PENDING;
         } else {
             return OrderStatus.FAIL;
         }
@@ -96,7 +96,7 @@ public class OrderValidator {
 
     public OrderStatus validateStockAvailabilityForCompany(ProductResponse productResponse, int orderQuantity) {
         if (productResponse.getStockQuantity() >= orderQuantity) {
-            return OrderStatus.SUCCESS;
+            return OrderStatus.PENDING;
         } else {
             return OrderStatus.FAIL;
         }

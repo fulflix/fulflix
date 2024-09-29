@@ -1,3 +1,17 @@
+# @name MASTER_AMDIN 로그인 API
+POST {{gateway}}/auth/sign-in
+Content-Type: application/json
+
+{
+  "username": "hong-gd",
+  "password": "password"
+}
+> {%
+    client.global.set("access_token", response.headers.valueOf("Authorization"))
+%}
+
+###
+
 # @name 주문 생성 API (마스터 관리자)
 POST {{gateway}}/order/admin
 Content-Type: application/json
@@ -6,14 +20,8 @@ Authorization: Bearer {{access_token}}
 {
   "supplierId": 1,
   "receiverId": 2,
-  "productId": 1,
-  "orderQuantity": 10,
-  "deliveryRequest": {
-    "departureHubId": 2,
-    "arrivalHubId": 4,
-    "recipient": "이유리",
-    "recipientSlackId": "yuri.slack"
-  }
+  "productId": 3,
+  "orderQuantity": 5
 }
 
 ###

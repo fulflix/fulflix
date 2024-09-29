@@ -11,5 +11,5 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreateOrderResponse {
-    private OrderStatus orderStatus; // SUCCESS or FAIL
+    private OrderStatus orderStatus; // PENDING
 }
