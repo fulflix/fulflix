@@ -6,6 +6,8 @@ ext {
 }
 
 dependencies {
+    implementation 'org.springframework.kafka:spring-kafka'
+
     implementation project(APP_CORE)
 
     testImplementation project(path: APP_CORE, configuration: "archives")
