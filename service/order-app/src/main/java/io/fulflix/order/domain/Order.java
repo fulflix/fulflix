@@ -1,6 +1,7 @@
 package io.fulflix.order.domain;
 
 import io.fulflix.core.app.jpa.audit.Auditable;
+import io.fulflix.order.api.dto.AdminCreateOrderRequest;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -37,5 +38,22 @@ public class Order extends Auditable {
     // 주문 수량 업데이트
     public void updateOrderQuantity(int newQuantity) {
         this.orderQuantity = newQuantity;
+    }
+
+    // 주문 생성 이벤트 발행
+    public AdminCreateOrderRequest createOrderCreatedEvent() {
+        return new AdminCreateOrderRequest(
+                this.id,
+                this.supplierId,
+                this.receiverId,
+                this.productId,
+                this.orderQuantity
+        );
+    }
+
+    // 주문 생성 시 기본 상태 PENDING 설정
+    @PrePersist
+    public void prePersist() {
+        this.orderStatus = OrderStatus.PENDING;
     }
 }

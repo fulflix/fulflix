@@ -1,6 +1,5 @@
 package io.fulflix.order.api.dto;
 
-import io.fulflix.infra.client.delivery.DeliveryRequest;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -11,6 +10,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AdminCreateOrderRequest {
+    private Long orderId;
+
     @NotNull(message = "Supplier Id를 입력해 주세요.")
     private Long supplierId;
 
@@ -24,6 +25,6 @@ public class AdminCreateOrderRequest {
     @Min(value = 1, message = "최소 주문 수량은 1개입니다.")
     private Integer orderQuantity;
 
-    @NotNull(message = "배송 정보를 입력해 주세요.")
-    private DeliveryRequest deliveryRequest;
+//    @NotNull(message = "배송 정보를 입력해 주세요.")
+//    private DeliveryRequest deliveryRequest;
 }

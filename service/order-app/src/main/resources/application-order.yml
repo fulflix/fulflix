@@ -4,3 +4,26 @@ server:
 spring:
   application:
     name: order-app
+
+  kafka:
+    bootstrap-servers: localhost:9092,localhost:9094,localhost:9094
+    consumer:
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer # Kafka 메세지의 키를 문자열로 역직렬화
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer # Kafka 메세지의 값을 JSON으로 역직렬화
+      auto-offset-reset: latest # 메세지 읽는 순서
+      properties:
+        spring.json.trusted.packages: '*'
+        allow.auto.create.topic: false # 코드에서 토픽 자동 생성을 막음
+      listener:
+        concurrency: 3
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer # Kafka 메시지의 키를 문자열로 직렬화
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer # Kafka 메세지의 값을 JSON으로 직렬화
+      acks: 1
+      compression-type: none
+      batch-size: 16384
+      retries: 0
+      properties:
+        linger-ms: 0 # 메세지 전송 속도 (딜레이 없음)
+        max-in-flight-requests-per-connection: 5 # 동시에 메세지를 보낼 수 있는 요청 개수
+        enable-idempotence: true
